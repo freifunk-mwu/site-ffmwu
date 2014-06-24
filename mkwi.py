@@ -7,8 +7,8 @@
 
 from os import path
 from sys import argv
-
-SITECONF = 'site.conf'
+BASEDIR = path.abspath(path.dirname(__file__))
+SITECONF = path.join(BASEDIR, 'site.conf')
 
 REPLACEMENTS = {
     "hostname_prefix = 'mz'": "hostname_prefix = 'wi'",
