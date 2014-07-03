@@ -14,23 +14,37 @@ REPLACEMENTS = {
     "hostname_prefix = 'mz'": "hostname_prefix = 'wi'",
     "site_name = 'Freifunk Mainz'": "site_name = 'Freifunk Wiesbaden'",
     "site_code = 'ffmz'": "site_code = 'ffwi'",
+
     "prefix4 = '10.37.0.0/18'": "prefix4 = '10.56.0.0/18'",
     "prefix6 = 'fd37:b4dc:4b1e::/64'": "prefix6 = 'fd56:b4dc:4b1e::/64'",
+
+    # wifi
     "ssid = 'mainz.freifunk.net'": "ssid = 'wiesbaden.freifunk.net'",
     "ssid = 'mainz.freifunk.net 5GHz'": "ssid = 'wiesbaden.freifunk.net 5GHz'",
     "mesh_bssid = '02:04:08:16:32:64'": "mesh_bssid = '64:32:16:08:04:02'",
-    "Hinterschinken = {\n                                        key = 'f885d213b8f61f33d501a366ce36bc0a1baeb48da83294f41a63248cdc0ace36'": "Hinterschinken = {\n                                        key = '2c181049a40be2f7bd9306cd02e4eefc9c19fd1c9a60d202ab95fa60a4a53c56'",
+
+    # next node
+    "ip4 = '10.37.0.1'": "ip4 = '10.56.0.1'",
+    "ip6 = 'fd37:b4dc:4b1e::1'": "ip6 = 'fd56:b4dc:4b1e::1'",
+    "mac = '02:00:0a:25:00:01'": "mac = '02:00:0a:38:00:01'",
+
+    #Hinterschinken
+    "key = 'f885d213b8f61f33d501a366ce36bc0a1baeb48da83294f41a63248cdc0ace36'": "key = '9064f0c2b666e8712126f65b64b1cf4c56e2e2a03a7ececa6ef6eed5000f0279'",
     "'ipv4 \"gate05.ffmz.org\" port 10037'": "'ipv4 \"gate05.ffwi.org\" port 10056'",
     "'ipv6 \"gate05.ffmz.org\" port 10037'": "'ipv6 \"gate05.ffwi.org\" port 10056'",
-    "Spinat = {\n                                        key = '7ebe0b5e6d15b1f8a525ba40f8289cbe60d99b54d15a2f89c5cf7448d25f2df1'": "Spinat = {\n                                        key = '2c181049a40be2f7bd9306cd02e4eefc9c19fd1c9a60d202ab95fa60a4a53c56'",
+    #Spinat
+    "key = '7ebe0b5e6d15b1f8a525ba40f8289cbe60d99b54d15a2f89c5cf7448d25f2df1'": "key = '5c7aeb92ffc61c77564191eca7838f875fb4e75164c48bcc506b27e0a24696df'",
     "'ipv4 \"gate07.ffmz.org\" port 10037'": "'ipv4 \"gate07.ffwi.org\" port 10056'",
     "'ipv6 \"gate07.ffmz.org\" port 10037'": "'ipv6 \"gate07.ffmz.org\" port 10056'",
-    "Lotuswurzel = {\n                                        key = '660d502abd1eb73822b942f8ca86554197f95fa55cb92cde943ef8b8d3a57ebf'": "Lotuswurzel = {\n                                        key = '1112e095beea32ecd0ca32f8b88803d4cb9ed1867c3859a20eb1b5c2927cea64'",
+    #Lotuswurzel
+    "key = '660d502abd1eb73822b942f8ca86554197f95fa55cb92cde943ef8b8d3a57ebf'": "key = '1112e095beea32ecd0ca32f8b88803d4cb9ed1867c3859a20eb1b5c2927cea64'",
     "'ipv4 \"gate23.ffmz.org\" port 10037'": "'ipv4 \"gate23.ffwi.org\" port 10056'",
     "'ipv6 \"gate23.ffmz.org\" port 10037'": "'ipv6 \"gate23.ffwi.org\" port 10056'",
+
     "'http://images.freifunk-mainz.de/gluon/mz/": "'http://images.freifunk-mainz.de/gluon/wi/",
     "'http://mirror.freifunk-wiesbaden.de/gluon/mz/": "'http://mirror.freifunk-wiesbaden.de/gluon/wi/",
     "'http://mirror.crazyhaze.de/ffmz/gluon/mz/": "'http://mirror.crazyhaze.de/ffmz/gluon/wi/",
+
     "Mainzer Freifunk-Community findest du auf": "Freifunk-Community in Mainz und Wiesbaden findest du auf",
     "<a href=\"http://mainz.freifunk.net/\">unserer Webseite</a>.": "der <a href=\"http://mainz.freifunk.net/\">Mainzer</a> oder <a href=\"http://www.freifunk-wiesbaden.de/\">Wiesbadener</a> Webseite."
 }
