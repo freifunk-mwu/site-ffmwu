@@ -29,7 +29,7 @@ REPLACEMENTS = {
     "mac = '02:00:0a:25:00:01'": "mac = '02:00:0a:38:00:01'",
 
     #Hinterschinken
-    "key = 'f885d213b8f61f33d501a366ce36bc0a1baeb48da83294f41a63248cdc0ace36'": "key = '9064f0c2b666e8712126f65b64b1cf4c56e2e2a03a7ececa6ef6eed5000f0279'",
+    "key = 'f885d213b8f61f33d501a366ce36bc0a1baeb48da83294f41a63248cdc0ace36'": "key = 'c43724f818e38548558c6f7bb28d4a1dce359050cbf4c7619ca4105afb894eba'",
     "'ipv4 \"gate05.ffmz.org\" port 10037'": "'ipv4 \"gate05.ffwi.org\" port 10056'",
     "'ipv6 \"gate05.ffmz.org\" port 10037'": "'ipv6 \"gate05.ffwi.org\" port 10056'",
     #Spinat
@@ -41,8 +41,9 @@ REPLACEMENTS = {
     "'ipv4 \"gate23.ffmz.org\" port 10037'": "'ipv4 \"gate23.ffwi.org\" port 10056'",
     "'ipv6 \"gate23.ffmz.org\" port 10037'": "'ipv6 \"gate23.ffwi.org\" port 10056'",
 
-    "'http://[fd37:b4dc:4b1e::0a25:0005]/gluon/'": "'http://[fd56:b4dc:4b1e::0a25:0005]/gluon/'",
-    "'http://pudding.ffwi.org/mz/'": "'http://pudding.ffwi.org/wi/'",
+    #mirrors
+    "'http://pudding.ffwi.org/mz/": "'http://pudding.ffwi.org/wi/",
+    "'http://[fd37:b4dc:4b1e::0a25:0005]/gluon/": "'http://[fd56:b4dc:4b1e::0a25:0005]/gluon/",
     "'http://images.freifunk-mainz.de/gluon/mz/": "'http://images.freifunk-mainz.de/gluon/wi/",
     "'http://mirror.freifunk-wiesbaden.de/gluon/mz/": "'http://mirror.freifunk-wiesbaden.de/gluon/wi/",
     "'http://mirror.crazyhaze.de/ffmz/gluon/mz/": "'http://mirror.crazyhaze.de/ffmz/gluon/wi/",
