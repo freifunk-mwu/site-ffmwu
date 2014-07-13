@@ -41,6 +41,8 @@ REPLACEMENTS = {
     "'ipv4 \"gate23.ffmz.org\" port 10037'": "'ipv4 \"gate23.ffwi.org\" port 10056'",
     "'ipv6 \"gate23.ffmz.org\" port 10037'": "'ipv6 \"gate23.ffwi.org\" port 10056'",
 
+    "'http://[fd37:b4dc:4b1e::0a25:0005]/gluon/'": "'http://[fd56:b4dc:4b1e::0a25:0005]/gluon/'",
+    "'http://pudding.ffwi.org/mz/'": "'http://pudding.ffwi.org/wi/'",
     "'http://images.freifunk-mainz.de/gluon/mz/": "'http://images.freifunk-mainz.de/gluon/wi/",
     "'http://mirror.freifunk-wiesbaden.de/gluon/mz/": "'http://mirror.freifunk-wiesbaden.de/gluon/wi/",
     "'http://mirror.crazyhaze.de/ffmz/gluon/mz/": "'http://mirror.crazyhaze.de/ffmz/gluon/wi/",
