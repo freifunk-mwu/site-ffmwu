@@ -29,7 +29,7 @@ REPLACEMENTS = {
     "mac = '02:00:0a:25:00:01'": "mac = '02:00:0a:38:00:01'",
 
     #Hinterschinken
-    "key = 'f885d213b8f61f33d501a366ce36bc0a1baeb48da83294f41a63248cdc0ace36'": "key = 'c43724f818e38548558c6f7bb28d4a1dce359050cbf4c7619ca4105afb894eba'",
+    "key = 'f885d213b8f61f33d501a366ce36bc0a1baeb48da83294f41a63248cdc0ace36'": "key = 'ea828d386069bed30dbda9dd75590758e9f161348d4721b54aa5c6517a604f61'",
     "'ipv4 \"gate05.ffmz.org\" port 10037'": "'ipv4 \"gate05.ffwi.org\" port 10056'",
     "'ipv6 \"gate05.ffmz.org\" port 10037'": "'ipv6 \"gate05.ffwi.org\" port 10056'",
     #Spinat
@@ -43,10 +43,9 @@ REPLACEMENTS = {
 
     #mirrors
     "'http://pudding.ffwi.org/mz/": "'http://pudding.ffwi.org/wi/",
-    "'http://[fd37:b4dc:4b1e::0a25:0005]/gluon/": "'http://[fd56:b4dc:4b1e::0a25:0005]/gluon/",
-    "'http://images.freifunk-mainz.de/gluon/mz/": "'http://images.freifunk-mainz.de/gluon/wi/",
-    "'http://mirror.freifunk-wiesbaden.de/gluon/mz/": "'http://mirror.freifunk-wiesbaden.de/gluon/wi/",
-    "'http://mirror.crazyhaze.de/ffmz/gluon/mz/": "'http://mirror.crazyhaze.de/ffmz/gluon/wi/",
+    "/gluon/mz/stable/": "/gluon/wi/stable/",
+    "/gluon/mz/beta/": "/gluon/wi/beta/",
+    "/gluon/mz/nightly/": "/gluon/wi/nightly/",
 
     "Mainzer Freifunk-Community findest du auf": "Freifunk-Community in Mainz und Wiesbaden findest du auf",
     "<a href=\"http://mainz.freifunk.net/\">unserer Webseite</a>.": "der <a href=\"http://mainz.freifunk.net/\">Mainzer</a> oder <a href=\"http://www.freifunk-wiesbaden.de/\">Wiesbadener</a> Webseite."
