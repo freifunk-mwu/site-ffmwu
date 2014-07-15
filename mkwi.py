@@ -43,14 +43,17 @@ REPLACEMENTS = {
     "'ipv6 \"gate23.ffmz.org\" port 10037'": "'ipv6 \"gate23.ffwi.org\" port 10056'",
 
     #mirrors
-    "'http://[fd37:b4dc:4b1e::0a25:0005]/gluon/mz": "'http://[fd56:b4dc:4b1e::0a25:0005]/gluon/wi",
     "'http://pudding.ffwi.org/mz/": "'http://pudding.ffwi.org/wi/",
+    "'http://[fd37:b4dc:4b1e::0a25:0005]/gluon/mz/": "'http://[fd56:b4dc:4b1e::0a25:0005]/gluon/wi/",
+    "'http://10.37.0.5/gluon/mz/": "'http://10.56.0.5/gluon/wi/",
+    "'http://gate05.ffmz.org/gluon/mz/": "'http://gate05.ffwi.org/gluon/wi",
+
     "/gluon/mz/stable/": "/gluon/wi/stable/",
     "/gluon/mz/beta/": "/gluon/wi/beta/",
     "/gluon/mz/nightly/": "/gluon/wi/nightly/",
 
-    "Mainzer Freifunk-Community findest du auf": "Freifunk-Community in Mainz und Wiesbaden findest du auf",
-    "<a href=\"http://mainz.freifunk.net/\">unserer Webseite</a>.": "der <a href=\"http://mainz.freifunk.net/\">Mainzer</a> oder <a href=\"http://www.freifunk-wiesbaden.de/\">Wiesbadener</a> Webseite."
+    "keys@freifunk-mainz.de": "keys@freifunk-mainz.de", # TODO: Liste aufsetzen
+
 }
 
 
