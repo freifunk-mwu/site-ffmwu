@@ -29,7 +29,7 @@ REPLACEMENTS = {
     "mac = '02:00:0a:25:00:01'": "mac = '02:00:0a:38:00:01'",
 
     #Hinterschinken
-    "key = 'f885d213b8f61f33d501a366ce36bc0a1baeb48da83294f41a63248cdc0ace36'": "key = 'ea828d386069bed30dbda9dd75590758e9f161348d4721b54aa5c6517a604f61'",
+    "key = 'f885d213b8f61f33d501a366ce36bc0a1baeb48da83294f41a63248cdc0ace36'": "key = 'f222d6fd564b959708a69e0525abf9c41d1add22419d8eeb7faf95b2a5900a63'",
     "'ipv4 \"gate05.ffmz.org\" port 10037'": "'ipv4 \"gate05.ffwi.org\" port 10056'",
     "'ipv6 \"gate05.ffmz.org\" port 10037'": "'ipv6 \"gate05.ffwi.org\" port 10056'",
     #Spinat
