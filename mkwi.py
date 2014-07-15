@@ -43,6 +43,7 @@ REPLACEMENTS = {
     "'ipv6 \"gate23.ffmz.org\" port 10037'": "'ipv6 \"gate23.ffwi.org\" port 10056'",
 
     #mirrors
+    "'http://[fd37:b4dc:4b1e::0a25:0005]/gluon/mz": "'http://[fd56:b4dc:4b1e::0a25:0005]/gluon/wi",
     "'http://pudding.ffwi.org/mz/": "'http://pudding.ffwi.org/wi/",
     "/gluon/mz/stable/": "/gluon/wi/stable/",
     "/gluon/mz/beta/": "/gluon/wi/beta/",
