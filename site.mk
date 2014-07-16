@@ -1,5 +1,4 @@
 GLUON_SITE_PACKAGES := \
-#	ffpb-debug \
 	gluon-alfred \
 	gluon-autoupdater \
 	gluon-batman-on-wan \

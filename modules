@@ -1,4 +1,0 @@
-GLUON_SITE_FEEDS='plus'
-
-PACKAGES_PLUS_REPO=https://github.com/Freifunk-Mainz/gluon-packages.git
-PACKAGES_PLUS_COMMIT=79c014dca596e6fa3df1385cd18daac3b8887008
