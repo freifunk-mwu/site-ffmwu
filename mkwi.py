@@ -80,8 +80,7 @@ if __name__ == '__main__':
     sitewi = sitemz
 
     modulesmz = readfile(MODULES)
-    moduleswi = moduleswi
-
+    moduleswi = modulesmz
 
     for mz, wi in SITEREPLACEMENTS.items():
         sitewi = sitewi.replace(mz, wi)
