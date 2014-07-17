@@ -44,7 +44,7 @@ REPLACEMENTS = {
 
     #mirrors
     "'http://pudding.ffwi.org/mz/": "'http://pudding.ffwi.org/wi/",
-    "'http://[fd37:b4dc:4b1e::0a25:0005]/gluon/mz/": "'http://[fd56:b4dc:4b1e::0a25:0005]/gluon/wi/",
+    "'http://[fd37:b4dc:4b1e::0a25:0005]/gluon/mz/": "'http://[fd56:b4dc:4b1e::0a38:0005]/gluon/wi/",
     "'http://10.37.0.5/gluon/mz/": "'http://10.56.0.5/gluon/wi/",
     "'http://gate05.ffmz.org/gluon/mz/": "'http://gate05.ffwi.org/gluon/wi/",
 
