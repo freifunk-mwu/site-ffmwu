@@ -1,9 +1,11 @@
+#!/usr/bin/env python3
+# -.- coding: utf-8 -.-
 
 ## mkwi.py
 # generates a site.conf for Freifunk Wiesbaden
 #
 # start it with any argument to replace the entire siteconf
-# (use git to restore the original)
+# (use git checkout -- site.conf to restore the original site.conf)
 
 from os import path
 from sys import argv
@@ -52,9 +54,9 @@ SITEREPLACEMENTS = {
 
 
     #mirrors
-    "/gluon/mz/stable/": "/gluon/wi/stable/",
-    "/gluon/mz/beta/": "/gluon/wi/beta/",
-    "/gluon/mz/nightly/": "/gluon/wi/nightly/",
+    "/mz/stable/": "/wi/stable/",
+    "/mz/beta/": "/wi/beta/",
+    "/mz/nightly/": "/wi/nightly/",
 
     "keys@freifunk-mainz.de": "keys@freifunk-mainz.de", # TODO: Liste od. forwarding aufsetzen
 
