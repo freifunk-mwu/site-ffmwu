@@ -79,6 +79,7 @@ def readfile(filename):
 def writefile(filename, content):
     with open(filename, 'w') as f:
         f.write(content)
+    print('#written: %s' %(filename))
 
 if __name__ == '__main__':
 
