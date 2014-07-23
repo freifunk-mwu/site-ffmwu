@@ -24,6 +24,8 @@ SITEREPLACEMENTS = {
     "prefix4 = '10.37.0.0/18'": "prefix4 = '10.56.0.0/18'",
     "prefix6 = 'fd37:b4dc:4b1e::/64'": "prefix6 = 'fd56:b4dc:4b1e::/64'",
 
+    ".ntp.ffmz.org": ".ntp.ffwi.org",
+
     ## wifi
     "ssid = 'mainz.freifunk.net'": "ssid = 'wiesbaden.freifunk.net'",
     "ssid = 'mainz.freifunk.net 5GHz'": "ssid = 'wiesbaden.freifunk.net 5GHz'",
