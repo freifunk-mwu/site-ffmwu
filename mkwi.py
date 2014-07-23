@@ -10,8 +10,10 @@
 from os import path
 from sys import argv
 BASEDIR = path.abspath(path.dirname(__file__))
-SITECONF = path.join(BASEDIR, 'site.conf')
-MODULES = path.join(BASEDIR, 'modules')
+sfile = 'site.conf'
+mfile = 'modules'
+SITECONF = path.join(BASEDIR, sfile)
+MODULES = path.join(BASEDIR, mfile)
 
 SITEREPLACEMENTS = {
     ## common
@@ -95,8 +97,12 @@ if __name__ == '__main__':
 
         writefile(MODULES, moduleswi)
 
-    else:
-        print(sitewi)
-
-        print(moduleswi)
+    print(
+        '''
+%s\n%s\n\n%s\n\n
+%s\n%s\n\n%s\n\n
+        ''' %(
+            sfile, '=' * len(sfile), sitewi,
+            mfile, '=' * len(mfile), moduleswi)
+        )
 
