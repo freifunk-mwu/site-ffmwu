@@ -23,3 +23,6 @@ DEFAULT_GLUON_RELEASE := 0.1+0-$(shell date '+%Y.%m.%d-%H.%M')-g$(shell git -C $
 
 # Allow overriding the release number from the command line
 GLUON_RELEASE ?= $(DEFAULT_GLUON_RELEASE)
+
+# Default priority for updates.
+GLUON_PRIORITY ?= 0.1
