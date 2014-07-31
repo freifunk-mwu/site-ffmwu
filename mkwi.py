@@ -54,7 +54,7 @@ SITEREPLACEMENTS = {
     "key = '660d502abd1eb73822b942f8ca86554197f95fa55cb92cde943ef8b8d3a57ebf'": "key = '1112e095beea32ecd0ca32f8b88803d4cb9ed1867c3859a20eb1b5c2927cea64'",
     "'ipv4 \"gate23.ffmz.org\" port 10037'": "'ipv4 \"gate23.ffwi.org\" port 10056'",
     "'ipv6 \"gate23.ffmz.org\" port 10037'": "'ipv6 \"gate23.ffwi.org\" port 10056'",
-    "'http://[fd37:b4dc:4b1e::0a25:0023]/": "'http://[fd56:b4dc:4b1e::0a38:0023]/",
+    "'http://[fd37:b4dc:4b1e::0a25:0017]/": "'http://[fd56:b4dc:4b1e::0a38:0017]/",
 
 
     #mirrors
