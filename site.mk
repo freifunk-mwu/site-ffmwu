@@ -1,5 +1,6 @@
 GLUON_SITE_PACKAGES := \
 	gluon-alfred \
+	gluon-announced \
 	gluon-autoupdater \
 	gluon-config-mode \
 	gluon-ebtables-filter-multicast \
@@ -7,17 +8,14 @@ GLUON_SITE_PACKAGES := \
 	gluon-luci-admin \
 	gluon-luci-autoupdater \
 	gluon-luci-portconfig \
-	gluon-next-node \
 	gluon-mesh-batman-adv \
 	gluon-mesh-vpn-fastd \
+	gluon-next-node \
 	gluon-radvd \
 	gluon-status-page \
 	iwinfo \
 	iptables \
-	haveged \
-	ffctl-configurator \
-	ffctl-nodewatcher
-
+	haveged
 
 DEFAULT_GLUON_RELEASE := 0.1+0-$(shell date '+%Y.%m.%d-%H.%M')-g.$(shell git -C $(GLUONDIR) log --pretty=format:'%h' -n 1)-s.$(shell git -C $(GLUONDIR)/site log --pretty=format:'%h' -n 1)
 
