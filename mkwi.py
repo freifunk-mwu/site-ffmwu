@@ -33,7 +33,6 @@ SITEREPLACEMENTS = {
 
     ## wifi
     "ssid = 'mainz.freifunk.net'": "ssid = 'wiesbaden.freifunk.net'",
-    "ssid = 'mainz.freifunk.net 5GHz'": "ssid = 'wiesbaden.freifunk.net 5GHz'",
     "mesh_ssid = '02:04:08:16:32:64'": "mesh_ssid = '64:32:16:08:04:02'",
     "mesh_bssid = '02:04:08:16:32:64'": "mesh_bssid = '64:32:16:08:04:02'",
 
