@@ -63,13 +63,10 @@ SITEREPLACEMENTS = {
     ## mirrors
     # Hinterschinken
     "'http://[fd37:b4dc:4b1e::a25:5]/": "'http://[fd56:b4dc:4b1e::a38:5]/",
-    "'http://gate05.ffmz.org/": "'http://gate05.ffwi.org/",
     # Spinat
     "'http://[fd37:b4dc:4b1e::a25:7]/": "'http://[fd56:b4dc:4b1e::a38:7]/",
-    "'http://gate07.ffmz.org/": "'http://gate07.ffwi.org/",
     # Lotuswurzel
     "'http://[fd37:b4dc:4b1e::a25:17]/": "'http://[fd56:b4dc:4b1e::a38:17]/",
-    "'http://gate23.ffmz.org/": "'http://gate23.ffwi.org/",
 
     "/mz/stable/": "/wi/stable/",
     "/mz/beta/": "/wi/beta/",
