@@ -26,9 +26,9 @@ SITEREPLACEMENTS = {
 
 
     ## ntp_servers
-    "'5.ntp.ffmz.org', 'fd37:b4dc:4b1e::0a25:0005',": "'5.ntp.ffwi.org', 'fd56:b4dc:4b1e::0a38:0005',",
-    "'7.ntp.ffmz.org', 'fd37:b4dc:4b1e::0a25:0007',": "'7.ntp.ffwi.org', 'fd56:b4dc:4b1e::0a38:0007',",
-    "'23.ntp.ffmz.org', 'fd37:b4dc:4b1e::0a25:0017',": "'23.ntp.ffwi.org', 'fd56:b4dc:4b1e::0a38:0017',",
+    "'5.ntp.ffmz.org', 'fd37:b4dc:4b1e::a25:5',": "'5.ntp.ffwi.org', 'fd56:b4dc:4b1e::a38:5',",
+    "'7.ntp.ffmz.org', 'fd37:b4dc:4b1e::a25:7',": "'7.ntp.ffwi.org', 'fd56:b4dc:4b1e::a38:7',",
+    "'23.ntp.ffmz.org', 'fd37:b4dc:4b1e::a25:17',": "'23.ntp.ffwi.org', 'fd56:b4dc:4b1e::a38:17',",
 
 
     ## wifi
@@ -62,13 +62,13 @@ SITEREPLACEMENTS = {
 
     ## mirrors
     # Hinterschinken
-    "'http://[fd37:b4dc:4b1e::0a25:0005]/": "'http://[fd56:b4dc:4b1e::0a38:0005]/",
+    "'http://[fd37:b4dc:4b1e::a25:5]/": "'http://[fd56:b4dc:4b1e::a38:5]/",
     "'http://gate05.ffmz.org/": "'http://gate05.ffwi.org/",
     # Spinat
-    "'http://[fd37:b4dc:4b1e::0a25:0007]/": "'http://[fd56:b4dc:4b1e::0a38:0007]/",
+    "'http://[fd37:b4dc:4b1e::a25:7]/": "'http://[fd56:b4dc:4b1e::a38:7]/",
     "'http://gate07.ffmz.org/": "'http://gate07.ffwi.org/",
     # Lotuswurzel
-    "'http://[fd37:b4dc:4b1e::0a25:0017]/": "'http://[fd56:b4dc:4b1e::0a38:0017]/",
+    "'http://[fd37:b4dc:4b1e::a25:17]/": "'http://[fd56:b4dc:4b1e::a38:17]/",
     "'http://gate23.ffmz.org/": "'http://gate23.ffwi.org/",
 
     "/mz/stable/": "/wi/stable/",
