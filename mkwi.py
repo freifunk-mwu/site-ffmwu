@@ -73,7 +73,7 @@ SITEREPLACEMENTS = {
     "/mz/nightly/": "/wi/nightly/",
 
     ## config_mode
-    "keys@freifunk-mainz.de": "keys@freifunk-mainz.de", # TODO: Liste od. forwarding aufsetzen
+    "keys@freifunk-mainz.de": "keys@freifunk-wiesbaden.de",
 
 }
 
