@@ -1,5 +1,5 @@
 GLUON_SITE_FEEDS='plus'
 
-PACKAGES_PLUS_REPO=git://github.com/ffrm/gluon-plus.git
+PACKAGES_PLUS_REPO=git://github.com/freifunk-mwu/gluon-plus.git
 PACKAGES_PLUS_BRANCH=mz
 PACKAGES_PLUS_COMMIT=e2f80149ed432e410e7214727dad616d5cf0ba44
