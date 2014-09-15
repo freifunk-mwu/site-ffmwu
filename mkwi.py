@@ -26,7 +26,6 @@ SITEREPLACEMENTS = {
 
 
     ## ntp_servers
-    "'5.ntp.ffmz.org', 'fd37:b4dc:4b1e::a25:5',": "'5.ntp.ffwi.org', 'fd56:b4dc:4b1e::a38:5',",
     "'7.ntp.ffmz.org', 'fd37:b4dc:4b1e::a25:7',": "'7.ntp.ffwi.org', 'fd56:b4dc:4b1e::a38:7',",
     "'23.ntp.ffmz.org', 'fd37:b4dc:4b1e::a25:17',": "'23.ntp.ffwi.org', 'fd56:b4dc:4b1e::a38:17',",
 
@@ -44,10 +43,6 @@ SITEREPLACEMENTS = {
 
 
     ## gateways
-    # Hinterschinken
-    "key = 'f885d213b8f61f33d501a366ce36bc0a1baeb48da83294f41a63248cdc0ace36'": "key = 'f222d6fd564b959708a69e0525abf9c41d1add22419d8eeb7faf95b2a5900a63'",
-    "'\"gate05.freifunk-wiesbaden.de\" port 10037'": "'\"gate05.freifunk-wiesbaden.de\" port 10056'",
-
     # Spinat
     "key = '7ebe0b5e6d15b1f8a525ba40f8289cbe60d99b54d15a2f89c5cf7448d25f2df1'": "key = '5c7aeb92ffc61c77564191eca7838f875fb4e75164c48bcc506b27e0a24696df'",
     "'\"gate07.freifunk-wiesbaden.de\" port 10037'": "'\"gate07.freifunk-wiesbaden.de\" port 10056'",
@@ -58,8 +53,6 @@ SITEREPLACEMENTS = {
 
 
     ## mirrors
-    # Hinterschinken
-    "'http://[fd37:b4dc:4b1e::a25:5]/": "'http://[fd56:b4dc:4b1e::a38:5]/",
     # Spinat
     "'http://[fd37:b4dc:4b1e::a25:7]/": "'http://[fd56:b4dc:4b1e::a38:7]/",
     # Lotuswurzel
