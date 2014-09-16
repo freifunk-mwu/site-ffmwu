@@ -1,0 +1,21 @@
+networks:
+    37:
+        ext: 'freifunk-mainz.de'
+        int: 'ffmz.org'
+    56:
+        ext: 'freifunk-wiesbaden.de'
+        int: 'ffwi.org'
+
+gateways:
+    1: hartwurstsuppe
+    2: popcorn
+    5: hinterschinken
+    7: spinat
+    23: lotuswurzel
+
+formats:
+    ntp: '%d.ntp.%s'
+    v4: '10.%d.0.%d'
+    v6: 'fd%d:b4dc:4b1e::a%x:%x'
+    cdns: 'gate%02d.%s'
+    ndns: '%s.%s'
