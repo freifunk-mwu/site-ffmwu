@@ -2,7 +2,7 @@
 from service import read_yaml, validate_keys, kill_me
 
 class Gateway(object):
-    def __init__(self, net, gw, mfile='gateway.yaml'):
+    def __init__(self, net, gw, mfile='meta.yaml'):
         meta = read_yaml(mfile)
 
         if not validate_keys(meta, ['networks', 'gateways', 'formats']) or not validate_keys(meta['networks']) or not validate_keys(meta['gateways']) or not validate_keys(meta['formats']):
@@ -31,13 +31,13 @@ class Gateway(object):
         return self.f['ndns'] %(self.g, self.n['ext'] if glob else self.n['int'])
 
 if __name__ == '__main__':
-    hinterschinken = Gateway(37, 5)
+    test = Gateway(37, 23)
 
-    print('ntp', hinterschinken.ntp())
-    print('v4', hinterschinken.v4())
-    print('v6', hinterschinken.v6())
-    print('cdns', hinterschinken.cdns())
-    print('ndns', hinterschinken.ndns())
+    print('ntp', test.ntp())
+    print('v4', test.v4())
+    print('v6', test.v6())
+    print('cdns', test.cdns())
+    print('ndns', test.ndns())
 
 
 

@@ -2,13 +2,15 @@ networks:
     37:
         ext: 'freifunk-mainz.de'
         int: 'ffmz.org'
+        short: mz
     56:
         ext: 'freifunk-wiesbaden.de'
         int: 'ffwi.org'
+        short: wi
 
 gateways:
-    1: hartwurstsuppe
-    2: popcorn
+#    2: hartwurstsuppe
+#    3: popcorn
     5: hinterschinken
     7: spinat
     23: lotuswurzel
