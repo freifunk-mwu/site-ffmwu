@@ -2,6 +2,10 @@
 from yaml import load
 from string import Template
 
+METAFILE = 'meta.yaml'
+SITETEMPLATE = 'templates/site.conf.template'
+SITECONF = 'site.conf'
+
 ###
 # service functions
 
@@ -9,24 +13,27 @@ def read_file(filename):
     with open(filename, 'r') as f:
         return f.read()
 
+def write_file(filename, content):
+    with open(filename, 'w') as f:
+        return f.write(content)
+
 def read_yaml(filename):
     content = read_file(filename)
     if content: return load(content)
 
-meta = read_yaml('meta.yaml')
+meta = read_yaml(METAFILE)
 
 ###
 # gateways
 
 class Gateway(object):
-    def __init__(self, netnum, gwnum):
+    def __init__(self, netname, gwnum):
 
-        self.netnum = netnum # number of network
-        self.gwnum = gwnum   # number of gateway
-
-        self.netname = meta['networks'][netnum]['name'] # name of network
-        self.inturl = meta['networks'][netnum]['int']
-        self.exturl = meta['networks'][netnum]['ext']
+        self.netname = netname
+        self.gwnum = gwnum
+        self.netnum = meta['networks'][netname]['num']
+        self.inturl = meta['networks'][netname]['int']
+        self.exturl = meta['networks'][netname]['ext']
         self.gatename = meta['gateways'][gwnum]['name']
         self.pubkey = meta['gateways'][gwnum]['pubkey']
         self.f = meta['formats']
@@ -49,10 +56,10 @@ class Gateway(object):
     def remote(self):
         return self.f['remote'] %(self.gatename, self.pubkey[self.netname], self.cdns(), self.netnum)
 
-def populate(netnum):
+def populate(netname):
     site = dict()
 
-    netname = meta['networks'][netnum]['name']
+    netnum = meta['networks'][netname]['num']
 
     for s in meta['site']:
         if netname in meta['site'][s]:
@@ -75,7 +82,7 @@ def populate(netnum):
         site.update({'gw_mirrors_%s' %(bb): str()})
 
     for gwnum in meta['gateways'].keys():
-        g = Gateway(netnum, gwnum)
+        g = Gateway(netname, gwnum)
         site['ntp_v6'] += '\'%s\', ' %(g.v6())
         site['ntp_dns'] += '\'%s\', ' %(g.ntp())
         site['gw_remotes'] += g.remote()
@@ -88,13 +95,9 @@ def populate(netnum):
 
     return site
 
-
-def generate(netname, sfile='templates/site.conf.template'):
-    netnum = next((num for num, net in meta['networks'].items() if net['name'] == netname), None)
-    site = populate(netnum)
+def generate(netname):
+    site = populate(netname)
     if site:
-        siteconf = Template(read_file(sfile)).substitute(site)
+        siteconf = Template(read_file(SITETEMPLATE)).substitute(site)
         print(siteconf)
 
-if __name__ == '__main__':
-    generate('wi')

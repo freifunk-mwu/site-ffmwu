@@ -1,12 +1,12 @@
 networks:
-    37:
-        ext:   'freifunk-mainz.de'
-        int:   'ffmz.org'
-        name: 'mz'
-    56:
-        ext:   'freifunk-wiesbaden.de'
-        int:   'ffwi.org'
-        name: 'wi'
+    mz:
+        ext: 'freifunk-mainz.de'
+        int: 'ffmz.org'
+        num: 37
+    wi:
+        ext: 'freifunk-wiesbaden.de'
+        int: 'ffwi.org'
+        num: 56
 
 gateways:
     # 2:
