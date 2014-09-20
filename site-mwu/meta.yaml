@@ -2,18 +2,32 @@ networks:
     37:
         ext: 'freifunk-mainz.de'
         int: 'ffmz.org'
-        short: mz
+        short: 'mz'
     56:
         ext: 'freifunk-wiesbaden.de'
         int: 'ffwi.org'
-        short: wi
+        short: 'wi'
 
 gateways:
-#    2: hartwurstsuppe
-#    3: popcorn
-    5: hinterschinken
-    7: spinat
-    23: lotuswurzel
+    # 2:
+    #    name: 'hartwurstsuppe'
+    # 3:
+    #     name: 'popcorn'
+    5:
+        name: 'hinterschinken'
+        fastd:
+            mz: 'f885d213b8f61f33d501a366ce36bc0a1baeb48da83294f41a63248cdc0ace36'
+            wi: 'f222d6fd564b959708a69e0525abf9c41d1add22419d8eeb7faf95b2a5900a63'
+    7:
+        name: 'spinat'
+        fastd:
+            mz: '7ebe0b5e6d15b1f8a525ba40f8289cbe60d99b54d15a2f89c5cf7448d25f2df1'
+            wi: '5c7aeb92ffc61c77564191eca7838f875fb4e75164c48bcc506b27e0a24696df'
+    23:
+        name: 'lotuswurzel'
+        fastd:
+            mz: '660d502abd1eb73822b942f8ca86554197f95fa55cb92cde943ef8b8d3a57ebf'
+            wi: '1112e095beea32ecd0ca32f8b88803d4cb9ed1867c3859a20eb1b5c2927cea64'
 
 formats:
     ntp: '%d.ntp.%s'
@@ -21,3 +35,8 @@ formats:
     v6: 'fd%d:b4dc:4b1e::a%x:%x'
     cdns: 'gate%02d.%s'
     ndns: '%s.%s'
+    remote: |
+        %s = {
+            key = '%s',
+            remotes = {'"%s" port 100%d'},
+        },

@@ -12,7 +12,9 @@ class Gateway(object):
         self.gw = gw
 
         self.n = meta['networks'][net]
-        self.g = meta['gateways'][gw]
+        self.s = meta['networks'][net]['short']
+        self.g = meta['gateways'][gw]['name']
+        self.r = meta['gateways'][gw]['fastd']
         self.f = meta['formats']
 
     def ntp(self, glob=False):
@@ -30,14 +32,18 @@ class Gateway(object):
     def ndns(self, glob=True): # n = named
         return self.f['ndns'] %(self.g, self.n['ext'] if glob else self.n['int'])
 
+    def remote(self):
+        return self.f['remote'] %(self.g, self.r[self.s], self.cdns(), self.net)
+
 if __name__ == '__main__':
-    test = Gateway(37, 23)
+    test = Gateway(56, 23)
 
     print('ntp', test.ntp())
     print('v4', test.v4())
     print('v6', test.v6())
     print('cdns', test.cdns())
     print('ndns', test.ndns())
+    print('remote', test.remote())
 
 
 
