@@ -8,11 +8,9 @@
 
     timezone = 'CET-1CEST,M3.5.0,M10.5.0/3', -- Europe/Berlin
     ntp_servers = {
-        ${ntp_v6}
-        ${ntp_dns}
-    },
-    regdom = 'DE',
+${ntp_v6}${ntp_dns}    },
 
+    regdom = 'DE',
     wifi24 = {
         ssid = '${ssid}',
         channel = 1,
@@ -42,7 +40,8 @@
         enabled = true,
         backbone = {
             limit = 2,
-            peers = { ${gw_remotes}            },
+            peers = {
+${gw_remotes}            },
         },
     },
 
@@ -52,29 +51,26 @@
             stable = {
                 name = 'stable',
                 mirrors = {
-                    ${gw_mirrors_stable}
-                },
+${gw_mirrors_stable}                },
                 good_signatures = 3,
                 pubkeys = {
-${pubkeys}                },
+${signkeys}                },
             },
             beta = {
                 name = 'beta',
                 mirrors = {
-                    ${gw_mirrors_beta}
-                },
+${gw_mirrors_beta}                },
                 good_signatures = 2,
                 pubkeys = {
-${pubkeys}                },
+${signkeys}                },
             },
             experimental = {
                 name = 'experimental',
                 mirrors = {
-                    ${gw_mirrors_experimental}
-                },
+${gw_mirrors_experimental}                },
                 good_signatures = 1,
                 pubkeys = {
-${pubkeys}                },
+${signkeys}                },
             },
         },
     },
