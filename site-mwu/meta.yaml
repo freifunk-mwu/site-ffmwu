@@ -14,13 +14,11 @@ gateways:
     #     fastd:
     #         mz: ''
     #         wi: ''
-
     # 3:
     #     name: 'popcorn'
     #     fastd:
     #         mz: ''
     #         wi: ''
-
     5:
         name: 'hinterschinken'
         fastd:
@@ -44,6 +42,7 @@ formats:
     cdns: 'gate%02d.%s'
     ndns: '%s.%s'
     remote: |
+
         %s = {
             key = '%s',
             remotes = {'"%s" port 100%d'},
@@ -68,3 +67,15 @@ site:
     mail_keys:
         mz: 'keys@freifunk-mainz.de'
         wi: 'keys@freifunk-wiesbaden.de'
+
+build:
+    branches:
+        - stable
+        - beta
+        - experimental
+
+    pubkeys:
+        autobuild: '1951f045ea50ba3b839f1902ad389935256f09e589bdf8e6fd697e54143eef50'
+        spky: '3d1af00550dec5f401dbacef00d6d73947f52bf078ed6891a4cf4855e5787cf9'
+        ungenannter: 'b71588aad2dde605062cf0da82cf22bb0316cbb21e87cb2e19e155fe448afa99'
+        kokel: '784249da3c254db96df556540b2c6f32e64a23269e48f03e78f61d9be2d9398f'

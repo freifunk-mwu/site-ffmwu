@@ -52,12 +52,48 @@ class SiteConf(object):
             else:
                 kill_me('no valid expression found for %s' %(s))
 
-        # add common fields
         self.site.update({
             'hostname_prefix': netcode,
             'netnum': net,
             'netnum_hex': '%x' %(net)
         })
+
+        if not validate_keys(meta['gateways']):
+            kill_me('no gateways in meta found')
+
+        self.site.update({
+            'ntp_v6': str(),
+            'ntp_dns': str(),
+            'gw_remotes': str()
+        })
+
+        if not validate_keys(meta['build']):
+            kill_me('no build information found')
+
+        for gb in meta['build']['branches']:
+            self.site.update({
+                'gw_mirrors_%s' %(gb): str()
+            })
+
+        for gw_num in meta['gateways'].keys():
+            g = Gateway(net, gw_num)
+            self.site['ntp_v6'] += '\'%s\', ' %(g.v6())
+            self.site['ntp_dns'] += '\'%s\', ' %(g.ntp())
+            self.site['gw_remotes'] += g.remote()
+            for gb in meta['build']['branches']:
+                self.site['gw_mirrors_%s' %(gb)] += '\'http://[%s]/gluon/%s/%s/sysupgrade/\', ' %(g.v6(), netcode, gb)
+                self.site['gw_mirrors_%s' %(gb)] += '\'http://%s/gluon/%s/%s/sysupgrade/\', ' %(g.ndns(), netcode, gb)
+
+        if not validate_keys(meta['build']['pubkeys']):
+            kill_me('no pubkeys specified')
+
+        self.site.update({
+            'pubkeys': str()
+        })
+
+        for pk in meta['build']['pubkeys'].keys():
+            self.site['pubkeys'] += '\'%s\', -- %s\n' %(meta['build']['pubkeys'][pk], pk)
+
 
     def generate(self, sfile='templates/site.conf.template'):
         t = Template(read_file(sfile))
@@ -72,17 +108,4 @@ class SiteConf(object):
 
 if __name__ == '__main__':
     s = SiteConf(56)
-
     s.generate()
-
-    test = Gateway(56, 23)
-
-    print('ntp', test.ntp())
-    print('v4', test.v4())
-    print('v6', test.v6())
-    print('cdns', test.cdns())
-    print('ndns', test.ndns())
-    print('remote', test.remote())
-
-
-
