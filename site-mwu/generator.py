@@ -2,15 +2,16 @@
 from service import read_yaml, read_file, kill_me
 from string import Template
 
-class Gateway(object):
-    def __init__(self, net, gw, mfile='meta.yaml'):
-        meta = read_yaml(mfile)
+meta = read_yaml('meta.yaml')
 
-        self.net = net
-        self.gw = gw
+class Gateway(object):
+    def __init__(self, net, gw):
+
+        self.net = net # number of network
+        self.gw = gw   # number of gateway
 
         self.n = meta['networks'][net]
-        self.s = meta['networks'][net]['short']
+        self.netcode = meta['networks'][net]['short'] # short name of network
         self.g = meta['gateways'][gw]['name']
         self.r = meta['gateways'][gw]['fastd']
         self.f = meta['formats']
@@ -24,18 +25,17 @@ class Gateway(object):
     def v6(self):
         return self.f['v6'] %(self.net, self.net, self.gw)
 
-    def cdns(self, glob=True): # c = count
+    def cdns(self, glob=True): # c: _c_ounted
         return self.f['cdns'] %(self.gw, self.n['ext'] if glob else self.n['int'])
 
-    def ndns(self, glob=True): # n = named
+    def ndns(self, glob=True): # n: _n_amed
         return self.f['ndns'] %(self.g, self.n['ext'] if glob else self.n['int'])
 
     def remote(self):
-        return self.f['remote'] %(self.g, self.r[self.s], self.cdns(), self.net)
+        return self.f['remote'] %(self.g, self.r[self.netcode], self.cdns(), self.net)
 
 class SiteConf(object):
-    def __init__(self, net, mfile='meta.yaml'):
-        meta = read_yaml(mfile)
+    def __init__(self, net):
 
         self.site = dict()
         netcode = meta['networks'][net]['short']
@@ -49,19 +49,15 @@ class SiteConf(object):
         self.site.update({
             'hostname_prefix': netcode,
             'netnum': net,
-            'netnum_hex': '%x' %(net)
-        })
-
-        self.site.update({
+            'netnum_hex': '%x' %(net),
             'ntp_v6': str(),
             'ntp_dns': str(),
-            'gw_remotes': str()
+            'gw_remotes': str(),
+            'pubkeys': str(),
         })
 
-        for gb in meta['build']['branches']:
-            self.site.update({
-                'gw_mirrors_%s' %(gb): str()
-            })
+        for bb in meta['build']['branches']:
+            self.site.update({'gw_mirrors_%s' %(bb): str()})
 
         for gw_num in meta['gateways'].keys():
             g = Gateway(net, gw_num)
@@ -71,10 +67,6 @@ class SiteConf(object):
             for gb in meta['build']['branches']:
                 self.site['gw_mirrors_%s' %(gb)] += '\'http://[%s]/gluon/%s/%s/sysupgrade/\', ' %(g.v6(), netcode, gb)
                 self.site['gw_mirrors_%s' %(gb)] += '\'http://%s/gluon/%s/%s/sysupgrade/\', ' %(g.ndns(), netcode, gb)
-
-        self.site.update({
-            'pubkeys': str()
-        })
 
         for pk in meta['build']['pubkeys'].keys():
             self.site['pubkeys'] += '\'%s\', -- %s\n' %(meta['build']['pubkeys'][pk], pk)
