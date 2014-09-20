@@ -1,6 +1,5 @@
 
 from yaml import load
-from sys import exit
 from string import Template
 
 ###
@@ -14,92 +13,88 @@ def read_yaml(filename):
     content = read_file(filename)
     if content: return load(content)
 
-def kill_me(reason=None):
-    r = '' if not reason else '\n - %s' %(reason)
-    print('ERROR!!1!%s' %(r))
-    exit(23)
-
 meta = read_yaml('meta.yaml')
 
 ###
 # gateways
 
 class Gateway(object):
-    def __init__(self, net, gw):
+    def __init__(self, netnum, gwnum):
 
-        self.net = net # number of network
-        self.gw = gw   # number of gateway
+        self.netnum = netnum # number of network
+        self.gwnum = gwnum   # number of gateway
 
-        self.n = meta['networks'][net]
-        self.netcode = meta['networks'][net]['short'] # short name of network
-        self.g = meta['gateways'][gw]['name']
-        self.r = meta['gateways'][gw]['fastd']
+        self.netname = meta['networks'][netnum]['name'] # name of network
+        self.inturl = meta['networks'][netnum]['int']
+        self.exturl = meta['networks'][netnum]['ext']
+        self.gatename = meta['gateways'][gwnum]['name']
+        self.pubkey = meta['gateways'][gwnum]['pubkey']
         self.f = meta['formats']
 
     def ntp(self, glob=False):
-        return self.f['ntp'] %(self.gw, self.n['ext'] if glob else self.n['int'])
+        return self.f['ntp'] %(self.gwnum, self.exturl if glob else self.inturl)
 
     def v4(self):
-        return self.f['v4'] %(self.net, self.gw)
+        return self.f['v4'] %(self.netnum, self.gwnum)
 
     def v6(self):
-        return self.f['v6'] %(self.net, self.net, self.gw)
+        return self.f['v6'] %(self.netnum, self.netnum, self.gwnum)
 
     def cdns(self, glob=True): # c: _c_ounted
-        return self.f['cdns'] %(self.gw, self.n['ext'] if glob else self.n['int'])
+        return self.f['cdns'] %(self.gwnum, self.exturl if glob else self.inturl)
 
     def ndns(self, glob=True): # n: _n_amed
-        return self.f['ndns'] %(self.g, self.n['ext'] if glob else self.n['int'])
+        return self.f['ndns'] %(self.gatename, self.exturl if glob else self.inturl)
 
     def remote(self):
-        return self.f['remote'] %(self.g, self.r[self.netcode], self.cdns(), self.net)
+        return self.f['remote'] %(self.gatename, self.pubkey[self.netname], self.cdns(), self.netnum)
 
-class SiteConf(object):
-    def __init__(self, net):
+def populate(netnum):
+    site = dict()
 
-        self.site = dict()
-        netcode = meta['networks'][net]['short']
+    netname = meta['networks'][netnum]['name']
 
-        for s in meta['site']:
-            if netcode in meta['site'][s]:
-                self.site.update({s: meta['site'][s][netcode]})
-            else:
-                kill_me('no valid data found for %s' %(s))
+    for s in meta['site']:
+        if netname in meta['site'][s]:
+            site.update({s: meta['site'][s][netname]})
+        else:
+            print('wrong data for %s - %s not found' %(s, netname))
+            return False
 
-        self.site.update({
-            'hostname_prefix': netcode,
-            'netnum': net,
-            'netnum_hex': '%x' %(net),
-            'ntp_v6': str(),
-            'ntp_dns': str(),
-            'gw_remotes': str(),
-            'pubkeys': str(),
-        })
+    site.update({
+        'hostname_prefix': netname,
+        'netnum': netnum,
+        'netnum_hex': '%x' %(netnum),
+        'ntp_v6': str(),
+        'ntp_dns': str(),
+        'gw_remotes': str(),
+        'pubkeys': str(),
+    })
 
-        for bb in meta['build']['branches']:
-            self.site.update({'gw_mirrors_%s' %(bb): str()})
+    for bb in meta['build']['branches']:
+        site.update({'gw_mirrors_%s' %(bb): str()})
 
-        for gw_num in meta['gateways'].keys():
-            g = Gateway(net, gw_num)
-            self.site['ntp_v6'] += '\'%s\', ' %(g.v6())
-            self.site['ntp_dns'] += '\'%s\', ' %(g.ntp())
-            self.site['gw_remotes'] += g.remote()
-            for gb in meta['build']['branches']:
-                self.site['gw_mirrors_%s' %(gb)] += '\'http://[%s]/gluon/%s/%s/sysupgrade/\', ' %(g.v6(), netcode, gb)
-                self.site['gw_mirrors_%s' %(gb)] += '\'http://%s/gluon/%s/%s/sysupgrade/\', ' %(g.ndns(), netcode, gb)
+    for gwnum in meta['gateways'].keys():
+        g = Gateway(netnum, gwnum)
+        site['ntp_v6'] += '\'%s\', ' %(g.v6())
+        site['ntp_dns'] += '\'%s\', ' %(g.ntp())
+        site['gw_remotes'] += g.remote()
+        for gb in meta['build']['branches']:
+            site['gw_mirrors_%s' %(gb)] += '\'http://[%s]/gluon/%s/%s/sysupgrade/\', ' %(g.v6(), netname, gb)
+            site['gw_mirrors_%s' %(gb)] += '\'http://%s/gluon/%s/%s/sysupgrade/\', ' %(g.ndns(), netname, gb)
 
-        for pk in meta['build']['pubkeys'].keys():
-            self.site['pubkeys'] += '\'%s\', -- %s\n' %(meta['build']['pubkeys'][pk], pk)
+    for pk in meta['build']['pubkeys'].keys():
+        site['pubkeys'] += '\'%s\', -- %s\n' %(meta['build']['pubkeys'][pk], pk)
+
+    return site
 
 
-    def generate(self, sfile='templates/site.conf.template'):
-        t = Template(read_file(sfile))
-
-        siteconf = t.substitute(self.site)
-
+def generate(netname, sfile='templates/site.conf.template'):
+    netnum = next((num for num, net in meta['networks'].items() if net['name'] == netname), None)
+    site = populate(netnum)
+    if site:
+        siteconf = Template(read_file(sfile)).substitute(site)
         print(siteconf)
 
-
 if __name__ == '__main__':
-    s = SiteConf(56)
-    s.generate()
+    generate('wi')
