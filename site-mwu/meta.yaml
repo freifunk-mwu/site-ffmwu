@@ -10,9 +10,17 @@ networks:
 
 gateways:
     # 2:
-    #    name: 'hartwurstsuppe'
+    #     name: 'hartwurstsuppe'
+    #     fastd:
+    #         mz: ''
+    #         wi: ''
+
     # 3:
     #     name: 'popcorn'
+    #     fastd:
+    #         mz: ''
+    #         wi: ''
+
     5:
         name: 'hinterschinken'
         fastd:

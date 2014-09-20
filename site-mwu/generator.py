@@ -49,12 +49,10 @@ class SiteConf(object):
         for s in meta['site']:
             if netcode in meta['site'][s]:
                 self.site.update({s: meta['site'][s][netcode]})
-            elif isinstance(meta['site'][s], str):
-                self.site.update({s: meta['site'][s]})
             else:
                 kill_me('no valid expression found for %s' %(s))
 
-        # add "special" fields
+        # add common fields
         self.site.update({
             'hostname_prefix': netcode,
             'netnum': net,
