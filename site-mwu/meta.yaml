@@ -40,3 +40,23 @@ formats:
             key = '%s',
             remotes = {'"%s" port 100%d'},
         },
+
+site:
+    site_name:
+        mz: 'Freifunk Mainz'
+        wi: 'Freifunk Wiesbaden'
+    site_code:
+        mz: 'ffmz'
+        wi: 'ffwi'
+    ssid:
+        mz: 'mainz.freifunk.net'
+        wi: 'wiesbaden.freifunk.net'
+    mesh_ssid:
+        mz: '02:04:08:16:32:64'
+        wi: '64:32:16:08:04:02'
+    mesh_bssid:
+        mz: '02:04:08:16:32:64'
+        wi: '64:32:16:08:04:02'
+    mail_keys:
+        mz: 'keys@freifunk-mainz.de'
+        wi: 'keys@freifunk-wiesbaden.de'

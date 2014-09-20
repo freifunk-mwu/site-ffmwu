@@ -1,5 +1,6 @@
 
-from service import read_yaml, validate_keys, kill_me
+from service import read_yaml, read_file, validate_keys, kill_me
+from string import Template
 
 class Gateway(object):
     def __init__(self, net, gw, mfile='meta.yaml'):
@@ -35,7 +36,47 @@ class Gateway(object):
     def remote(self):
         return self.f['remote'] %(self.g, self.r[self.s], self.cdns(), self.net)
 
+class SiteConf(object):
+    def __init__(self, net, mfile='meta.yaml'):
+        meta = read_yaml(mfile)
+
+        if not validate_keys(meta, ['networks', 'site']) or not validate_keys(meta['networks']) or not validate_keys(meta['site']):
+            kill_me('insufficient yaml file')
+
+        self.site = dict()
+        netcode = meta['networks'][net]['short']
+
+        for s in meta['site']:
+            if netcode in meta['site'][s]:
+                self.site.update({s: meta['site'][s][netcode]})
+            elif isinstance(meta['site'][s], str):
+                self.site.update({s: meta['site'][s]})
+            else:
+                kill_me('no valid expression found for %s' %(s))
+
+        # add "special" fields
+        self.site.update({
+            'hostname_prefix': netcode,
+            'netnum': net,
+            'netnum_hex': '%x' %(net)
+        })
+
+    def generate(self, sfile='templates/site.conf.template'):
+        t = Template(read_file(sfile))
+
+        if not validate_keys(self.site):
+            kill_me('invalid site!')
+
+        siteconf = t.substitute(self.site)
+
+        print(siteconf)
+
+
 if __name__ == '__main__':
+    s = SiteConf(56)
+
+    s.generate()
+
     test = Gateway(56, 23)
 
     print('ntp', test.ntp())
