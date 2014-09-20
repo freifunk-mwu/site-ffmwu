@@ -1,8 +1,28 @@
 
-from service import read_yaml, read_file, kill_me
+from yaml import load
+from sys import exit
 from string import Template
 
+###
+# service functions
+
+def read_file(filename):
+    with open(filename, 'r') as f:
+        return f.read()
+
+def read_yaml(filename):
+    content = read_file(filename)
+    if content: return load(content)
+
+def kill_me(reason=None):
+    r = '' if not reason else '\n - %s' %(reason)
+    print('ERROR!!1!%s' %(r))
+    exit(23)
+
 meta = read_yaml('meta.yaml')
+
+###
+# gateways
 
 class Gateway(object):
     def __init__(self, net, gw):
