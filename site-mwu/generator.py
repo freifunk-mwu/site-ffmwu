@@ -1,13 +1,10 @@
 
-from service import read_yaml, read_file, validate_keys, kill_me
+from service import read_yaml, read_file, kill_me
 from string import Template
 
 class Gateway(object):
     def __init__(self, net, gw, mfile='meta.yaml'):
         meta = read_yaml(mfile)
-
-        if not validate_keys(meta, ['networks', 'gateways', 'formats']) or not validate_keys(meta['networks']) or not validate_keys(meta['gateways']) or not validate_keys(meta['formats']):
-            kill_me('insufficient yaml file')
 
         self.net = net
         self.gw = gw
@@ -40,9 +37,6 @@ class SiteConf(object):
     def __init__(self, net, mfile='meta.yaml'):
         meta = read_yaml(mfile)
 
-        if not validate_keys(meta, ['networks', 'site']) or not validate_keys(meta['networks']) or not validate_keys(meta['site']):
-            kill_me('insufficient yaml file')
-
         self.site = dict()
         netcode = meta['networks'][net]['short']
 
@@ -50,7 +44,7 @@ class SiteConf(object):
             if netcode in meta['site'][s]:
                 self.site.update({s: meta['site'][s][netcode]})
             else:
-                kill_me('no valid expression found for %s' %(s))
+                kill_me('no valid data found for %s' %(s))
 
         self.site.update({
             'hostname_prefix': netcode,
@@ -58,17 +52,11 @@ class SiteConf(object):
             'netnum_hex': '%x' %(net)
         })
 
-        if not validate_keys(meta['gateways']):
-            kill_me('no gateways in meta found')
-
         self.site.update({
             'ntp_v6': str(),
             'ntp_dns': str(),
             'gw_remotes': str()
         })
-
-        if not validate_keys(meta['build']):
-            kill_me('no build information found')
 
         for gb in meta['build']['branches']:
             self.site.update({
@@ -84,9 +72,6 @@ class SiteConf(object):
                 self.site['gw_mirrors_%s' %(gb)] += '\'http://[%s]/gluon/%s/%s/sysupgrade/\', ' %(g.v6(), netcode, gb)
                 self.site['gw_mirrors_%s' %(gb)] += '\'http://%s/gluon/%s/%s/sysupgrade/\', ' %(g.ndns(), netcode, gb)
 
-        if not validate_keys(meta['build']['pubkeys']):
-            kill_me('no pubkeys specified')
-
         self.site.update({
             'pubkeys': str()
         })
@@ -97,9 +82,6 @@ class SiteConf(object):
 
     def generate(self, sfile='templates/site.conf.template'):
         t = Template(read_file(sfile))
-
-        if not validate_keys(self.site):
-            kill_me('invalid site!')
 
         siteconf = t.substitute(self.site)
 
