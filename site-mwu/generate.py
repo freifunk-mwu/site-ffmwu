@@ -114,13 +114,14 @@ def populate(netname):
 def generate(netname):
     site = populate(netname)
     if site:
-        return Template(read_file(SITETEMPLATE)).substitute(site)
+        siteconf = Template(read_file(SITETEMPLATE)).substitute(site)
+        write_file(SITECONF, siteconf)
+
 
 
 if __name__ == '__main__':
-    parser = ArgumentParser()
-    for net in meta['networks'].keys():
-        parser.add_argument('-%s' %(net[0]), '--%s' %(net), action='store_true', help='generate site for %s' %(meta['site']['site_name'][net]))
+    parser = ArgumentParser(prog='site-generator', description='generate similar sites for similar gluon builds for multi mesh gateways like those at freifunk-mwu', epilog='your ad here!', add_help=True)
+    parser.add_argument('community', action='store', choices=meta['networks'].keys(), help='generate site for community')
 
     res = parser.parse_args()
-    print(generate('wi'))
+    generate(res.community)
