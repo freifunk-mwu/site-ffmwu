@@ -4,7 +4,7 @@ from yaml import load
 from string import Template
 
 METAFILE = 'meta.yaml'
-SITETEMPLATE = 'templates/site.conf.template'
+SITETEMPLATE = 'site.conf.tpl'
 SITECONF = 'site.conf'
 
 ###
