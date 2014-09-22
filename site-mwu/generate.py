@@ -4,8 +4,9 @@ from yaml import load
 from string import Template
 
 METAFILE = 'meta.yaml'
-SITETEMPLATE = 'site.conf.tpl'
-SITECONF = 'site.conf'
+SITE=('site.conf.tpl', 'site.conf')
+MAKEFILE=('site.mk.tpl', 'site.mk')
+MODULES=('modules.tpl', 'modules')
 
 ###
 # service functions
@@ -16,7 +17,8 @@ def read_file(filename):
 
 def write_file(filename, content):
     with open(filename, 'w') as f:
-        return f.write(content)
+        bytes = f.write(content)
+        print('written: %s (%d bytes)' %(filename, bytes))
 
 def read_yaml(filename):
     content = read_file(filename)
@@ -92,6 +94,12 @@ def populate(netname):
         'ntp_dns': str(),
         'gw_remotes': str(),
         'signkeys': str(),
+        'batman_pkg': meta['make']['batman_pkg'],
+        'modules_name': meta['modules']['name'],
+        'modules_name_cap': str.upper(meta['modules']['name']),
+        'modules_remote': meta['modules']['remote'],
+        'modules_branch': meta['modules']['branch'][netname],
+        'modules_commit': meta['modules']['commit'][netname]
     })
 
     for bb in meta['build']['branches']:
@@ -111,17 +119,22 @@ def populate(netname):
 
     return site
 
-def generate(netname):
+def generate(netname, nomodules=False):
     site = populate(netname)
     if site:
-        siteconf = Template(read_file(SITETEMPLATE)).substitute(site)
-        write_file(SITECONF, siteconf)
+        siteconf = Template(read_file(SITE[0])).substitute(site)
+        write_file(SITE[-1], siteconf)
 
+        makefile = Template(read_file(MAKEFILE[0])).substitute(site)
+        write_file(MAKEFILE[-1], makefile)
 
+        modules = Template(read_file(MODULES[0])).substitute(site)
+        if not nomodules: write_file(MODULES[-1], modules)
 
 if __name__ == '__main__':
     parser = ArgumentParser(prog='site-generator', description='generate similar sites for similar gluon builds for multi mesh gateways like those at freifunk-mwu', epilog='your ad here!', add_help=True)
     parser.add_argument('community', action='store', choices=meta['networks'].keys(), help='generate site for community')
+    parser.add_argument('--nomodules', action='store_true', help='prevent modules file generation')
 
     res = parser.parse_args()
-    generate(res.community)
+    generate(res.community, nomodules=res.nomodules)
