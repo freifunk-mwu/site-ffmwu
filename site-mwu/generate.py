@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 
 from argparse import ArgumentParser
 from yaml import load
@@ -82,6 +83,8 @@ def populate(netname):
     for s in meta['site']:
         if netname in meta['site'][s]:
             site.update({s: meta['site'][s][netname]})
+        elif isinstance(meta['site'][s], str):
+            site.update({s: meta['site'][s]})
         else:
             print('wrong data for %s - %s not found' %(s, netname))
             return False
@@ -94,12 +97,7 @@ def populate(netname):
         'ntp_dns': str(),
         'gw_remotes': str(),
         'signkeys': str(),
-        'batman_pkg': meta['make']['batman_pkg'],
-        'modules_name': meta['modules']['name'],
-        'modules_name_cap': str.upper(meta['modules']['name']),
-        'modules_remote': meta['modules']['remote'],
-        'modules_branch': meta['modules']['branch'][netname],
-        'modules_commit': meta['modules']['commit'][netname]
+        'modules_name_cap': str.upper(site['modules_name']),
     })
 
     for bb in meta['build']['branches']:

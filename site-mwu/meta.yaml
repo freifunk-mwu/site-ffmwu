@@ -48,6 +48,8 @@ formats:
         },
 
 site:
+
+    # site.conf
     site_name:
         mz: 'Freifunk Mainz'
         wi: 'Freifunk Wiesbaden'
@@ -67,6 +69,21 @@ site:
         mz: 'keys@freifunk-mainz.de'
         wi: 'keys@freifunk-wiesbaden.de'
 
+    # modules
+    modules_name: 'plus'
+    modules_remote: 'git://github.com/freifunk-mwu/gluon-plus.git'
+    modules_branch:
+        mz: 'mz'
+        wi: 'wi'
+    modules_commit:
+        mz: '........................................'
+        wi: '........................................'
+
+    # site.mk
+    batman_pkg: 'gluon-mesh-batman-adv-14'
+    gluon_release_num: '0.1'
+    gluon_priority: '0.2'
+
 build:
     branches: ['stable', 'beta', 'experimental']
     signkeys:
@@ -74,17 +91,3 @@ build:
         spky:        '3d1af00550dec5f401dbacef00d6d73947f52bf078ed6891a4cf4855e5787cf9'
         ungenannter: 'b71588aad2dde605062cf0da82cf22bb0316cbb21e87cb2e19e155fe448afa99'
         kokel:       '784249da3c254db96df556540b2c6f32e64a23269e48f03e78f61d9be2d9398f'
-
-make:
-    batman_pkg: 'gluon-mesh-batman-adv-14'
-
-modules:
-    name: 'plus'
-    remote: 'git://github.com/freifunk-mwu/gluon-plus.git'
-    branch:
-        mz: 'mz'
-        wi: 'wi'
-    commit:
-        mz: '........................................'
-        wi: '........................................'
-
