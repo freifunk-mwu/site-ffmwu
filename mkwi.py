@@ -58,9 +58,9 @@ SITEREPLACEMENTS = {
     # Lotuswurzel
     "'http://[fd37:b4dc:4b1e::a25:17]/": "'http://[fd56:b4dc:4b1e::a38:17]/",
 
-    "/mz/stable/": "/wi/stable/",
-    "/mz/beta/": "/wi/beta/",
-    "/mz/nightly/": "/wi/nightly/",
+    "/mainz/stable/": "/wiesbaden/stable/",
+    "/mainz/beta/": "/wiesbaden/beta/",
+    "/mainz/experimental/": "/wiesbaden/experimental/",
 
     ## config_mode
     "keys@freifunk-mainz.de": "keys@freifunk-wiesbaden.de",
