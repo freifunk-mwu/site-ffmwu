@@ -26,8 +26,8 @@ SITEREPLACEMENTS = {
 
 
     ## ntp_servers
-    "'7.ntp.ffmz.org', 'fd37:b4dc:4b1e::a25:7',": "'7.ntp.ffwi.org', 'fd56:b4dc:4b1e::a38:7',",
-    "'23.ntp.ffmz.org', 'fd37:b4dc:4b1e::a25:17',": "'23.ntp.ffwi.org', 'fd56:b4dc:4b1e::a38:17',",
+    "'fd37:b4dc:4b1e::a25:7',": "'fd56:b4dc:4b1e::a38:7',",
+    "'fd37:b4dc:4b1e::a25:17',": "'fd56:b4dc:4b1e::a38:17',",
 
 
     ## wifi
