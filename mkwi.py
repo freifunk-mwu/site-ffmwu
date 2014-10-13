@@ -45,11 +45,11 @@ SITEREPLACEMENTS = {
     ## gateways
     # Spinat
     "key = '7ebe0b5e6d15b1f8a525ba40f8289cbe60d99b54d15a2f89c5cf7448d25f2df1'": "key = '5c7aeb92ffc61c77564191eca7838f875fb4e75164c48bcc506b27e0a24696df'",
-    "'\"gate07.freifunk-wiesbaden.de\" port 10037'": "'\"gate07.freifunk-wiesbaden.de\" port 10056'",
+    "'\"gate07.freifunk-mainz.de\" port 10037'": "'\"gate07.freifunk-wiesbaden.de\" port 10056'",
 
     # Lotuswurzel
     "key = '660d502abd1eb73822b942f8ca86554197f95fa55cb92cde943ef8b8d3a57ebf'": "key = '1112e095beea32ecd0ca32f8b88803d4cb9ed1867c3859a20eb1b5c2927cea64'",
-    "'\"gate23.freifunk-wiesbaden.de\" port 10037'": "'\"gate23.freifunk-wiesbaden.de\" port 10056'",
+    "'\"gate23.freifunk-mainz.de\" port 10037'": "'\"gate23.freifunk-wiesbaden.de\" port 10056'",
 
 
     ## mirrors
