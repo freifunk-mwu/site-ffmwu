@@ -48,14 +48,14 @@ class Gateway(object):
         self.netname = netname
         self.gwnum = gwnum
         self.netnum = meta['networks'][netname]['num']
-        self.inturl = meta['networks'][netname]['int']
+        self.srdurl = meta['networks'][netname]['srd']
         self.exturl = meta['networks'][netname]['ext']
         self.gatename = meta['gateways'][gwnum]['name']
         self.pubkey = meta['gateways'][gwnum]['pubkey']
         self.f = meta['formats']
 
-    def ntp(self, glob=False):
-        return self.f['ntp'] %(self.gwnum, self.exturl if glob else self.inturl)
+    def ntp(self, shared=False):
+        return self.f['ntp'] %(self.gwnum, self.srdurl if shared else self.exturl)
 
     def v4(self):
         return self.f['v4'] %(self.netnum, self.gwnum)
@@ -63,11 +63,11 @@ class Gateway(object):
     def v6(self):
         return self.f['v6'] %(self.netnum, self.netnum, self.gwnum)
 
-    def cdns(self, glob=True): # c: _c_ounted
-        return self.f['cdns'] %(self.gwnum, self.exturl if glob else self.inturl)
+    def cdns(self, shared=True): # c: _c_ounted
+        return self.f['cdns'] %(self.gwnum, self.srdurl if shared else self.exturl)
 
-    def ndns(self, glob=True): # n: _n_amed
-        return self.f['ndns'] %(self.gatename, self.exturl if glob else self.inturl)
+    def ndns(self, shared=True): # n: _n_amed
+        return self.f['ndns'] %(self.gatename, self.srdurl if shared else self.exturl)
 
     def remote(self):
         return self.f['remote'] %(self.gatename, self.pubkey[self.netname], self.cdns(), self.netnum)
@@ -79,6 +79,7 @@ def populate(netname):
     site = dict()
 
     netnum = meta['networks'][netname]['num']
+    netlng = meta['networks'][netname]['lng']
 
     for s in meta['site']:
         if netname in meta['site'][s]:
@@ -109,8 +110,8 @@ def populate(netname):
         site['ntp_dns'] += lua_listelem(g.ntp(), comment='%s (DNS)' %(g.name()), indent=2)
         site['gw_remotes'] += prepend_witespace(g.remote(), 4)
         for gb in meta['build']['branches']:
-            site['gw_mirrors_%s' %(gb)] += lua_listelem('http://[%s]/gluon/%s/%s/sysupgrade/' %(g.v6(), netname, gb), comment='%s (IPv6)' %(g.name()), indent=5)
-            site['gw_mirrors_%s' %(gb)] += lua_listelem('http://%s/gluon/%s/%s/sysupgrade/' %(g.ndns(), netname, gb), comment='%s (DNS)' %(g.name()), indent=5)
+            site['gw_mirrors_%s' %(gb)] += lua_listelem('http://[%s]/firmware/%s/%s/sysupgrade' %(g.v6(), netlng, gb), comment='%s (IPv6)' %(g.name()), indent=5)
+            site['gw_mirrors_%s' %(gb)] += lua_listelem('http://%s/firmware/%s/%s/sysupgrade' %(g.ndns(), netlng, gb), comment='%s (DNS)' %(g.name()), indent=5)
 
     for pk in meta['build']['signkeys'].keys():
         site['signkeys'] += lua_listelem(meta['build']['signkeys'][pk], comment=pk, indent=5)

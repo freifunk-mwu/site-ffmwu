@@ -8,12 +8,12 @@
 
     timezone = 'CET-1CEST,M3.5.0,M10.5.0/3', -- Europe/Berlin
     ntp_servers = {
-${ntp_v6}${ntp_dns}    },
+${ntp_v6}    },
 
     regdom = 'DE',
     wifi24 = {
         ssid = '${ssid}',
-        channel = 1,
+        channel = 6,
         htmode = 'HT40+',
         mesh_ssid = '${mesh_ssid}',
         mesh_bssid = '${mesh_bssid}',

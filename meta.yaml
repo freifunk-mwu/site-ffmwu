@@ -1,19 +1,16 @@
 networks:
     mz:
         ext: 'freifunk-mainz.de'
-        int: 'ffmz.org'
+        srd: 'freifunk-mwu.de'
         num: 37
+        lng: 'mainz'
     wi:
         ext: 'freifunk-wiesbaden.de'
-        int: 'ffwi.org'
+        srd: 'freifunk-mwu.de'
         num: 56
+        lng: 'wiesbaden'
 
 gateways:
-    # 2:
-    #     name: 'hartwurstsuppe'
-    #     pubkey:
-    #         mz: '................................................................'
-    #         wi: '................................................................'
     # 3:
     #     name: 'popcorn'
     #     pubkey:
