@@ -1,0 +1,90 @@
+networks:
+    mz:
+        ext: 'freifunk-mainz.de'
+        srd: 'freifunk-mwu.de'
+        num: 37
+        lng: 'mainz'
+    wi:
+        ext: 'freifunk-wiesbaden.de'
+        srd: 'freifunk-mwu.de'
+        num: 56
+        lng: 'wiesbaden'
+
+gateways:
+    # 3:
+    #     name: 'popcorn'
+    #     pubkey:
+    #         mz: '................................................................'
+    #         wi: '................................................................'
+    5:
+        name: 'hinterschinken'
+        pubkey:
+            mz: 'f885d213b8f61f33d501a366ce36bc0a1baeb48da83294f41a63248cdc0ace36'
+            wi: 'f222d6fd564b959708a69e0525abf9c41d1add22419d8eeb7faf95b2a5900a63'
+    7:
+        name: 'spinat'
+        pubkey:
+            mz: '7ebe0b5e6d15b1f8a525ba40f8289cbe60d99b54d15a2f89c5cf7448d25f2df1'
+            wi: '5c7aeb92ffc61c77564191eca7838f875fb4e75164c48bcc506b27e0a24696df'
+    23:
+        name: 'lotuswurzel'
+        pubkey:
+            mz: '660d502abd1eb73822b942f8ca86554197f95fa55cb92cde943ef8b8d3a57ebf'
+            wi: '1112e095beea32ecd0ca32f8b88803d4cb9ed1867c3859a20eb1b5c2927cea64'
+
+formats:
+    ntp:  '%d.ntp.%s'
+    v4:   '10.%d.0.%d'
+    v6:   'fd%d:b4dc:4b1e::a%x:%x'
+    cdns: 'gate%02d.%s'
+    ndns: '%s.%s'
+    remote: |
+        %s = {
+            key = '%s',
+            remotes = {'"%s" port 100%d'},
+        },
+
+site:
+
+    # site.conf
+    site_name:
+        mz: 'Freifunk Mainz'
+        wi: 'Freifunk Wiesbaden'
+    site_code:
+        mz: 'ffmz'
+        wi: 'ffwi'
+    ssid:
+        mz: 'mainz.freifunk.net'
+        wi: 'wiesbaden.freifunk.net'
+    mesh_ssid:
+        mz: '02:04:08:16:32:64'
+        wi: '64:32:16:08:04:02'
+    mesh_bssid:
+        mz: '02:04:08:16:32:64'
+        wi: '64:32:16:08:04:02'
+    mail_keys:
+        mz: 'keys@freifunk-mainz.de'
+        wi: 'keys@freifunk-wiesbaden.de'
+
+    # modules
+    modules_name: 'plus'
+    modules_remote: 'git://github.com/freifunk-mwu/gluon-plus.git'
+    modules_branch:
+        mz: 'mz'
+        wi: 'wi'
+    modules_commit:
+        mz: '........................................'
+        wi: '........................................'
+
+    # site.mk
+    batman_pkg: 'gluon-mesh-batman-adv-14'
+    gluon_release_num: '0.1'
+    gluon_priority: '0.2'
+
+build:
+    branches: ['stable', 'beta', 'experimental']
+    signkeys:
+        autobuild:   '1951f045ea50ba3b839f1902ad389935256f09e589bdf8e6fd697e54143eef50'
+        spky:        '3d1af00550dec5f401dbacef00d6d73947f52bf078ed6891a4cf4855e5787cf9'
+        ungenannter: 'b71588aad2dde605062cf0da82cf22bb0316cbb21e87cb2e19e155fe448afa99'
+        kokel:       '784249da3c254db96df556540b2c6f32e64a23269e48f03e78f61d9be2d9398f'

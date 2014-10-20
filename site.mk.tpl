@@ -1,5 +1,5 @@
 GLUON_SITE_PACKAGES := \
-	gluon-mesh-batman-adv-15 \
+	${batman_pkg} \
 	gluon-alfred \
 	gluon-announced \
 	gluon-autoupdater \
@@ -22,10 +22,10 @@ GLUON_SITE_PACKAGES := \
 	iptables \
 	haveged
 
-DEFAULT_GLUON_RELEASE := 0.1+0-$(shell date '+%Y.%m.%d-%H.%M')-g.$(shell git -C $(GLUONDIR) log --pretty=format:'%h' -n 1)-s.$(shell git -C $(GLUONDIR)/site log --pretty=format:'%h' -n 1)
+DEFAULT_GLUON_RELEASE := ${gluon_release_num}-$$(shell date '+%Y%m%d')
 
 # Allow overriding the release number from the command line
-GLUON_RELEASE ?= $(DEFAULT_GLUON_RELEASE)
+GLUON_RELEASE ?= $$(DEFAULT_GLUON_RELEASE)
 
 # Default priority for updates.
-GLUON_PRIORITY ?= 0.1
+GLUON_PRIORITY ?= ${gluon_priority}
