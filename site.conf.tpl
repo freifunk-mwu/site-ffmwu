@@ -2,6 +2,7 @@
     hostname_prefix = '${hostname_prefix}',
     site_name = '${site_name}',
     site_code = '${site_code}',
+    opkg_repo = '${opkg_repo}',
 
     prefix4 = '10.${netnum}.0.0/18',
     prefix6 = 'fd${netnum}:b4dc:4b1e::/64',
