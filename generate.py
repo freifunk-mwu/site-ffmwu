@@ -111,7 +111,7 @@ def populate(netname):
         site['gw_remotes'] += prepend_witespace(g.remote(), 4)
         for gb in meta['build']['branches']:
             site['gw_mirrors_%s' %(gb)] += lua_listelem('http://[%s]/firmware/%s/%s/sysupgrade' %(g.v6(), netlng, gb), comment='%s (IPv6)' %(g.name()), indent=5)
-            site['gw_mirrors_%s' %(gb)] += lua_listelem('http://%s/firmware/%s/%s/sysupgrade' %(g.ndns(), netlng, gb), comment='%s (DNS)' %(g.name()), indent=5)
+            site['gw_mirrors_%s' %(gb)] += lua_listelem('http://firmware.ff%s.org/%s/sysupgrade' %(g.netname, gb), comment='%s (DNS)' %(g.name()), indent=5)
 
     for pk in meta['build']['signkeys'].keys():
         site['signkeys'] += lua_listelem(meta['build']['signkeys'][pk], comment=pk, indent=5)
