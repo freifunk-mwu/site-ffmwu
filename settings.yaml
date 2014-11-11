@@ -58,9 +58,14 @@ site:
     mesh_bssid:
         mz: '02:04:08:16:32:64'
         wi: '64:32:16:08:04:02'
-    mail_keys:
+
+    descr_mailkeys:
         mz: 'keys@freifunk-mainz.de'
         wi: 'keys@freifunk-wiesbaden.de'
+
+    descr_url:
+        mz: 'freifunk-mainz.de'
+        wi: 'freifunk-wiesbaden.de'
 
     # modules
     modules_name: 'plus'

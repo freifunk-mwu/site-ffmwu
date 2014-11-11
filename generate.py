@@ -99,6 +99,7 @@ def populate(netname):
         'gw_remotes': str(),
         'signkeys': str(),
         'modules_name_cap': str.upper(site['modules_name']),
+        'city': str.capitalize(netlng)
     })
 
     for bb in s['build']['branches']:
