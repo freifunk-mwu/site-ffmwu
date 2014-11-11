@@ -98,8 +98,8 @@ Dies ist der öffentliche Schlüssel deines Freifunk-Knotens. Erst nachdem er au
 den Servern des Mainzer bzw. Wiesbadener Freifunk-Projektes eingetragen wurde
 kann sich dein Knoten mit den Mesh-VPNs in Mainz und Wiesbaden verbinden.
 Bitte schicke dazu diesen Schlüssel und den Namen deines Knotens (<em><%=hostname%></em>)
-an <a href="mailto:${mail_keys}?&amp;subject=Neuer%20Freifunk-Knoten%3A%20<%=hostname%>&amp;body=Name%3A%20<%=hostname%>%0D%0AKey%3A%20<%=pubkey%>%0D%0AMAC%3A%20<%=sysconfig.primary_mac%>%0D%0A">${mail_keys}</a>.
-<small>Ein Klick auf den E-Mail Link müsste&trade; dein E-Mail Programm
+an <a href="mailto:${mail_keys}?&amp;subject=Neuer%20Freifunk-Knoten%3A%20<%=hostname%>&amp;body=Name%3A%20<%=hostname%>%0D%0AKey%3A%20<%=pubkey%>%0D%0AMAC%3A%20<%=sysconfig.primary_mac%>%0D%0A">${mail_keys}</a>.<br />
+<small>Ein Klick auf den E-Mail Link sollte&trade; dein E-Mail Programm
 öffnen und alle benötigten Informationen in eine neue Mail einfügen.</small>
 ]],
         msg_reboot = [[
