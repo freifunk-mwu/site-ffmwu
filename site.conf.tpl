@@ -36,7 +36,7 @@ ${ntp_v6}    },
     },
 
     fastd_mesh_vpn = {
-        methods = {'salsa2012+gmac'},
+        methods = {'salsa2012+umac'},
         mtu = 1406,
         enabled = true,
         backbone = {
