@@ -9,7 +9,7 @@
 
     timezone = 'CET-1CEST,M3.5.0,M10.5.0/3', -- Europe/Berlin
     ntp_servers = {
-${ntp_v6}    },
+${ntp_dns}    },
 
     regdom = 'DE',
     wifi24 = {

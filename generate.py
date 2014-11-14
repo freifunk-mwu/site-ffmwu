@@ -113,7 +113,7 @@ def populate(netname):
         for gb in sorted(s['build']['branches']):
             combined = lua_listelem('http://firmware.%s/%s/sysupgrade' %(s['networks'][netname]['int'], gb), comment='combined (DNS)', indent=5)
             site['gw_mirrors_%s' %(gb)] += combined if not combined in site['gw_mirrors_%s' %(gb)] else ''
-            site['gw_mirrors_%s' %(gb)] += lua_listelem('http://[%s]/firmware/%s/%s/sysupgrade' %(g.v6(), netlng, gb), comment='%s (IPv6)' %(g.name()), indent=5)
+#            site['gw_mirrors_%s' %(gb)] += lua_listelem('http://[%s]/firmware/%s/%s/sysupgrade' %(g.v6(), netlng, gb), comment='%s (IPv6)' %(g.name()), indent=5)
 
     for pk in sorted(s['build']['signkeys'].keys()):
         site['signkeys'] += lua_listelem(s['build']['signkeys'][pk], comment=pk, indent=5)
