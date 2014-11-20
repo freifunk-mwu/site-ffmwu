@@ -14,18 +14,18 @@ gateways:
     5:
         name: 'hinterschinken'
         pubkey:
-            mz: 'f885d213b8f61f33d501a366ce36bc0a1baeb48da83294f41a63248cdc0ace36'
-            wi: 'f222d6fd564b959708a69e0525abf9c41d1add22419d8eeb7faf95b2a5900a63'
+            mz: 'aad6b746134a657e31bc4e45154e1dcf0429e5e3b6bd6ba5ab0821c55dddb043'
+            wi: 'a539f07c356f8865f4bac00150292bb067da9eba1501782a7dc86b4b3b829858'
     7:
         name: 'spinat'
         pubkey:
-            mz: '7ebe0b5e6d15b1f8a525ba40f8289cbe60d99b54d15a2f89c5cf7448d25f2df1'
-            wi: '5c7aeb92ffc61c77564191eca7838f875fb4e75164c48bcc506b27e0a24696df'
+            mz: '9e59a202eccabe1aac37d8000e762ecb05e17b3e521f7a54ab693af66e4adfb7'
+            wi: '9de492aad55c91d2871ab2d277f612eb31011eb242830e421c2e7478c1e11406'
     23:
         name: 'lotuswurzel'
         pubkey:
-            mz: '660d502abd1eb73822b942f8ca86554197f95fa55cb92cde943ef8b8d3a57ebf'
-            wi: '1112e095beea32ecd0ca32f8b88803d4cb9ed1867c3859a20eb1b5c2927cea64'
+            mz: 'd73479cc97a87ffd4b256a873e505f3264408ed077b248358c52e8dc82bbfc07'
+            wi: '45c22f99699ea2cea22eb00c024a32f4d04bbee649138a4df6ee2090e2736ca8'
 
 formats:
     ntp:  '%d.ntp.%s'
