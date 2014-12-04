@@ -97,7 +97,8 @@ Fülle das folgende Formular deinen Vorstellung entsprechend aus und sende es ab
 Dies ist der öffentliche Schlüssel deines Freifunk-Knotens. Erst nachdem er auf den Servern des ${city}er Freifunk-Projektes eingetragen wurde kann sich dein Knoten mit den Mesh-VPNs in ${city} verbinden.<br />
 Bitte schicke dazu diesen Schlüssel und den Namen deines Knotens (<em><%=hostname%></em>)
 an <a href="mailto:${descr_mailkeys}?&amp;subject=Neuer%20Freifunk-Knoten%3A%20<%=hostname%>&amp;body=Name%3A%20<%=hostname%>%0D%0AKey%3A%20<%=pubkey%>%0D%0AMAC%3A%20<%=sysconfig.primary_mac%>%0D%0A">${descr_mailkeys}</a>.<br />
-<small>Ein Klick auf den E-Mail Link sollte&trade; dein E-Mail Programm öffnen und alle benötigten Informationen in eine neue Mail einfügen.</small>
+<small>Ein Klick auf den E-Mail Link sollte&trade; dein E-Mail Programm öffnen und alle benötigten Informationen in eine neue Mail einfügen.</small><br />
+Sei so nett, und schreib noch ein zwei Zeilen dazu - kommentarlos einen Key vor die Nase geknallt zu bekommen ist ein bisschen schade, und motiviert uns nicht unbedingt den Key auch sofort einzutragen. Schreib uns wie das Wetter gerade ist, was deine Katze so treibt, oder warum du Freifunker bist. Egal was, Hauptsache irgendwas, was uns motiviert deinen Key auch schnell einzutragen :)<br />
 ]],
         msg_reboot = [[
 Dein Knoten startet gerade neu und wird anschließend versuchen, sich mit anderen Freifunk-Knoten in seiner Nähe zu verbinden.<br />
