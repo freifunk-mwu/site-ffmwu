@@ -53,7 +53,7 @@ ${gw_remotes}            },
                 name = 'stable',
                 mirrors = {
 ${gw_mirrors_stable}                },
-                good_signatures = 3,
+                good_signatures = 4,
                 pubkeys = {
 ${signkeys}                },
             },
@@ -61,7 +61,7 @@ ${signkeys}                },
                 name = 'beta',
                 mirrors = {
 ${gw_mirrors_beta}                },
-                good_signatures = 2,
+                good_signatures = 3,
                 pubkeys = {
 ${signkeys}                },
             },
