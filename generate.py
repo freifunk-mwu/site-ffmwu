@@ -25,19 +25,19 @@ def read_yaml(filename):
     content = read_file(filename)
     if content: return load(content)
 
-def prepend_witespace(t, i, iwidth=4):
+def prepend_witespace(content, indent, identwidth=4):
     res = list()
-    for r in str.rstrip(t).split('\n'):
-        res.append('%s%s' %(' ' * (i * iwidth), r))
+    for r in str.rstrip(content).split('\n'):
+        res.append('%s%s' %(' ' * (indent * identwidth), r))
     return '\n'.join([r for r in res]) + '\n'
 
-def lua_listelem(t, comment=None, indent=False):
-    t = '\'%s\',%s' %(t, ' -- %s\n' %(comment) if comment else ' ')
+def lua_listelem(content, comment=None, indent=False):
+    content = '\'%s\',%s' %(content, ' -- %s\n' %(comment) if comment else ' ')
     if indent and isinstance(indent, int):
-        t = prepend_witespace(t, indent)
-    return t
+        content = prepend_witespace(content, indent)
+    return content
 
-s = read_yaml(SETTINGSFILE)
+settings = read_yaml(SETTINGSFILE)
 
 ###
 # gateways
@@ -47,12 +47,12 @@ class Gateway(object):
 
         self.netname = netname
         self.gwnum = gwnum
-        self.netnum = s['networks'][netname]['num']
-        self.srdurl = s['networks'][netname]['srd']
-        self.inturl = s['networks'][netname]['int']
-        self.gatename = s['gateways'][gwnum]['name']
-        self.pubkey = s['gateways'][gwnum]['pubkey']
-        self.f = s['formats']
+        self.netnum = settings['networks'][netname]['num']
+        self.srdurl = settings['networks'][netname]['srd']
+        self.inturl = settings['networks'][netname]['int']
+        self.gatename = settings['gateways'][gwnum]['name']
+        self.pubkey = settings['gateways'][gwnum]['pubkey']
+        self.f = settings['formats']
 
     def ntp(self):
         return self.f['ntp'] %(self.gwnum, self.inturl)
@@ -78,14 +78,14 @@ class Gateway(object):
 def populate(netname):
     site = dict()
 
-    netnum = s['networks'][netname]['num']
-    netlng = s['networks'][netname]['lng']
+    netnum = settings['networks'][netname]['num']
+    netlng = settings['networks'][netname]['lng'].lower()
 
-    for elem in s['site']:
-        if netname in s['site'][elem]:
-            site.update({elem: s['site'][elem][netname]})
-        elif isinstance(s['site'][elem], str):
-            site.update({elem: s['site'][elem]})
+    for elem in settings['site']:
+        if netname in settings['site'][elem]:
+            site.update({elem: settings['site'][elem][netname]})
+        elif isinstance(settings['site'][elem], str):
+            site.update({elem: settings['site'][elem]})
         else:
             print('wrong data for %s - %s not found' %(elem, netname))
             return False
@@ -102,21 +102,20 @@ def populate(netname):
         'city': str.capitalize(netlng)
     })
 
-    for bb in s['build']['branches']:
-        site.update({'gw_mirrors_%s' %(bb): str()})
+    for gluon_branch in settings['build']['branches']:
+        site.update({'gw_mirrors_%s' %(gluon_branch): str()})
 
-    for gwnum in s['gateways'].keys():
+    for gwnum in settings['gateways'].keys():
         g = Gateway(netname, gwnum)
         site['ntp_v6'] += lua_listelem(g.v6(), comment='%s (IPv6)' %(g.name()), indent=2)
         site['ntp_dns'] += lua_listelem(g.ntp(), comment='%s (DNS)' %(g.name()), indent=2)
         site['gw_remotes'] += prepend_witespace(g.remote(), 4)
-        for gb in sorted(s['build']['branches']):
-            combined = lua_listelem('http://firmware.%s/%s/sysupgrade' %(s['networks'][netname]['int'], gb), comment='combined (DNS)', indent=5)
-            site['gw_mirrors_%s' %(gb)] += combined if not combined in site['gw_mirrors_%s' %(gb)] else ''
-#            site['gw_mirrors_%s' %(gb)] += lua_listelem('http://[%s]/firmware/%s/%s/sysupgrade' %(g.v6(), netlng, gb), comment='%s (IPv6)' %(g.name()), indent=5)
+        for gluon_branch in sorted(settings['build']['branches']):
+            combined = lua_listelem('http://firmware.%s/%s/sysupgrade' %(settings['networks'][netname]['int'], gluon_branch), comment='combined (DNS)', indent=5)
+            site['gw_mirrors_%s' %(gluon_branch)] += combined if not combined in site['gw_mirrors_%s' %(gluon_branch)] else ''
 
-    for pk in sorted(s['build']['signkeys'].keys()):
-        site['signkeys'] += lua_listelem(s['build']['signkeys'][pk], comment=pk, indent=5)
+    for pk in sorted(settings['build']['signkeys'].keys()):
+        site['signkeys'] += lua_listelem(settings['build']['signkeys'][pk], comment=pk, indent=5)
 
     return site
 
@@ -129,12 +128,13 @@ def generate(netname, nomodules=False):
         makefile = Template(read_file(MAKEFILE[0])).substitute(site)
         write_file(MAKEFILE[-1], makefile)
 
-        modules = Template(read_file(MODULES[0])).substitute(site)
-        if not nomodules: write_file(MODULES[-1], modules)
+        if not nomodules:
+            modules = Template(read_file(MODULES[0])).substitute(site)
+            write_file(MODULES[-1], modules)
 
 if __name__ == '__main__':
     parser = ArgumentParser(prog='site-generator', description='generate similar sites for similar gluon builds for multi mesh gateways like those at freifunk-mwu', epilog='your ad here!', add_help=True)
-    parser.add_argument('community', action='store', choices=s['networks'].keys(), help='generate site for community')
+    parser.add_argument('community', action='store', choices=settings['networks'].keys(), help='generate site for community')
     parser.add_argument('--nomodules', action='store_true', help='prevent modules file generation')
 
     res = parser.parse_args()
