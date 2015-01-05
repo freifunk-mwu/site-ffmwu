@@ -91,7 +91,10 @@ ${signkeys}                },
     config_mode = {
         msg_welcome = [[
 Willkommen zum Einrichtungsassistenten für deinen neuen Freifunk-Knoten.<br />
-Fülle das folgende Formular deinen Vorstellung entsprechend aus und sende es ab.
+<p>
+    Fülle das Formular deinen Vorstellungen entsprechend aus und sende es ab.<br />
+    Sei kreativ bei der Wahl des Namens (Standorte, Gerichte/Speisen, Personennamen, oder Charaktere einer Serie - je ausgefallener, desto besser), wobei Dopplungen innerhalb des Netzes vermieden werden sollten.<br />
+</p>
 ]],
         msg_pubkey = [[
 Dies ist der öffentliche Schlüssel deines Freifunk-Knotens. Erst nachdem er auf den Servern des ${city}er Freifunk-Projektes eingetragen wurde kann sich dein Knoten mit den Mesh-VPNs in ${city} verbinden.<br />
@@ -103,7 +106,7 @@ Bitte sei so nett, und schreib noch ein zwei Zeilen dazu - kommentarlos einen Ke
         msg_reboot = [[
 Dein Knoten startet gerade neu und wird anschließend versuchen, sich mit anderen Freifunk-Knoten in seiner Nähe zu verbinden.<br />
 Weitere Informationen zur Freifunk-Community findest du auf der Webseite von <a href="http://www.${descr_url}/">${site_name}</a>, oder unter <a href="http://www.freifunk.net/">freifunk.net</a>.<br />
-Viel Spaß mit deinem Knoten und bei der Erkundung von Freifunk!
+Viel Spaß mit deinem Knoten und bei der Erkundung von Freifunk in ${city}!<br />
 ]],
     },
 }
