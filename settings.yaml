@@ -1,14 +1,13 @@
-networks:
     mz:
-        int: 'ffmz.org'
-        srd: 'freifunk-mwu.de'
+        int: 'ffmz.org'         # internal
+        srd: 'freifunk-mwu.de'  # shared
         num: 37
-        lng: 'mainz'
+        lng: 'mainz'            # natural language
     wi:
-        int: 'ffwi.org'
-        srd: 'freifunk-mwu.de'
+        int: 'ffwi.org'         # internal
+        srd: 'freifunk-mwu.de'  # shared
         num: 56
-        lng: 'wiesbaden'
+        lng: 'wiesbaden'        # natural language
 
 gateways:
     5:
@@ -79,7 +78,7 @@ site:
 
     # site.mk
     batman_pkg: 'gluon-mesh-batman-adv-15'
-    gluon_release_num: '0.0.2'
+    gluon_release_num: '0.0.3'
     gluon_priority: '0.2'
 
 build:
