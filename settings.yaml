@@ -1,3 +1,4 @@
+networks:
     mz:
         int: 'ffmz.org'         # internal
         srd: 'freifunk-mwu.de'  # shared
@@ -67,8 +68,8 @@ site:
         wi: 'freifunk-wiesbaden.de'
 
     # modules
-    modules_name: 'plus'
-    modules_remote: 'git://github.com/freifunk-mwu/gluon-plus.git'
+    modules_name: 'ffmwu'
+    modules_remote: 'git://github.com/freifunk-mwu/packages-ffmwu.git'
     modules_branch:
         mz: 'mz'
         wi: 'wi'
