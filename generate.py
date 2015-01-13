@@ -80,6 +80,7 @@ def populate(netname):
 
     netnum = settings['networks'][netname]['num']
     netlng = settings['networks'][netname]['lng'].lower()
+    opkg_url = 'http://openwrt.%s/%s/%s' %(settings['networks'][netname]['int'], settings['openwrt']['release_name'], settings['openwrt']['release_ver'])
 
     for elem in settings['site']:
         if netname in settings['site'][elem]:
@@ -91,6 +92,7 @@ def populate(netname):
             return False
 
     site.update({
+        'opkg_repo': str(opkg_url + '/%S/packages'),
         'hostname_prefix': netname,
         'netnum': netnum,
         'netnum_hex': '%x' %(netnum),

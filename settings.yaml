@@ -10,6 +10,10 @@ networks:
         num: 56
         lng: 'wiesbaden'        # natural language
 
+openwrt:
+    release_name: 'barrier_breaker'
+    release_ver: '14.07'
+
 gateways:
     5:
         name: 'hinterschinken'
@@ -48,7 +52,6 @@ site:
     site_code:
         mz: 'ffmz'
         wi: 'ffwi'
-    opkg_repo: 'http://openwrt.draic.info/barrier_breaker/14.07/%S/packages'
     ssid:
         mz: 'mainz.freifunk.net'
         wi: 'wiesbaden.freifunk.net'
