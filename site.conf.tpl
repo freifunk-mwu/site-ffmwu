@@ -76,6 +76,14 @@ ${signkeys}                },
         },
     },
 
+    roles = {
+        default = 'node',
+        list = {
+            node = 'Normaler Knoten',
+            backbone = 'Backbone Knoten',
+        },
+    },
+
     simple_tc = {
         mesh_vpn = {
             ifname = 'mesh-vpn',
