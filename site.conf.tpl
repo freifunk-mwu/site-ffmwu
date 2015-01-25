@@ -80,6 +80,7 @@ ${signkeys}                },
         default = 'node',
         list = {
             node = 'Normaler Knoten',
+            test = 'Test Knoten',
             backbone = 'Backbone Knoten',
         },
     },
