@@ -70,7 +70,7 @@ class Gateway(object):
         return self.f['ndns'] %(self.gatename, self.srdurl if shared else self.inturl)
 
     def remote(self):
-        return self.f['remote'] %(self.gatename, self.pubkey[self.netname], self.cdns(), self.netnum)
+        return self.f['remote'] %(self.gatename, self.pubkey[self.netname], self.ndns(), self.netnum)
 
     def name(self):
         return str.capitalize(self.gatename)
