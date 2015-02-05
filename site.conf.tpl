@@ -103,6 +103,7 @@ Willkommen zum Einrichtungsassistenten für deinen neuen Freifunk-Knoten.<br />
 <p>
     Fülle das Formular deinen Vorstellungen entsprechend aus und sende es ab.<br />
     Sei kreativ bei der Wahl des Namens (Standorte, Gerichte/Speisen, Personennamen, oder Charaktere einer Serie - je ausgefallener, desto besser), wobei Dopplungen innerhalb des Netzes vermieden werden sollten.<br />
+    Bitte nutze dabei keine Punkte, nur Buchstaben A-Za-z und als einziges Sonderzeichen ein "-"<br />
 </p>
 ]],
         msg_pubkey = [[
