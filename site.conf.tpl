@@ -95,15 +95,16 @@ Willkommen zum Einrichtungsassistenten für deinen neuen Freifunk-Knoten.<br />
     Fülle das Formular deinen Vorstellungen entsprechend aus und sende es ab.<br />
     Sei kreativ bei der Wahl des Namens (Standorte, Gerichte/Speisen, Personennamen, oder Charaktere einer Serie - je ausgefallener, desto besser), wobei Dopplungen innerhalb des Netzes vermieden werden sollten.<br />
     Bitte nutze dabei keine Punkte, nur Buchstaben A-Za-z und als einziges Sonderzeichen ein "-".<br />
-Bitte beachte, dass es bei der Aktivierung des Autoupdaters unter Umständen zur Beschädigung des Routers kommen kann.<br />
-Die Angabe einer Emailadresse ist freiwillig; mit dieser können wir dich erreichen falls es ein Problem mit deinem Router gibt. Beachte jedoch, dass die Adresse von jedem Benutzer im Freifunk Netz einsehbar ist.
+    Bitte beachte: Wir können nicht ausschließen, dass es bei der Aktivierung der Autoupdater Funktion unter Umständen zur Beschädigung des Freifunk-Knotens kommt. Dennoch empfehlen wir dir den Autoupdater einzuschalten, weil die Wahrscheinlichkeit der Beschädigung sehr gering ist.<br />
+
+Die Angabe einer E-Mail Adresse ist freiwillig; mit dieser können wir dich erreichen falls es ein Problem mit deinem Freifunk-Knoten gibt. Beachte jedoch, dass die Adresse im Freifunk Netz einsehbar ist, im Internet dagegen nicht.
 </p>
 ]],
         msg_pubkey = [[
-Dies ist der öffentliche Schlüssel deines Freifunk-Knotens. Erst nachdem er auf den Servern des ${city}er Freifunk-Projektes eingetragen wurde kann sich dein Knoten mit den Mesh-VPNs in ${city} verbinden.<br />
+Dies ist der öffentliche Schlüssel deines Freifunk-Knotens. Erst nachdem er auf den Servern der ${city}er Freifunk-Community eingetragen wurde kann sich dein Knoten mit den Mesh-VPNs in ${city} verbinden.<br />
 Bitte schicke dazu diesen Schlüssel und den Namen deines Knotens (<em><%=hostname%></em>)
 an <a href="mailto:${descr_mailkeys}?&amp;subject=Neuer%20Freifunk-Knoten%3A%20<%=hostname%>&amp;body=Name%3A%20<%=hostname%>%0D%0AKey%3A%20<%=pubkey%>%0D%0AMAC%3A%20<%=sysconfig.primary_mac%>%0D%0A">${descr_mailkeys}</a>.<br />
-<small>Ein Klick auf den E-Mail Link sollte&trade; dein E-Mail Programm öffnen und alle benötigten Informationen in eine neue Mail einfügen.</small><br />
+<small>Ein Klick auf den E-Mail Link sollte&trade; dein E-Mail Programm öffnen und alle benötigten Informationen in eine neue E-Mail einfügen.</small><br />
 Bitte sei so nett, und schreib noch ein zwei Zeilen dazu - kommentarlos einen Key vor die Nase geknallt zu bekommen ist ein bisschen schade, und motiviert uns nicht unbedingt diesen Key auch sofort einzutragen. Schreib uns wie das Wetter gerade ist, was deine Katze so treibt, oder warum du Freifunker bist. Egal was, Hauptsache irgendwas, was uns motiviert deinen Key auch schnell einzutragen :) Vielen Dank!<br />
 ]],
         msg_reboot = [[
