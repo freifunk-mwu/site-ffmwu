@@ -31,3 +31,6 @@ GLUON_RELEASE ?= $$(DEFAULT_GLUON_RELEASE)
 
 # Default priority for updates.
 GLUON_PRIORITY ?= ${gluon_priority}
+
+# i18n langs
+GLUON_LANGS ?= en de
