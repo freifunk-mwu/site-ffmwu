@@ -98,15 +98,35 @@ ${signkeys}                },
 
     config_mode = {
         msg_welcome = [[
-Willkommen zum Einrichtungsassistenten für deinen neuen Freifunk-Knoten.<br />
+Willkommen zum Einrichtungsassistenten für deinen neuen Freifunk-Knoten in ${city}.<br />
 <p>
-    Fülle das Formular deinen Vorstellungen entsprechend aus und sende es ab.<br />
-    Sei kreativ bei der Wahl des Namens (Standorte, Gerichte/Speisen, Personennamen, oder Charaktere einer Serie - je ausgefallener, desto besser), wobei Dopplungen innerhalb des Netzes vermieden werden sollten.<br />
-    Bitte nutze dabei keine Punkte, nur Buchstaben A-Za-z und als einziges Sonderzeichen ein "-".<br />
-    Bitte beachte: Wir können nicht ausschließen, dass es bei der Aktivierung der Autoupdater Funktion unter Umständen zur Beschädigung des Freifunk-Knotens kommt. Dennoch empfehlen wir dir den Autoupdater einzuschalten, weil die Wahrscheinlichkeit der Beschädigung sehr gering ist.<br />
-
-Die Angabe einer E-Mail Adresse ist freiwillig; mit dieser können wir dich erreichen falls es ein Problem mit deinem Freifunk-Knoten gibt. Beachte jedoch, dass die Adresse im Freifunk Netz einsehbar ist, im Internet dagegen nicht.
+    Fülle das Formular deinen Vorstellungen entsprechend aus und sende es ab.
 </p>
+<dl>
+    <dt>Hostname</dt>
+    <dd>
+        Sei kreativ bei der Wahl des Namens (Standorte, Gerichte/Speisen, Personennamen, oder Charaktere einer Serie - je ausgefallener, desto besser), wobei Dopplungen innerhalb des Netzes vermieden werden sollten.
+    </dd>
+    <dd>
+        Bitte nutze dabei keine Punkte, nur Buchstaben A-Za-z und als einziges Sonderzeichen ein "-".
+    </dd>
+
+    <dt>Auto-Update</dt>
+    <dd>
+        Wir können nicht ausschließen, dass es bei der Aktivierung der Autoupdater Funktion unter Umständen zur Beschädigung des Freifunk-Knotens kommt.
+    </dd>
+    <dd>
+        Dennoch empfehlen wir dir den Autoupdater einzuschalten, weil die Wahrscheinlichkeit der Beschädigung sehr gering ist.<br />
+    </dd>
+
+    <dt>E-Mail</dt>
+    <dd>
+        Die Angabe einer E-Mail Adresse ist freiwillig; mit dieser können wir dich erreichen falls es ein Problem mit deinem Freifunk-Knoten gibt.
+    </dd>
+    <dd>
+        Beachte jedoch, dass die Adresse im Freifunk Netz einsehbar ist, im Internet dagegen nicht.
+    </dd>
+</dl>
 ]],
         msg_pubkey = [[
 Dies ist der öffentliche Schlüssel deines Freifunk-Knotens. Erst nachdem er auf den Servern der ${city}er Freifunk-Community eingetragen wurde kann sich dein Knoten mit den Mesh-VPNs in ${city} verbinden.<br />
