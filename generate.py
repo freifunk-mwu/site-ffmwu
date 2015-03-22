@@ -8,6 +8,7 @@ SETTINGSFILE = 'settings.yaml'
 SITE=('site.conf.tpl', 'site.conf')
 MAKEFILE=('site.mk.tpl', 'site.mk')
 MODULES=('modules.tpl', 'modules')
+LANGS=('en','de')
 
 ###
 # service functions
@@ -133,6 +134,12 @@ def generate(netname, nomodules=False):
         if not nomodules:
             modules = Template(read_file(MODULES[0])).substitute(site)
             write_file(MODULES[-1], modules)
+
+        for lang in LANGS:
+            pofiletemplate = 'i18n/' + lang + '.po.tpl'
+            pofile = 'i18n/' + lang + '.po'
+            po = Template(read_file(pofiletemplate)).substitute(site)
+            write_file(pofile, po)
 
 if __name__ == '__main__':
     parser = ArgumentParser(prog='site-generator', description='generate similar sites for similar gluon builds for multi mesh gateways like those at freifunk-mwu', epilog='your ad here!', add_help=True)
