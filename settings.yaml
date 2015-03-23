@@ -67,8 +67,8 @@ site:
         wi: 'keys@freifunk-wiesbaden.de'
 
     descr_url:
-        mz: 'freifunk-mainz.de'
-        wi: 'freifunk-wiesbaden.de'
+        mz: 'www.freifunk-mainz.de'
+        wi: 'wiesbaden.freifunk.net'
 
     # modules
     modules_name: 'ffmwu'
