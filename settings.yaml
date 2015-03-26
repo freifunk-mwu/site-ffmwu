@@ -70,6 +70,10 @@ site:
         mz: 'www.freifunk-mainz.de'
         wi: 'wiesbaden.freifunk.net'
 
+    hostname_prefix:
+        mz: 'mz'
+        wi: ''
+
     # modules
     modules_name: 'ffmwu'
     modules_remote: 'git://github.com/freifunk-mwu/packages-ffmwu.git'
