@@ -8,7 +8,7 @@ SETTINGSFILE = 'settings.yaml'
 SITE=('site.conf.tpl', 'site.conf')
 MAKEFILE=('site.mk.tpl', 'site.mk')
 MODULES=('modules.tpl', 'modules')
-LANGS=('en','de')
+LANGS=('en', 'de')
 
 ###
 # service functions
@@ -94,7 +94,6 @@ def populate(netname):
 
     site.update({
         'opkg_repo': str(opkg_url + '/%S/packages'),
-        'hostname_prefix': site['hostname_prefix'],
         'netnum': netnum,
         'netnum_hex': '%x' %(netnum),
         'ntp_v6': str(),

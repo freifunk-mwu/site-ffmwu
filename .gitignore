@@ -3,3 +3,4 @@ __pycache__
 site.conf
 site.mk
 modules
+i18n/*.po
