@@ -5,6 +5,7 @@ GLUON_SITE_PACKAGES := \
 	gluon-autoupdater \
 	gluon-config-mode-autoupdater \
 	gluon-config-mode-contact-info \
+	gluon-config-mode-core \
 	gluon-config-mode-geo-location \
 	gluon-config-mode-hostname \
 	gluon-config-mode-mesh-vpn \
@@ -18,6 +19,7 @@ GLUON_SITE_PACKAGES := \
 	gluon-mesh-vpn-fastd \
 	gluon-next-node \
 	gluon-radvd \
+	gluon-setup-mode \
 	gluon-site-info \
 	gluon-status-page \
 	iwinfo \
