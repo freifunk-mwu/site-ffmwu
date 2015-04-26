@@ -71,7 +71,7 @@ site:
         wi: 'wiesbaden.freifunk.net'
 
     hostname_prefix:
-        mz: 'mz'
+        mz: 'mz-'
         wi: ''
 
     # modules
