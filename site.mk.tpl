@@ -3,18 +3,18 @@ GLUON_SITE_PACKAGES := \
 	gluon-alfred \
 	gluon-announced \
 	gluon-autoupdater \
-	gluon-config-mode-hostname \
 	gluon-config-mode-autoupdater \
-	gluon-config-mode-mesh-vpn \
-	gluon-config-mode-geo-location \
 	gluon-config-mode-contact-info \
+	gluon-config-mode-geo-location \
+	gluon-config-mode-hostname \
+	gluon-config-mode-mesh-vpn \
 	gluon-ebtables-filter-multicast \
 	gluon-ebtables-filter-ra-dhcp \
 	gluon-luci-admin \
 	gluon-luci-autoupdater \
+	gluon-luci-node-role \
 	gluon-luci-portconfig \
 	gluon-luci-private-wifi \
-	gluon-luci-node-role \
 	gluon-mesh-vpn-fastd \
 	gluon-next-node \
 	gluon-radvd \
