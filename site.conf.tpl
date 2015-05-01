@@ -81,8 +81,8 @@ ${signkeys}                },
     roles = {
         default = 'node',
         list = {
-            node = 'Normaler Knoten',
-            backbone = 'Backbone Knoten',
+            'node',
+            'backbone',
         },
     },
 

@@ -46,3 +46,11 @@ msgstr ""
 "Your node is currently rebooting and will try to connect to nearby Freifunk nodes after that.<br />"
 "You can obtain further information about the local Freifunk community from the website of <a href=\"http://${descr_url}/\">${site_name}</a><br />"
 "Have a lot of fun exploring Freifunk in ${city}!<br />"
+
+msgid "gluon-luci-node-role:role:backbone"
+msgstr ""
+"Backbone node"
+
+msgid "gluon-luci-node-role:role:node"
+msgstr ""
+"Normal node"

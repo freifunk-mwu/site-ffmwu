@@ -46,3 +46,11 @@ msgstr ""
 "Dein Knoten startet gerade neu und wird anschließend versuchen, sich mit anderen Freifunk-Knoten in seiner Nähe zu verbinden.<br />"
 "Weitere Informationen zur Freifunk-Community findest du auf der Webseite von <a href=\"http://${descr_url}/\">${site_name}</a><br />"
 "Viel Spaß mit deinem Knoten und bei der Erkundung von Freifunk in ${city}!<br />"
+
+msgid "gluon-luci-node-role:role:backbone"
+msgstr ""
+"Backbone Knoten"
+
+msgid "gluon-luci-node-role:role:node"
+msgstr ""
+"Normaler Knoten"
