@@ -39,10 +39,12 @@ ${ntp_dns}    },
         methods = {'salsa2012+umac'},
         mtu = 1406,
         enabled = true,
-        backbone = {
-            limit = 2,
-            peers = {
-${gw_remotes}            },
+        groups = {
+            backbone = {
+                limit = 2,
+                peers = {
+${gw_remotes}                },
+            },
         },
     },
 
