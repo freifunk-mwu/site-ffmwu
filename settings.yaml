@@ -86,7 +86,7 @@ site:
 
     # site.mk
     batman_pkg: 'gluon-mesh-batman-adv-15'
-    gluon_release_num: '0.1'
+    gluon_release_num: '0.2'
     gluon_priority: '0.2'
 
 build:
