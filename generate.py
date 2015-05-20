@@ -112,7 +112,7 @@ def populate(netname):
         g = Gateway(netname, gwnum)
         site['ntp_v6'] += lua_listelem(g.v6(), comment='%s (IPv6)' %(g.name()), indent=2)
         site['ntp_dns'] += lua_listelem(g.ntp(), comment='%s (DNS)' %(g.name()), indent=2)
-        site['gw_remotes'] += prepend_witespace(g.remote(), 4)
+        site['gw_remotes'] += prepend_witespace(g.remote(), 5)
         for gluon_branch in sorted(settings['build']['branches']):
             combined = lua_listelem('http://firmware.%s/%s/sysupgrade' %(settings['networks'][netname]['int'], gluon_branch), comment='combined (DNS)', indent=5)
             site['gw_mirrors_%s' %(gluon_branch)] += combined if not combined in site['gw_mirrors_%s' %(gluon_branch)] else ''
