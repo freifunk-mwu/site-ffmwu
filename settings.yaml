@@ -15,11 +15,6 @@ openwrt:
     release_ver: '14.07'
 
 gateways:
-    5:
-        name: 'hinterschinken'
-        pubkey:
-            mz: 'aad6b746134a657e31bc4e45154e1dcf0429e5e3b6bd6ba5ab0821c55dddb043'
-            wi: 'a539f07c356f8865f4bac00150292bb067da9eba1501782a7dc86b4b3b829858'
     7:
         name: 'spinat'
         pubkey:
@@ -30,6 +25,16 @@ gateways:
         pubkey:
             mz: 'd73479cc97a87ffd4b256a873e505f3264408ed077b248358c52e8dc82bbfc07'
             wi: '45c22f99699ea2cea22eb00c024a32f4d04bbee649138a4df6ee2090e2736ca8'
+    208:
+        name: 'kaschu'
+        pubkey:
+            mz: 'e46bac7a7f4141175aea54f8c8ee0222e0f4d20cad257b56eb5eee6f139378e5'
+            wi: '92802dc965cd735708c2203630d4c95232fae99beee1fcf90dfa92eeaf0b625e'
+    231:
+        name: 'wasserfloh'
+        pubkey:
+            mz: '9c00e0534a9dc5232e9bfacb304261f21f24604ad233b648bf52d6b40ca60884'
+            wi: '8b35d24e192cac0c70925e5101fad7d6430726b410bc53eb581d2b03a3e3f97b'
 
 formats:
     ntp:  '%d.ntp.%s'
@@ -98,3 +103,4 @@ build:
         kokel:       '784249da3c254db96df556540b2c6f32e64a23269e48f03e78f61d9be2d9398f'
         knirps:      'df0373c8f9783632406e57948aac3e93efbcae737e8c3971da0bb53fcc33f649'
         prisma:      'a2f42ad93a24a6e4d0063e362f343610c015cca9a07592a189edcbb098bf0e79'
+        markus:      '5ae89be149319ef2caeb805e4ea1a082922cf4f71d90ab723b0119a39d8463df'
