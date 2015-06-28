@@ -25,6 +25,11 @@ gateways:
         pubkey:
             mz: 'd73479cc97a87ffd4b256a873e505f3264408ed077b248358c52e8dc82bbfc07'
             wi: '45c22f99699ea2cea22eb00c024a32f4d04bbee649138a4df6ee2090e2736ca8'
+    208:
+        name: 'kaschu'
+        pubkey:
+            mz: 'e46bac7a7f4141175aea54f8c8ee0222e0f4d20cad257b56eb5eee6f139378e5'
+            wi: '92802dc965cd735708c2203630d4c95232fae99beee1fcf90dfa92eeaf0b625e'
     231:
         name: 'wasserfloh'
         pubkey:
