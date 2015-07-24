@@ -11,8 +11,8 @@ networks:
         lng: 'wiesbaden'        # natural language
 
 openwrt:
-    release_name: 'barrier_breaker'
-    release_ver: '14.07'
+    release_name: 'chaos_calmer'
+    release_ver: '15.05-rc3'
 
 gateways:
     7:
