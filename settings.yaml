@@ -66,6 +66,9 @@ site:
     ibss_bssid:
         mz: '02:04:08:16:32:64'
         wi: '64:32:16:08:04:02'
+    mesh_id:
+        mz: 'laeKahd4'
+        wi: 'ShawXm3u'
     mcast_rate:
         mz: '12000'
         wi: '12000'
