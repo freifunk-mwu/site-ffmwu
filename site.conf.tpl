@@ -21,7 +21,7 @@ ${ntp_dns}    },
         ibss = {
                 ssid = '${ibss_ssid}',
                 bssid = '${ibss_bssid}',
-                mcast_rate = 12000,
+                mcast_rate = '${mcast_rate}',
         },
     },
     wifi5 = {
@@ -33,7 +33,7 @@ ${ntp_dns}    },
         ibss = {
                 ssid = '${ibss_ssid}',
                 bssid = '${ibss_bssid}',
-                mcast_rate = 12000,
+                mcast_rate = '${mcast_rate}',
         },
     },
 
