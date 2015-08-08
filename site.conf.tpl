@@ -13,20 +13,28 @@ ${ntp_dns}    },
 
     regdom = 'DE',
     wifi24 = {
-        ssid = '${ssid}',
         channel = 6,
         htmode = 'HT40+',
-        mesh_ssid = '${mesh_ssid}',
-        mesh_bssid = '${mesh_bssid}',
-        mesh_mcast_rate = 12000,
+        ap = {
+                ssid = '${ssid}',
+        },
+        ibss = {
+                ssid = '${mesh_ssid}',
+                bssid = '${mesh_bssid}',
+                mcast_rate = 12000,
+        },
     },
     wifi5 = {
-        ssid = '${ssid}',
         channel = 44,
         htmode = 'HT40+',
-        mesh_ssid = '${mesh_ssid}',
-        mesh_bssid = '${mesh_bssid}',
-        mesh_mcast_rate = 12000,
+        ap = {
+                ssid = '${ssid}',
+        },
+        ibss = {
+                ssid = '${mesh_ssid}',
+                bssid = '${mesh_bssid}',
+                mcast_rate = 12000,
+        },
     },
 
     next_node = {
