@@ -21,11 +21,11 @@ ${ntp_dns}    },
         ibss = {
                 ssid = '${ibss_ssid}',
                 bssid = '${ibss_bssid}',
-                mcast_rate = '${mcast_rate}',
+                mcast_rate = ${mcast_rate},
         },
 --        mesh = {
 --                id = '${mesh_id}',
---                mcast_rate = '${mcast_rate}',
+--                mcast_rate = ${mcast_rate},
 --        },
     },
     wifi5 = {
@@ -37,11 +37,11 @@ ${ntp_dns}    },
         ibss = {
                 ssid = '${ibss_ssid}',
                 bssid = '${ibss_bssid}',
-                mcast_rate = '${mcast_rate}',
+                mcast_rate = ${mcast_rate},
         },
 --        mesh = {
 --                id = '${mesh_id}',
---                mcast_rate = '${mcast_rate}',
+--                mcast_rate = ${mcast_rate},
 --        },
     },
 
