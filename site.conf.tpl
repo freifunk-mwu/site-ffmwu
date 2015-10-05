@@ -57,7 +57,7 @@ ${ntp_dns}    },
         enabled = true,
         groups = {
             backbone = {
-                limit = 2,
+                limit = 1,
                 peers = {
 ${gw_remotes}                },
             },
