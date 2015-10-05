@@ -15,7 +15,7 @@ ${ntp_dns}    },
     wifi24 = {
         ssid = '${ssid}',
         channel = 6,
-        htmode = 'HT40+',
+        htmode = 'HT20',
         mesh_ssid = '${mesh_ssid}',
         mesh_bssid = '${mesh_bssid}',
         mesh_mcast_rate = 12000,
