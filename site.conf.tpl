@@ -51,6 +51,17 @@ ${ntp_dns}    },
         mac = '02:00:0a:${netnum_hex}:00:01',
     },
 
+    -- Options specific to routing protocols (optional)
+    mesh = {
+        -- Options specific to the batman-adv routing protocol (optional)
+        batman_adv = {
+            -- Gateway selection class (optional)
+            -- The default class 20 is based on the link quality (TQ) only,
+            -- class 1 is calculated from both the TQ and the announced bandwidth
+            gw_sel_class = ${batman_adv_gw_sel_class},
+        },
+    },
+
     fastd_mesh_vpn = {
         methods = {'salsa2012+umac'},
         mtu = 1406,
