@@ -12,7 +12,7 @@ networks:
 
 openwrt:
     release_name: 'chaos_calmer'
-    release_ver: '15.05-rc3'
+    release_ver: '15.05'
 
 gateways:
     7:
