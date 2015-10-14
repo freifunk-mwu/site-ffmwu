@@ -10,10 +10,6 @@ networks:
         num: 56
         lng: 'wiesbaden'        # natural language
 
-openwrt:
-    release_name: 'chaos_calmer'
-    release_ver: '15.05'
-
 gateways:
     7:
         name: 'spinat'
