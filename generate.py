@@ -99,7 +99,7 @@ class Gateway(object):
         return str.capitalize(self.gatename)
 
 
-def populate(netname):
+def populate(netname, priority=None):
     site = dict()
 
     netnum = settings['networks'][netname]['num']
@@ -131,6 +131,9 @@ def populate(netname):
         'city': str.capitalize(netlng)
     })
 
+    if priority is not None:
+        site.update({'gluon_priority': priority})
+
     for gluon_branch in settings['build']['branches']:
         site.update({'gw_mirrors_%s' % (gluon_branch): str()})
 
@@ -152,7 +155,7 @@ def populate(netname):
             )
             site['gw_mirrors_%s' % (gluon_branch)] += (
                 combined
-                if not combined in site['gw_mirrors_%s' % (gluon_branch)]
+                if combined not in site['gw_mirrors_%s' % (gluon_branch)]
                 else ''
             )
 
@@ -163,8 +166,8 @@ def populate(netname):
     return site
 
 
-def generate(netname, nomodules=False):
-    site = populate(netname)
+def generate(netname, nomodules=False, priority=None):
+    site = populate(netname, priority)
     if site:
         siteconf = Template(read_file(SITE[0])).substitute(site)
         write_file(SITE[-1], siteconf)
@@ -181,6 +184,7 @@ def generate(netname, nomodules=False):
                 read_file(TRANSLATION[0] % (lang))
             ).substitute(site)
             write_file(TRANSLATION[-1] % (lang), translation)
+
 
 if __name__ == '__main__':
     parser = ArgumentParser(
@@ -201,6 +205,11 @@ if __name__ == '__main__':
         action='store_true',
         help='prevent modules file generation'
     )
+    parser.add_argument(
+        '--priority',
+        action='store',
+        help='overwrite gluon priority'
+    )
 
-    res = parser.parse_args()
-    generate(res.community, nomodules=res.nomodules)
+    args = parser.parse_args()
+    generate(args.community, nomodules=args.nomodules, priority=args.priority)
