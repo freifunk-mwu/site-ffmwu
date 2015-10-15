@@ -113,13 +113,10 @@ ${signkeys}                },
         },
     },
 
-    simple_tc = {
-        mesh_vpn = {
-            ifname = 'mesh-vpn',
-            enabled = false,
-            limit_egress = 400,
-            limit_ingress = 6000,
-        },
+    bandwidth_limit = {
+        enabled = false,
+        egress = 400,
+        ingress = 6000,
     },
 
     -- enable BATMAN on WAN interface by default (see gluon-luci-portconfig for webinterface)
