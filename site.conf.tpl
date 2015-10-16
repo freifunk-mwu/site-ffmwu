@@ -73,6 +73,11 @@ ${ntp_dns}    },
 ${gw_remotes}                },
             },
         },
+        bandwidth_limit = {
+            enabled = false,
+            egress = 400,
+            ingress = 6000,
+        },
     },
 
     autoupdater = {
@@ -111,12 +116,6 @@ ${signkeys}                },
             'node',
             'backbone',
         },
-    },
-
-    bandwidth_limit = {
-        enabled = false,
-        egress = 400,
-        ingress = 6000,
     },
 
     -- enable BATMAN on WAN interface by default (see gluon-luci-portconfig for webinterface)
