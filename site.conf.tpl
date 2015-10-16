@@ -23,10 +23,10 @@ ${ntp_dns}    },
                 bssid = '${ibss_bssid}',
                 mcast_rate = ${mcast_rate},
         },
-        mesh = {
+        --[[mesh = {
                 id = '${mesh_id}',
                 mcast_rate = ${mcast_rate},
-        },
+        },--]]
     },
     wifi5 = {
         channel = 44,
@@ -39,10 +39,10 @@ ${ntp_dns}    },
                 bssid = '${ibss_bssid}',
                 mcast_rate = ${mcast_rate},
         },
-        -- mesh = {
-                -- id = '${mesh_id}',
-                -- mcast_rate = ${mcast_rate},
-        -- },
+        --[[mesh = {
+                id = '${mesh_id}',
+                mcast_rate = ${mcast_rate},
+        },--]]
     },
 
     next_node = {
