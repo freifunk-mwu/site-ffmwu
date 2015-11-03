@@ -45,7 +45,6 @@ formats:
         },
 
 site:
-
     # site.conf
     site_name:
         mz: 'Freifunk Mainz'
@@ -75,7 +74,6 @@ site:
     descr_mailkeys:
         mz: 'keys@freifunk-mainz.de'
         wi: 'keys@freifunk-wiesbaden.de'
-
     descr_url:
         mz: 'www.freifunk-mainz.de'
         wi: 'wiesbaden.freifunk.net'

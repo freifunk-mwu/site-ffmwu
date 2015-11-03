@@ -7,7 +7,10 @@
     prefix6 = 'fd${netnum}:b4dc:4b1e::/64',
 
     opkg = {
-        openwrt = '${opkg_repo}',
+        openwrt = '${opkg_openwrt_mirror}',
+        extra = {
+            modules = '${opkg_extra_modules}',
+        },
     },
 
     timezone = 'CET-1CEST,M3.5.0,M10.5.0/3', -- Europe/Berlin

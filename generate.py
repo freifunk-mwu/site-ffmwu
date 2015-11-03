@@ -104,7 +104,6 @@ def populate(netname, priority=None):
 
     netnum = settings['networks'][netname]['num']
     netlng = settings['networks'][netname]['lng'].lower()
-    opkg_url = 'http://openwrt.%s' % ( settings['networks'][netname]['int'] )
 
     for elem in settings['site']:
         if netname in settings['site'][elem]:
@@ -115,8 +114,15 @@ def populate(netname, priority=None):
             print('wrong data for %s - %s not found' % (elem, netname))
             return False
 
+    opkg_openwrt_mirror = 'http://openwrt.%s/%%n/%%v/%%S/packages'
+    opkg_extra_modules = 'http://firmware.%s/_library/%%GR/%s/modules/%%S'
     site.update({
-        'opkg_repo': str(opkg_url + '/%n/%v/%S/packages'),
+        'opkg_openwrt_mirror': opkg_openwrt_mirror % (
+            settings['networks'][netname]['int']
+        ),
+        'opkg_extra_modules': opkg_extra_modules % (
+            settings['networks'][netname]['int'], netname
+        ),
         'netnum': netnum,
         'netnum_hex': '%x' % (netnum),
         'ntp_v6': str(),
