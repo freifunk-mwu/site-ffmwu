@@ -20,7 +20,6 @@ ${ntp_dns}    },
     regdom = 'DE',
     wifi24 = {
         channel = 6,
-        htmode = 'HT20',
         ap = {
                 ssid = '${ssid}',
         },
@@ -36,7 +35,6 @@ ${ntp_dns}    },
     },
     wifi5 = {
         channel = 44,
-        htmode = 'HT40+',
         ap = {
                 ssid = '${ssid}',
         },
