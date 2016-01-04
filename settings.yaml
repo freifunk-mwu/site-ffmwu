@@ -68,8 +68,8 @@ site:
         mz: '12000'
         wi: '12000'
     batman_adv_gw_sel_class:
-        mz: '1'
-        wi: '1'
+        mz: '15'
+        wi: '15'
 
     descr_mailkeys:
         mz: 'keys@freifunk-mainz.de'
