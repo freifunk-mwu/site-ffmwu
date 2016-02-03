@@ -89,8 +89,8 @@ site:
         mz: 'mz'
         wi: 'wi'
     modules_commit:
-        mz: '723b82aaf70f62d795a00fa657b8f92e2346e270'
-        wi: '723b82aaf70f62d795a00fa657b8f92e2346e270'
+        mz: 'aa12ed4db2db7d3e8868ddd8b60e3e9e13a838d1'
+        wi: 'aa12ed4db2db7d3e8868ddd8b60e3e9e13a838d1'
 
     # site.mk
     batman_pkg: 'gluon-mesh-batman-adv-15'

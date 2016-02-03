@@ -1,7 +1,6 @@
 GLUON_SITE_PACKAGES := \
 	${batman_pkg} \
 	gluon-alfred \
-	gluon-announced \
 	gluon-autoupdater \
 	gluon-config-mode-autoupdater \
 	gluon-config-mode-contact-info \
@@ -19,8 +18,8 @@ GLUON_SITE_PACKAGES := \
 	gluon-mesh-vpn-fastd \
 	gluon-next-node \
 	gluon-radvd \
+	gluon-respondd \
 	gluon-setup-mode \
-	gluon-site-info \
 	gluon-status-page \
 	iwinfo \
 	iptables \
