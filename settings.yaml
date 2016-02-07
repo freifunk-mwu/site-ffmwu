@@ -1,12 +1,14 @@
 networks:
     mz:
         int: 'ffmz.org'         # internal
-        srd: 'freifunk-mwu.de'  # shared
+        srdint: 'ffmwu.org'     # shared internal
+        ext: 'freifunk-mwu.de'  # external
         num: 37
         lng: 'mainz'            # natural language
     wi:
         int: 'ffwi.org'         # internal
-        srd: 'freifunk-mwu.de'  # shared
+        srdint: 'ffmwu.org'     # shared internal
+        ext: 'freifunk-mwu.de'  # external
         num: 56
         lng: 'wiesbaden'        # natural language
 

@@ -59,7 +59,7 @@ class Gateway(object):
         self.netname = netname
         self.gwnum = gwnum
         self.netnum = settings['networks'][netname]['num']
-        self.srdurl = settings['networks'][netname]['srd']
+        self.exturl = settings['networks'][netname]['ext']
         self.inturl = settings['networks'][netname]['int']
         self.gatename = settings['gateways'][gwnum]['name']
         self.pubkey = settings['gateways'][gwnum]['pubkey']
@@ -80,14 +80,14 @@ class Gateway(object):
             self.netnum, self.netnum, self.gwnum
         )
 
-    def cdns(self, shared=True):  # c: _c_ounted
+    def cdns(self, external=True):  # c: _c_ounted
         return self.f['cdns'] % (
-            self.gwnum, self.srdurl if shared else self.inturl
+            self.gwnum, self.exturl if external else self.inturl
         )
 
-    def ndns(self, shared=True):  # n: _n_amed
+    def ndns(self, external=True):  # n: _n_amed
         return self.f['ndns'] % (
-            self.gatename, self.srdurl if shared else self.inturl
+            self.gatename, self.exturl if external else self.inturl
         )
 
     def remote(self):
@@ -121,7 +121,7 @@ def populate(netname, priority=None):
             settings['networks'][netname]['int']
         ),
         'opkg_extra_modules': opkg_extra_modules % (
-            settings['networks'][netname]['int'], netname
+            settings['networks'][netname]['srdint'], netname
         ),
         'netnum': netnum,
         'netnum_hex': '%x' % (netnum),
