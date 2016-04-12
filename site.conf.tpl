@@ -119,6 +119,8 @@ ${signkeys}                },
         list = {
             'node',
             'backbone',
+            'offloader',
+            'test',
         },
     },
 
