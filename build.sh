@@ -10,7 +10,9 @@
 MAKEOPTS="-j4 V=s"
 
 # Default to build all Gluon targets if parameter -t is not set
-TARGETS="ar71xx-generic ar71xx-nand mpc85xx-generic x86-generic x86-kvm_guest x86-64 x86-xen_domu ramips-rt305x brcm2708-bcm2708 brcm2708-bcm2709 sunxi"
+TARGETS="ar71xx-generic ar71xx-nand mpc85xx-generic x86-generic \
+x86-kvm_guest x86-64 x86-xen_domu ramips-rt305x brcm2708-bcm2708 \
+brcm2708-bcm2709 sunxi"
 
 # Sites directory
 SITES_DIR="sites"
