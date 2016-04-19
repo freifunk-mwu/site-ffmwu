@@ -173,7 +173,7 @@ if [[ "${BRANCH}" == "experimental" ]]; then
   GLUON_TAG=$(git --git-dir="${GLUON_DIR}/.git" describe --always)
   GLUON_TAG="${GLUON_TAG#v}"
   GLUON_TAG="${GLUON_TAG//-*}"
-  RELEASE="${GLUON_TAG}+${SITE}~$(date +%Y%m%d)$(printf %02d ${RELEASE_NUM})"
+  RELEASE="${GLUON_TAG}+${SITE}~exp$(date +%Y%m%d)$(printf %02d ${RELEASE_NUM})"
 elif [[ "${BRANCH}" == "testing" ]]; then
   if ! GLUON_TAG=$(git --git-dir="${GLUON_DIR}/.git" describe --exact-match); then
     echo 'The gluon tree is not checked out at a tag.'
