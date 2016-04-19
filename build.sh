@@ -63,7 +63,7 @@ if [[ "${#}" == 0 ]]; then
 fi
 
 # Evaluate arguments for build script.
-while getopts b:c:dham:i:t:s: flag; do
+while getopts ab:c:dhm:i:t:r:s: flag; do
   case ${flag} in
     b)
       case "${OPTARG}" in
