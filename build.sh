@@ -4,10 +4,12 @@
 #
 # Credits:
 #   - Freifunk Fulda for their build script
+#   - Freifunk Bremen for their version schema
 # =====================================================================
 
 # Default make options
-MAKEOPTS="-j4 V=s"
+CORES=$(nproc)
+MAKEOPTS="-j $((CORES+1)) V=s"
 
 # Default to build all Gluon targets if parameter -t is not set
 TARGETS="ar71xx-generic ar71xx-nand mpc85xx-generic x86-generic \
@@ -38,22 +40,22 @@ usage() {
   echo ""
   echo "Build script for Freifunk MWU Gluon firmware."
   echo ""
+  echo "-a: Build targets marked as broken (optional)"
+  echo "    Default: ${BROKEN}"
   echo "-b: Firmware branch name (testing or experimental)"
   echo "-c: Build command: update | build | sign | deploy"
   echo "-d: Enable bash debug output"
   echo "-h: Show this help"
-  echo "-m: Setting for make options (optional)"
-  echo "    Default: \"${MAKEOPTS}\""
   echo "-i: Build identifier (optional)"
   echo "    Default: \"${BUILD}\""
+  echo "-m: Setting for make options (optional)"
+  echo "    Default: \"${MAKEOPTS}\""
+  echo "-r: Release suffix number (optional)"
+  echo "    Default: 1"
+  echo "-s: Site directory to use (required)"
+  echo "    Availible: $(ls -m ${SITES_DIR})"
   echo "-t: Gluon target architectures to build (optional)"
   echo "    Default: \"${TARGETS}\""
-  echo "-r: Release suffix number"
-  echo "    Default: 1"
-  echo "-s: Path to site directory"
-  echo "    Availible: $(ls -m ${SITES_DIR})"
-  echo "-a: Build targets marked as broken"
-  echo "    Default: ${BROKEN}"
 }
 
 # Evaluate arguments for build script.
