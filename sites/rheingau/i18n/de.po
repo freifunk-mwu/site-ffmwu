@@ -60,3 +60,11 @@ msgstr ""
 msgid "gluon-luci-node-role:role:node"
 msgstr ""
 "Normaler Knoten"
+
+msgid "gluon-luci-node-role:role:offloader"
+msgstr ""
+"Offloader"
+
+msgid "gluon-luci-node-role:role:test"
+msgstr ""
+"Test Knoten"
