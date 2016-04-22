@@ -20,7 +20,7 @@ We also maintain additional site configurations for things like mass deployment.
 
 ## Build the firmware
 The firmware can be build using the `build.sh` script contained in the repository.
-For example to do a full testing build for site >>mainz<< use the following commands:
+For example to do a full testing build for site mainz use the following commands:
 
 ```
 ./build.sh -s mainz -b testing -r mainz1 -c update
