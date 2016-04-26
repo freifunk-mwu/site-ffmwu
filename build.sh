@@ -67,6 +67,9 @@ fi
 # Evaluate arguments for build script.
 while getopts ab:c:dhm:i:t:r:s: flag; do
   case ${flag} in
+    d)
+      set -x
+      ;;
     h)
       usage
       exit
@@ -101,11 +104,13 @@ while getopts ab:c:dhm:i:t:r:s: flag; do
           ;;
       esac
       ;;
-    d)
-      set -x
-      ;;
     m)
-      MAKEOPTS="${OPTARG}"
+      if [[ ${OPTARG} == +* ]]; then
+
+        MAKEOPTS="${MAKEOPTS} ${OPTARG#+}"
+      else
+        MAKEOPTS="${OPTARG}"
+      fi
       ;;
     i)
       BUILD="${OPTARG}"
@@ -173,10 +178,9 @@ if [[ "${BRANCH}" == "experimental" ]]; then
   GLUON_TAG="${GLUON_TAG//-*}"
 elif [[ "${BRANCH}" == "testing" ]]; then
   if ! GLUON_TAG=$(git --git-dir="${GLUON_DIR}/.git" describe --exact-match) ; then
-    echo 'The gluon tree is not checked out at a tag.'
+    echo 'Error: The gluon tree is not checked out at a tag.'
     echo 'Please use `git checkout <tagname>` to use an official gluon release'
-    echo 'or build it manually. Only with a tag we can autogenerate the'
-    echo 'release string!'
+    echo 'or build it as experimental.'
     exit ${E_ILLEGAL_TAG}
   fi
   GLUON_TAG="${GLUON_TAG#v}"
@@ -194,12 +198,10 @@ update() {
 }
 
 build() {
-  echo
-  echo "--- Build Gluon ${GLUON_TAG} as ${RELEASE}"
+  echo "--- Build Gluon ${GLUON_TAG} as ${RELEASE} ---"
 
   for TARGET in ${TARGETS}; do
-    echo
-    echo "--- Build Gluon Images for target: ${TARGET}"
+    echo "--- Build Gluon Images for target: ${TARGET} ---"
     make ${MAKEOPTS} \
          GLUON_SITEDIR="${SITE_DIR}" \
          GLUON_RELEASE="${RELEASE}" \
@@ -209,8 +211,7 @@ build() {
          all
   done
 
-  echo
-  echo "--- Build Gluon Manifest"
+  echo "--- Build Gluon Manifest ---"
   make ${MAKEOPTS} \
        GLUON_SITEDIR="${SITE_DIR}" \
        GLUON_RELEASE="${RELEASE}" \
@@ -220,8 +221,7 @@ build() {
 }
 
 sign() {
-  echo
-  echo "--- Sign Gluon Firmware Build: "
+  echo "--- Sign Gluon Firmware Build ---"
 
   # Add the signature to the local manifest
   contrib/sign.sh \
@@ -236,8 +236,7 @@ deploy() {
     TARGET="${TARGET}~${BUILD}"
   fi
 
-  echo
-  echo "--- Deploy Gluon ${RELEASE} Firmware to ${TARGET}"
+  echo "--- Deploy Gluon Firmware ---"
   mkdir --parents --verbose "${TARGET}"
 
   # Check if target directory is empty
@@ -254,7 +253,10 @@ deploy() {
 }
 
 clean(){
+  echo "--- Clean ---"
+
   for TARGET in ${TARGETS}; do
+    echo "--- Cleaning target: ${TARGET} ---"
     make ${MAKEOPTS} \
          GLUON_SITEDIR="${SITE_DIR}" \
          GLUON_TARGET="${TARGET}" \
@@ -264,6 +266,7 @@ clean(){
 }
 
 dirclean(){
+  echo "--- Cleaning working directory ---"
   make ${MAKEOPTS} \
        GLUON_SITEDIR="${SITE_DIR}" \
        BROKEN="${BROKEN}" \
