@@ -26,6 +26,11 @@ GLUON_SITE_PACKAGES := \
 	iptables \
 	haveged
 
+ifeq ($(GLUON_TARGET),x86-64)
+GLUON_SITE_PACKAGES += \
+        kmod-igb
+endif
+
 DEFAULT_GLUON_RELEASE := ${gluon_release_num}-$$(shell date '+%Y%m%d')
 
 # Allow overriding the release number from the command line
