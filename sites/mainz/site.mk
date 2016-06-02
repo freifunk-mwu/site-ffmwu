@@ -26,11 +26,6 @@ GLUON_SITE_PACKAGES := \
 	iptables \
 	haveged
 
-DEFAULT_GLUON_RELEASE := 0.4-$(shell date '+%Y%m%d')
-
-# Allow overriding the release number from the command line
-GLUON_RELEASE ?= $(DEFAULT_GLUON_RELEASE)
-
 # Default priority for updates.
 GLUON_PRIORITY ?= 0
 
