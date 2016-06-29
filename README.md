@@ -3,12 +3,12 @@ This repository holds the site configurations for the following Freifunk MWU (Ma
 
 * [Freifunk Mainz](http://www.freifunk-mainz.de)
 * [Freifunk Wiesbaden](http://wiesbaden.freifunk.net)
-* [Freifunk Rheingau](https://www.freifunk-rheingau.de)
+* [Freifunk Rheingau-Taunus](https://www.freifunk-rheingau.de)
 
 ## Repository structure
-We maintain two branches `experimental` and `testing`.
+We maintain two branches `experimental` and `stable`.
 
-All new commits go to the _experimental_ branch and if neccesary they are cherry-picked to _testing_ otherwise they will be merged with the next major release.
+All new commits go to the _experimental_ branch and if neccesary they are cherry-picked to _stable_ otherwise they will be merged with the next major release.
 
 The gluon version used to build the firmware is referenced as a git submodule in `gluon`.
 To ensure that the submodule is initialized correctly, call `git submodule update --init` after a checkout.
@@ -20,15 +20,15 @@ We also maintain additional site configurations for things like mass deployment.
 
 ## Build the firmware
 The firmware can be build using the `build.sh` script contained in the repository.
-For example to do a full testing build for site >>mainz<< use the following commands:
+For example to do a full stable build for site _mainz_ use the following commands:
 
 ```
-./build.sh -s mainz -b testing -r mainz1 -c update
-./build.sh -s mainz -b testing -r mainz1 -c build
+./build.sh -s mainz -b stable -r mainz1 -c update
+./build.sh -s mainz -b stable -r mainz1 -c build
 ```
 
 ## Sign and deploy the firmware
-To sign the images, use the following command:
+To sign the new images as _testing_, use the following command:
 
 ```
 ./build.sh -s mainz -b testing -r mainz1 -c sign
@@ -45,5 +45,5 @@ For the versioning of our _stable_ and _testing_ releases we use the Gluon versi
 
 For _experimental_ builds this is slightly different. They also start with the Gluon version followed by the site name (as we don't have Git tag we use the latest branch name). But the suffix doesn't include the regular counter instead we add a second suffix that reflects the build date followed by an incrementable counter incase we build several times a day. For example the experimental build for the 21.04.2016 would be `2016.1+mainz~exp2016042101`.
 
-## Where is the stable branch?
-We decided to no longer build individual versions for _stable_ and _testing_ (formerly known as beta). Testing builds are promoted to stable builds by moving them to the stable directory. This ensures we don't mess anything up between the testing and stable release.
+## Where is the testing branch?
+We decided to no longer build individual versions for _stable_ and _testing_ (formerly known as beta). Testing builds are promoted to stable builds by moving them to the stable directory and re-generate the manifest. This ensures we don't mess anything up between the testing and stable releases.
