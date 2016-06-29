@@ -23,6 +23,11 @@ gateways:
         pubkey:
             mz: 'd73479cc97a87ffd4b256a873e505f3264408ed077b248358c52e8dc82bbfc07'
             wi: '45c22f99699ea2cea22eb00c024a32f4d04bbee649138a4df6ee2090e2736ca8'
+    161:
+        name: 'ingwer'
+        pubkey:
+            mz: '9b74e90fd68df749e45718eced65268260872e4cf74369b9bf9e9fb42411efe9'
+            wi: 'ba6a9a09e519ec0f74603ca9808dbdde40ed9d539bd6baa5589f0a0e152fbea3'
     231:
         name: 'wasserfloh'
         pubkey:
