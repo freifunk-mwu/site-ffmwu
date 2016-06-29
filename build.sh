@@ -13,8 +13,7 @@ MAKEOPTS="-j$((CORES+1))"
 
 # Default to build all Gluon targets if parameter -t is not set
 TARGETS="ar71xx-generic ar71xx-nand mpc85xx-generic x86-generic \
-x86-kvm_guest x86-64 x86-xen_domu ramips-rt305x brcm2708-bcm2708 \
-brcm2708-bcm2709 sunxi"
+x86-kvm_guest x86-64 x86-xen_domu"
 
 # Sites directory
 SITES_DIR="./sites"
@@ -30,6 +29,7 @@ SIGN_KEY="${HOME}/.ecdsakey"
 
 # Build targets marked broken
 BROKEN=false
+TARGETS_BROKEN="ramips-rt305x brcm2708-bcm2708 brcm2708-bcm2709 sunxi"
 
 # Error codes
 E_ILLEGAL_ARGS=126
@@ -43,7 +43,7 @@ usage() {
   echo ""
   echo "-a: Build targets marked as broken (optional)"
   echo "    Default: ${BROKEN}"
-  echo "-b: Firmware branch name (testing or experimental)"
+  echo "-b: Firmware branch name: stable | testing | experimental"
   echo "-c: Build command: update | build | sign | deploy"
   echo "-d: Enable bash debug output"
   echo "-h: Show this help"
@@ -56,6 +56,7 @@ usage() {
   echo "    Availible: $(ls -m ${SITES_DIR})"
   echo "-t: Gluon target architectures to build (optional)"
   echo "    Default: \"${TARGETS}\""
+  echo "    Broken: \"${TARGETS_BROKEN}\""
 }
 
 # Evaluate arguments for build script.
@@ -76,6 +77,7 @@ while getopts ab:c:dhm:i:t:r:s: flag; do
       ;;
     b)
       case "${OPTARG}" in
+        stable| \
         testing| \
         experimental)
           BRANCH="${OPTARG}"
@@ -116,7 +118,7 @@ while getopts ab:c:dhm:i:t:r:s: flag; do
       BUILD="${OPTARG}"
       ;;
     t)
-      TARGETS="${OPTARG}"
+      TARGETS_OPT="${OPTARG}"
       ;;
     r)
       RELEASE="${OPTARG}"
@@ -153,6 +155,13 @@ if [[ "${#}" > 0 ]]; then
   exit ${E_ILLEGAL_ARGS}
 fi
 
+# Generate target list
+if [[ -z "${TARGETS_OPT}" && "${BROKEN}" == true ]]; then
+  TARGETS="${TARGETS} ${TARGETS_BROKEN}"
+elif [[ -n "${TARGETS_OPT}" ]] ; then
+  TARGETS="${TARGETS_OPT}"
+fi
+
 # Set branch name
 if [[ -z "${BRANCH}" ]]; then
   BRANCH="$(git rev-parse --abbrev-ref HEAD)"
@@ -176,7 +185,7 @@ if [[ "${BRANCH}" == "experimental" ]]; then
   GLUON_TAG=$(git --git-dir="${GLUON_DIR}/.git" describe --always)
   GLUON_TAG="${GLUON_TAG#v}"
   GLUON_TAG="${GLUON_TAG//-*}"
-elif [[ "${BRANCH}" == "testing" ]]; then
+elif [[ "${BRANCH}" == "stable" || "${BRANCH}" == "testing" ]]; then
   if ! GLUON_TAG=$(git --git-dir="${GLUON_DIR}/.git" describe --exact-match) ; then
     echo 'Error: The gluon tree is not checked out at a tag.'
     echo 'Please use `git checkout <tagname>` to use an official gluon release'
@@ -210,7 +219,9 @@ build() {
          BROKEN="${BROKEN}" \
          all
   done
+}
 
+sign() {
   echo "--- Build Gluon Manifest ---"
   make ${MAKEOPTS} \
        GLUON_SITEDIR="${SITE_DIR}" \
@@ -218,15 +229,16 @@ build() {
        GLUON_BRANCH="${BRANCH}" \
        GLUON_PRIORITY="${PRIORITY}" \
        manifest
-}
 
-sign() {
   echo "--- Sign Gluon Firmware Build ---"
-
   # Add the signature to the local manifest
-  contrib/sign.sh \
-      "${SIGN_KEY}" \
-      "output/images/sysupgrade/${BRANCH}.manifest"
+  if [[ -e "${SIGN_KEY}" ]] ; then
+    contrib/sign.sh \
+        "${SIGN_KEY}" \
+        "output/images/sysupgrade/${BRANCH}.manifest"
+  else
+    "${SIGN_KEY} not found!"
+  fi
 }
 
 deploy() {
@@ -259,6 +271,7 @@ clean(){
     echo "--- Cleaning target: ${TARGET} ---"
     make ${MAKEOPTS} \
          GLUON_SITEDIR="${SITE_DIR}" \
+         GLUON_RELEASE="${RELEASE}" \
          GLUON_TARGET="${TARGET}" \
          BROKEN="${BROKEN}" \
          clean
