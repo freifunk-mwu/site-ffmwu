@@ -31,6 +31,9 @@ SIGN_KEY="${HOME}/.ecdsakey"
 BROKEN=false
 TARGETS_BROKEN="ramips-rt305x brcm2708-bcm2708 brcm2708-bcm2709 sunxi"
 
+# Overwrite Git Tag for experimental releases
+GLUON_EXP_TAG="2016.1"
+
 # Error codes
 E_ILLEGAL_ARGS=126
 E_ILLEGAL_TAG=127
@@ -162,11 +165,6 @@ elif [[ -n "${TARGETS_OPT}" ]] ; then
   TARGETS="${TARGETS_OPT}"
 fi
 
-# Set branch name
-if [[ -z "${BRANCH}" ]]; then
-  BRANCH="$(git rev-parse --abbrev-ref HEAD)"
-fi
-
 # Set command
 if [[ -z "${COMMAND}" ]]; then
   echo "Error: Build command missing."
@@ -182,9 +180,7 @@ if [[ -z "${RELEASE}" ]]; then
 fi
 
 if [[ "${BRANCH}" == "experimental" ]]; then
-  GLUON_TAG=$(git --git-dir="${GLUON_DIR}/.git" describe --always)
-  GLUON_TAG="${GLUON_TAG#v}"
-  GLUON_TAG="${GLUON_TAG//-*}"
+  GLUON_TAG="${GLUON_EXP_TAG}"
 elif [[ "${BRANCH}" == "stable" || "${BRANCH}" == "testing" ]]; then
   if ! GLUON_TAG=$(git --git-dir="${GLUON_DIR}/.git" describe --exact-match) ; then
     echo 'Error: The gluon tree is not checked out at a tag.'
@@ -262,6 +258,16 @@ deploy() {
   $CP_CMD "output/images/factory"         "${TARGET}/factory"
   $CP_CMD "output/images/sysupgrade"      "${TARGET}/sysupgrade"
   $CP_CMD "output/modules/"*"${RELEASE}"  "${TARGET}/modules"
+
+  # Set branch link to new release
+  echo "--- Linking branch ${BRANCH} to $(basename ${TARGET}) ---"
+  if [[ -e "${DEPLOYMENT_DIR}/../${BRANCH}" ]] ; then
+    rm "${DEPLOYMENT_DIR}/../${BRANCH}"
+  fi
+
+  ln --relative --symbolic \
+        "${TARGET}" \
+        "${DEPLOYMENT_DIR}/../${BRANCH}"
 }
 
 clean(){
