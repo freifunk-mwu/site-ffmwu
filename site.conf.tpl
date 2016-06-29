@@ -91,7 +91,7 @@ ${gw_remotes}                },
                 name = 'stable',
                 mirrors = {
 ${gw_mirrors_stable}                },
-                good_signatures = 4,
+                good_signatures = 3,
                 pubkeys = {
 ${signkeys}                },
             },
