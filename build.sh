@@ -47,7 +47,7 @@ usage() {
   echo "-a: Build targets marked as broken (optional)"
   echo "    Default: ${BROKEN}"
   echo "-b: Firmware branch name: stable | testing | experimental"
-  echo "-c: Build command: update | build | sign | deploy"
+  echo "-c: Build command: update | build | sign | deploy | clean | dirclean"
   echo "-d: Enable bash debug output"
   echo "-h: Show this help"
   echo "-i: Build identifier (optional)"
@@ -79,18 +79,13 @@ while getopts ab:c:dhm:i:t:r:s: flag; do
       exit
       ;;
     b)
-      case "${OPTARG}" in
-        stable| \
-        testing| \
-        experimental)
-          BRANCH="${OPTARG}"
-          ;;
-        *)
-          echo "Error: Invalid branch set."
-          usage
-          exit ${E_ILLEGAL_ARGS}
-          ;;
-      esac
+      if [[ " stable testing experimental " =~ " ${OPTARG} " ]] ; then
+        BRANCH="${OPTARG}"
+      else
+        echo "Error: Invalid branch set."
+        usage
+        exit ${E_ILLEGAL_ARGS}
+      fi
       ;;
     c)
       case "${OPTARG}" in
@@ -238,6 +233,9 @@ sign() {
 }
 
 deploy() {
+  # Site name
+  SITE=$(basename ${SITE_DIR})
+
   # Create the deployment directory
   TARGET="${DEPLOYMENT_DIR}/${RELEASE}"
   if [[ -n ${BUILD} ]]; then
@@ -261,13 +259,16 @@ deploy() {
 
   # Set branch link to new release
   echo "--- Linking branch ${BRANCH} to $(basename ${TARGET}) ---"
-  if [[ -e "${DEPLOYMENT_DIR}/../${BRANCH}" ]] ; then
-    rm "${DEPLOYMENT_DIR}/../${BRANCH}"
+  if [[ ! -d "${DEPLOYMENT_DIR}/../${SITE}" ]]; then
+    echo "No directory to link to."
+    exit 0
+  elif [[ -e "${DEPLOYMENT_DIR}/../${SITE}/${BRANCH}" ]] ; then
+    unlink "${DEPLOYMENT_DIR}/../${SITE}/${BRANCH}"
   fi
 
   ln --relative --symbolic \
         "${TARGET}" \
-        "${DEPLOYMENT_DIR}/../${BRANCH}"
+        "${DEPLOYMENT_DIR}/../${SITE}/${BRANCH}"
 }
 
 clean(){
