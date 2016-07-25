@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 DATE=$(date +%Y%m%d)
-SITES="mainz wiesbaden rheingau"
+SITES="mainz wiesbaden rheingau taunus"
 
 # Error codes
 E_ILLEGAL_ARGS=126
