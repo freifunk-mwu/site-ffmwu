@@ -141,3 +141,5 @@ GLUON_PRIORITY ?= 0
 
 # i18n langs
 GLUON_LANGS ?= en de
+
+GLUON_ATH10K_MESH ?= 11s
