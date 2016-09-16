@@ -139,5 +139,8 @@ endif
 # Default priority for updates.
 GLUON_PRIORITY ?= 0
 
+# Region code required for some images; supported values: us eu
+GLUON_REGION ?= eu
+
 # i18n langs
 GLUON_LANGS ?= en de

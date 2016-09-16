@@ -13,7 +13,6 @@ Config specs
     * juventas
     * kokel
     * magic
-    * stonie
     * tanjeff
     * sander
     * axel
