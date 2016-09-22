@@ -262,7 +262,9 @@ deploy() {
   if [[ ! -d "${DEPLOYMENT_DIR}/../${SITE}" ]]; then
     echo "No directory to link to."
     exit 0
-  elif [[ -e "${DEPLOYMENT_DIR}/../${SITE}/${BRANCH}" ]] ; then
+  fi
+
+  if [[ -L "${DEPLOYMENT_DIR}/../${SITE}/${BRANCH}" ]] ; then
     unlink "${DEPLOYMENT_DIR}/../${SITE}/${BRANCH}"
   fi
 
