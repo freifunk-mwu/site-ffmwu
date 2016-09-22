@@ -188,9 +188,6 @@ fi
 
 RELEASE="${GLUON_TAG}+${RELEASE}"
 
-# Number of days that may pass between releasing an updating
-PRIORITY=0
-
 update() {
   make ${MAKEOPTS} \
        GLUON_SITEDIR="${SITE_DIR}" \
@@ -218,7 +215,6 @@ sign() {
        GLUON_SITEDIR="${SITE_DIR}" \
        GLUON_RELEASE="${RELEASE}" \
        GLUON_BRANCH="${BRANCH}" \
-       GLUON_PRIORITY="${PRIORITY}" \
        manifest
 
   echo "--- Sign Gluon Firmware Build ---"
