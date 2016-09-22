@@ -12,8 +12,8 @@ CORES=$(nproc)
 MAKEOPTS="-j$((CORES+1))"
 
 # Default to build all Gluon targets if parameter -t is not set
-TARGETS="ar71xx-generic ar71xx-nand mpc85xx-generic x86-generic \
-x86-kvm_guest x86-64 x86-xen_domu"
+TARGETS="ar71xx-generic ar71xx-nand mpc85xx-generic brcm2708-bcm2708 \
+brcm2708-bcm2709 x86-generic x86-kvm_guest x86-64 x86-xen_domu"
 
 # Sites directory
 SITES_DIR="./sites"
@@ -29,7 +29,7 @@ SIGN_KEY="${HOME}/.ecdsakey"
 
 # Build targets marked broken
 BROKEN=false
-TARGETS_BROKEN="ramips-rt305x brcm2708-bcm2708 brcm2708-bcm2709 sunxi"
+TARGETS_BROKEN="ar71xx-mikrotik, ramips-mt7621, ramips-rt305x sunxi"
 
 # Overwrite Git Tag for experimental releases
 GLUON_EXP_TAG="2016.2"
