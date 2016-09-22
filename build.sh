@@ -32,7 +32,7 @@ BROKEN=false
 TARGETS_BROKEN="ramips-rt305x brcm2708-bcm2708 brcm2708-bcm2709 sunxi"
 
 # Overwrite Git Tag for experimental releases
-GLUON_EXP_TAG="2016.1"
+GLUON_EXP_TAG="2016.2"
 
 # Error codes
 E_ILLEGAL_ARGS=126
