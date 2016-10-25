@@ -72,6 +72,9 @@ if [[ "${BRANCH}" == "experimental" ]]; then
   git submodule update --remote
 fi
 
+# Set release name
+RELEASE="mwu${SUFFIX}"
+
 # Build testing as stable to get correct autoupdater branch
 if [[ "${BRANCH}" == "testing" ]]; then
   BRANCH_EFFECTIVE="stable"
@@ -81,8 +84,6 @@ fi
 
 # Ensure the build tree is clean
 for SITE in ${SITES}; do
-  RELEASE="${SITE}${SUFFIX}"
-
   if [[ ${CLEAN} ]] ; then
     echo "--- Clean entire build tree ---"
     ./build.sh -s ${SITE} -b ${BRANCH} -r ${RELEASE} "${@}" -c dirclean
@@ -97,7 +98,6 @@ done
 
 # Build the firmware, sign and deploy
 for SITE in ${SITES}; do
-  RELEASE="${SITE}${SUFFIX}"
   echo "--- Build Firmware for ${SITE}/ ${RELEASE} ---"
 
   echo "--- Build Firmware for ${SITE}/ update ---"

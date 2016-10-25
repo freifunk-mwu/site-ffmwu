@@ -233,7 +233,7 @@ deploy() {
   SITE=$(basename ${SITE_DIR})
 
   # Create the deployment directory
-  TARGET="${DEPLOYMENT_DIR}/${RELEASE}"
+  TARGET="${DEPLOYMENT_DIR}/${RELEASE}/${SITE}"
   if [[ -n ${BUILD} ]]; then
     TARGET="${TARGET}~${BUILD}"
   fi
