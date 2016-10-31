@@ -29,7 +29,7 @@ SIGN_KEY="${HOME}/.ecdsakey"
 
 # Build targets marked broken
 BROKEN=false
-TARGETS_BROKEN="ar71xx-mikrotik, ramips-mt7621, ramips-rt305x sunxi"
+TARGETS_BROKEN="ar71xx-mikrotik ramips-mt7621 ramips-rt305x sunxi"
 
 # Overwrite Git Tag for experimental releases
 GLUON_EXP_TAG="2016.2"
