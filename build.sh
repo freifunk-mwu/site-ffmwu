@@ -46,8 +46,10 @@ usage() {
   echo ""
   echo "-a: Build targets marked as broken (optional)"
   echo "    Default: ${BROKEN}"
-  echo "-b: Firmware branch name: stable | testing | experimental"
-  echo "-c: Build command: update | build | sign | deploy | clean | dirclean"
+  echo "-b: Firmware branch name (required)"
+  echo "    Availible: stable testing experimental"
+  echo "-c: Build command (required)"
+  echo "    Availible: update build sign deploy clean dirclean"
   echo "-d: Enable bash debug output"
   echo "-h: Show this help"
   echo "-i: Build identifier (optional)"
@@ -160,16 +162,23 @@ elif [[ -n "${TARGETS_OPT}" ]] ; then
   TARGETS="${TARGETS_OPT}"
 fi
 
-# Set command
+# Check if $COMMAND is set
 if [[ -z "${COMMAND}" ]]; then
   echo "Error: Build command missing."
   usage
   exit ${E_ILLEGAL_ARGS}
 fi
 
-# Set release number
+# Check if $RELESE is set
 if [[ -z "${RELEASE}" ]]; then
   echo "Error: Release suffix missing."
+  usage
+  exit ${E_ILLEGAL_ARGS}
+fi
+
+# Check if $BRANCG is set
+if [[ -z "${BRANCH}" ]]; then
+  echo "Error: Branch missing."
   usage
   exit ${E_ILLEGAL_ARGS}
 fi
@@ -188,6 +197,18 @@ fi
 
 RELEASE="${GLUON_TAG}+${RELEASE}"
 
+
+patch_ati_pata() {
+  X86_ARC=${1}
+  PATCHSTR="CONFIG_PATA_ATIIXP=y"
+  for PATCH in "openwrt/target/linux/x86/${X86_ARC}/config-"*; do
+    if [ -f "${PATCH}" ]; then
+       echo "--- Patching target ${TARGET} for ATI PATA support ---"
+       grep "${PATCHSTR}" "${PATCH}" || echo "${PATCHSTR}" >> "${PATCH}"
+    fi
+  done
+}
+
 update() {
   make ${MAKEOPTS} \
        GLUON_SITEDIR="${SITE_DIR}" \
@@ -198,6 +219,9 @@ build() {
   echo "--- Build Gluon ${GLUON_TAG} as ${RELEASE} ---"
 
   for TARGET in ${TARGETS}; do
+    # Patch OpenWRT Sources
+    if [ "${TARGET}" == "x86-64" ]; then patch_ati_pata "64"; fi
+
     echo "--- Build Gluon Images for target: ${TARGET} ---"
     make ${MAKEOPTS} \
          GLUON_SITEDIR="${SITE_DIR}" \
