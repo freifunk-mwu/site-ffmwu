@@ -25,7 +25,8 @@ GLUON_SITE_PACKAGES := \
 	gluon-status-page \
 	iwinfo \
 	iptables \
-	haveged
+        haveged \
+        tecff-ath9k-broken-wifi-workaround 
 
 # basic support for USB stack
 USB_PACKAGES_BASIC := \
