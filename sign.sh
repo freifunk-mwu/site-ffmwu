@@ -11,8 +11,8 @@
 
 # Basic configuration
 SRV_USER="admin"
-SRV_HOST="pudding.freifunk-mwu.de"
-SRV_PORT="2323"
+SRV_HOST="milchreis.freifunk-mwu.de"
+SRV_PORT="3323"
 SRV_PATH="/var/www/html/firmware"
 
 # Help function used in error messages and -h option
