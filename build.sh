@@ -197,18 +197,6 @@ fi
 
 RELEASE="${GLUON_TAG}+${RELEASE}"
 
-
-patch_ati_pata() {
-  X86_ARC=${1}
-  PATCHSTR="CONFIG_PATA_ATIIXP=y"
-  for PATCH in "openwrt/target/linux/x86/${X86_ARC}/config-"*; do
-    if [ -f "${PATCH}" ]; then
-       echo "--- Patching target ${TARGET} for ATI PATA support ---"
-       grep "${PATCHSTR}" "${PATCH}" || echo "${PATCHSTR}" >> "${PATCH}"
-    fi
-  done
-}
-
 update() {
   make ${MAKEOPTS} \
        GLUON_SITEDIR="${SITE_DIR}" \
@@ -219,9 +207,6 @@ build() {
   echo "--- Build Gluon ${GLUON_TAG} as ${RELEASE} ---"
 
   for TARGET in ${TARGETS}; do
-    # Patch OpenWRT Sources
-    if [ "${TARGET}" == "x86-64" ]; then patch_ati_pata "64"; fi
-
     echo "--- Build Gluon Images for target: ${TARGET} ---"
     make ${MAKEOPTS} \
          GLUON_SITEDIR="${SITE_DIR}" \
