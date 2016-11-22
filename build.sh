@@ -169,14 +169,14 @@ if [[ -z "${COMMAND}" ]]; then
   exit ${E_ILLEGAL_ARGS}
 fi
 
-# Check if $RELESE is set
+# Check if $RELEASE is set
 if [[ -z "${RELEASE}" ]]; then
   echo "Error: Release suffix missing."
   usage
   exit ${E_ILLEGAL_ARGS}
 fi
 
-# Check if $BRANCG is set
+# Check if $BRANCH is set
 if [[ -z "${BRANCH}" ]]; then
   echo "Error: Branch missing."
   usage
