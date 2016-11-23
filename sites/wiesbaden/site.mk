@@ -19,6 +19,7 @@ GLUON_SITE_PACKAGES := \
 	gluon-luci-wifi-config \
 	gluon-mesh-vpn-fastd \
 	gluon-next-node \
+        gluon-radv-filterd \
 	gluon-radvd \
 	gluon-respondd \
 	gluon-setup-mode \
