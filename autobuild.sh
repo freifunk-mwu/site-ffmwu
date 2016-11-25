@@ -107,8 +107,8 @@ for SITE in ${SITES}; do
   ./build.sh -s ${SITE} -b ${BRANCH_EFFECTIVE} -r ${RELEASE} "${@}" -c build
 
   echo "--- Build Firmware for ${SITE}/ sign ---"
-  ./build.sh -s ${SITE} -b ${BRANCH} -r ${RELEASE} -c sign
+  ./build.sh -s ${SITE} -b ${BRANCH} -r ${RELEASE} "${@}" -c sign
 
   echo "--- Build Firmware for ${SITE}/ deploy ---"
-  ./build.sh -s ${SITE} -b ${BRANCH} -r ${RELEASE} -c deploy
+  ./build.sh -s ${SITE} -b ${BRANCH} -r ${RELEASE} "${@}" -c deploy
 done
