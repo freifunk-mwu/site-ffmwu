@@ -36,8 +36,8 @@ USB_PACKAGES_BASIC := \
 
 # USB HID support
 USB_PACKAGES_HID += \
-        kmod-usb-hid \
-        kmod-hid-generic \
+	kmod-usb-hid \
+	kmod-hid-generic \
 
 # storage support for USB devices
 USB_PACKAGES_STORAGE := \
