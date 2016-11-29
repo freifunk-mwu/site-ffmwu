@@ -19,15 +19,15 @@ GLUON_SITE_PACKAGES := \
 	gluon-luci-wifi-config \
 	gluon-mesh-vpn-fastd \
 	gluon-next-node \
-        gluon-radv-filterd \
+	gluon-radv-filterd \
 	gluon-radvd \
 	gluon-respondd \
 	gluon-setup-mode \
 	gluon-status-page \
 	iwinfo \
 	iptables \
-        haveged \
-        tecff-ath9k-broken-wifi-workaround
+	haveged \
+	tecff-ath9k-broken-wifi-workaround
 
 # basic support for USB stack
 USB_PACKAGES_BASIC := \
@@ -36,8 +36,8 @@ USB_PACKAGES_BASIC := \
 
 # USB HID support
 USB_PACKAGES_HID += \
-        kmod-usb-hid \
-        kmod-hid-generic \
+	kmod-usb-hid \
+	kmod-hid-generic \
 
 # storage support for USB devices
 USB_PACKAGES_STORAGE := \
