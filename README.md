@@ -8,7 +8,7 @@ This repository holds the site configurations for the following Freifunk MWU (Ma
 ## Repository structure
 We maintain two branches `experimental` and `stable`.
 
-All new commits go to the _experimental_ branch and if neccesary they are cherry-picked to _stable_ otherwise they will be merged with the next major release.
+All new commits go to the _experimental_ branch and if neccesary they are cherry-picked to _stable_.
 
 The gluon version used to build the firmware is referenced as a git submodule in `gluon`.
 To ensure that the submodule is initialized correctly, call `git submodule update --init` after a checkout.
