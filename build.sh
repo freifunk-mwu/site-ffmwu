@@ -158,6 +158,7 @@ fi
 # Generate target list
 if [[ -z "${TARGETS_OPT}" && "${BROKEN}" == true ]]; then
   TARGETS="${TARGETS} ${TARGETS_BROKEN}"
+  MAKEOPTS="${MAKEOPTS} BROKEN"
 elif [[ -n "${TARGETS_OPT}" ]] ; then
   TARGETS="${TARGETS_OPT}"
 fi
@@ -213,7 +214,6 @@ build() {
          GLUON_RELEASE="${RELEASE}" \
          GLUON_BRANCH="${BRANCH}" \
          GLUON_TARGET="${TARGET}" \
-         BROKEN="${BROKEN}" \
          all
   done
 }
