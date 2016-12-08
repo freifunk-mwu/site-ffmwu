@@ -69,7 +69,7 @@ if [[ "${BRANCH}" == "experimental" ]]; then
 
   echo "--- Init & Checkout Latest Gluon Master ---"
   git submodule init
-  git submodule update --remote
+  git submodule update --remote --init --force
 fi
 
 # Set release name
