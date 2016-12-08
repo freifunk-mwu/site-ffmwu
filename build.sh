@@ -56,6 +56,8 @@ usage() {
   echo "    Will be applied to the deployment directory"
   echo "-m: Setting for make options (optional)"
   echo "    Default: \"${MAKEOPTS}\""
+  echo "-p: Priority used for autoupdater"
+  echo "    Default: see site.mk"
   echo "-r: Release suffix (required)"
   echo "-s: Site directory to use (required)"
   echo "    Availible: $(ls -m ${SITES_DIR})"
@@ -71,7 +73,7 @@ if [[ "${#}" == 0 ]]; then
 fi
 
 # Evaluate arguments for build script.
-while getopts ab:c:dhm:i:t:r:s: flag; do
+while getopts ab:c:dhm:p:i:t:r:s: flag; do
   case ${flag} in
     d)
       set -x
@@ -113,6 +115,9 @@ while getopts ab:c:dhm:i:t:r:s: flag; do
       else
         MAKEOPTS="${OPTARG}"
       fi
+      ;;
+    p)
+      MAKEOPTS="${MAKEOPTS} GLUON_PRIORITY=${OPTARG}"
       ;;
     i)
       BUILD="${OPTARG}"
@@ -158,7 +163,10 @@ fi
 # Generate target list
 if [[ -z "${TARGETS_OPT}" && "${BROKEN}" == true ]]; then
   TARGETS="${TARGETS} ${TARGETS_BROKEN}"
-  MAKEOPTS="${MAKEOPTS} BROKEN"
+  MAKEOPTS="${MAKEOPTS} BROKEN=true"
+elif [[ -n "${TARGETS_OPT}" && "${BROKEN}" == true ]] ; then
+  TARGETS="${TARGETS_OPT}"
+  MAKEOPTS="${MAKEOPTS} BROKEN=true"
 elif [[ -n "${TARGETS_OPT}" ]] ; then
   TARGETS="${TARGETS_OPT}"
 fi
