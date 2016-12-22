@@ -15,7 +15,7 @@ usage() {
   echo "Use the seperater -- to pass options directly to build.sh"
   echo ""
   echo "-b: Firmware branch name: stable | testing | experimental"
-  echo "-c: Start with a clean working dir"
+  echo "-c: Run dirclean instead of clean"
   echo "-d: Enable bash debug output"
   echo "-h: Show this help"
   echo "-r: Release suffix number (default: 1)"
@@ -84,13 +84,16 @@ fi
 
 # Ensure the build tree is clean
 for SITE in ${SITES}; do
+  echo "--- Build Firmware / update ---"
+  ./build.sh -s ${SITE} -b ${BRANCH_EFFECTIVE} -r ${RELEASE} "${@}" -c update
+
   if [[ ${CLEAN} ]] ; then
     echo "--- Clean entire build tree ---"
     ./build.sh -s ${SITE} -b ${BRANCH} -r ${RELEASE} "${@}" -c dirclean
+  else
+    echo "--- Clean build dir ---"
+    ./build.sh -s ${SITE} -b ${BRANCH} -r ${RELEASE} "${@}" -c clean 
   fi
-
-  echo "--- Build Firmware / update ---"
-  ./build.sh -s ${SITE} -b ${BRANCH_EFFECTIVE} -r ${RELEASE} "${@}" -c update
 
   # exit loop after first run (running them once is enough)
   break
@@ -99,9 +102,6 @@ done
 # Build the firmware, sign and deploy
 for SITE in ${SITES}; do
   echo "--- Build Firmware for ${SITE}/ ${RELEASE} ---"
-
-  echo "--- Build Firmware for ${SITE}/ update ---"
-  ./build.sh -s ${SITE} -b ${BRANCH_EFFECTIVE} -r ${RELEASE} "${@}" -c update
 
   echo "--- Build Firmware for ${SITE}/ build ---"
   ./build.sh -s ${SITE} -b ${BRANCH_EFFECTIVE} -r ${RELEASE} "${@}" -c build
