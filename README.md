@@ -20,30 +20,48 @@ We also maintain additional site configurations for things like mass deployment.
 
 ## Build the firmware
 The firmware can be build using the `build.sh` script contained in the repository.
-For example to do a full stable build for site _mainz_ use the following commands:
+For example to do a full build for site _mainz_ as `2016.2.2+mwu1` use the following commands:
 
 ```
-./build.sh -s mainz -b stable -r mwu1 -c update
-./build.sh -s mainz -b stable -r mwu1 -c build
+(cd gluon && git checkout v2016.2.2)
+./build.sh -s mainz -c update
+./build.sh -s mainz -c clean
+./build.sh -s mainz -c build -r 2016.2.2+mwu1
 ```
 
 ## Sign and deploy the firmware
 To sign the new images as _testing_, use the following command:
 
 ```
-./build.sh -s mainz -b testing -r mwu1 -c sign
+./build.sh -s mainz -c sign -r 2016.2.2+mwu1 -b testing
 ```
 
 To copy the build to the firmware directory, you can use the following command:
 
 ```
-./build.sh -s mainz -b testing -r mwu1 -c deploy
+./build.sh -s mainz -c deploy -r 2016.2.2+mwu1 -b testing
+```
+
+## Autobuild
+`autobuild.sh` acts as a wrapper-script for `build.sh` and also generates a proper version release name based on the git tag that was checked out in the `gluon` submodule. When build as _experimental_ it will automatically checkout the lastest `master` branch for `gluon`.
+
+For example to do a full build for sites _mainz_ and _wiesbaden_ use the following commands:
+
+```
+./autobuild.sh -s 'mainz wiesbaden' -b testing
+```
+
+`autobuild.sh` can pass extra options to `build.sh`. To do so you need to separate them by `--`.
+For example if you want to do an _experimantal_ build that includes broken targets (`-a`).
+
+```
+./autobuild.sh -s 'mainz wiesbaden' -b experimental -- -a
 ```
 
 ## Version schema
-For the versioning of our _stable_ and _testing_ releases we use the Gluon version as the base and append the string `mwu` followed by a counter. The counter starts at 1 and will only be increased if we do maintenance releases with the same gluon version as the previous release. For example the first release based on gluon v2016.1.3 would be `2016.1.3+mwu1`.
+For the versioning of our _stable_ and _testing_ releases we use the Gluon version as the base and append the string `mwu` followed by a counter. The counter starts at 1 and will only be increased if we do maintenance releases with the same gluon version as the previous release. For example the first release based on gluon v2016.2.2 would be `2016.2.2+mwu1`.
 
-For _experimental_ builds this is slightly different. They also start with the Gluon version (as we don't have Git tag we use the latest branch name) followed by `mwu`. But the suffix doesn't include the regular counter instead we add a second suffix that reflects the build date followed by an incrementable counter incase we build several times a day. For example the experimental build for the 21.04.2016 would be called `2016.1+mwu~exp2016042101`.
+For _experimental_ builds this is slightly different. They also start with the Gluon version (as we don't have Git tag we use the latest branch name) followed by `mwu`. But the suffix doesn't include the regular counter instead we add a second suffix that reflects the build date followed by an incrementable counter incase we build several times a day. For example the experimental build for the 23.12.2016 would be called `2016.2+mwu~exp2016122301`.
 
 ## Where is the testing branch?
-We decided to no longer build individual versions for _stable_ and _testing_ (formerly known as beta). Testing builds are promoted to stable by moving them to the stable directory and re-generate the manifest. This ensures we don't mess anything up between the testing and stable releases.
+We decided to no longer build individual versions for _stable_ and _testing_ (formerly known as _beta_). Testing builds are promoted to stable by moving them to the stable directory and re-generate the manifest. This ensures we don't mess anything up between the testing and stable releases.

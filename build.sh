@@ -7,19 +7,22 @@
 # - Freifunk Bremen for their version schema
 # =====================================================================
 
+# Get full path to script directory
+SCRIPTPATH="$(dirname "$(readlink -e "$0")" )"
+
 # Default make options
 CORES=$(nproc)
-MAKEOPTS="-j$((CORES+1))"
+MAKEOPTS="-j$((CORES+1)) V=s"
 
 # Default to build all Gluon targets if parameter -t is not set
 TARGETS="ar71xx-generic ar71xx-nand mpc85xx-generic brcm2708-bcm2708 \
 brcm2708-bcm2709 x86-generic x86-kvm_guest x86-64 x86-xen_domu"
 
 # Sites directory
-SITES_DIR="./sites"
+SITES_DIR="${SCRIPTPATH}/sites"
 
 # Gluon directory
-GLUON_DIR="./gluon"
+GLUON_DIR="${SCRIPTPATH}/gluon"
 
 # Deployment directory
 DEPLOYMENT_DIR="/var/www/html/firmware/_library"
@@ -31,13 +34,11 @@ SIGN_KEY="${HOME}/.ecdsakey"
 BROKEN=false
 TARGETS_BROKEN="ar71xx-mikrotik mvebu ramips-mt7621 ramips-rt305x sunxi"
 
-# Overwrite Git Tag for experimental releases
-GLUON_EXP_TAG="2016.2"
+# Branch used for building (autoupdater!)
+BUILDBRANCH="stable"
 
 # Error codes
 E_ILLEGAL_ARGS=126
-E_ILLEGAL_TAG=127
-E_DIR_NOT_EMPTY=128
 
 # Help function used in error messages and -h option
 usage() {
@@ -45,24 +46,24 @@ usage() {
   echo "Build script for Freifunk MWU Gluon firmware."
   echo ""
   echo "-a: Build targets marked as broken (optional)"
-  echo "    Default: ${BROKEN}"
-  echo "-b: Firmware branch name (required)"
+  echo "    Applied: ${BROKEN}"
+  echo "-b: Firmware branch name (required: sign deploy)"
   echo "    Availible: stable testing experimental"
   echo "-c: Build command (required)"
   echo "    Availible: update build sign deploy clean dirclean"
-  echo "-d: Enable bash debug output"
+  echo "-d: Enable bash debug output (optional)"
   echo "-h: Show this help"
   echo "-i: Build identifier (optional)"
   echo "    Will be applied to the deployment directory"
   echo "-m: Setting for make options (optional)"
-  echo "    Default: \"${MAKEOPTS}\""
-  echo "-p: Priority used for autoupdater"
+  echo "    Applied: \"${MAKEOPTS}\""
+  echo "-p: Priority used for autoupdater (optional)"
   echo "    Default: see site.mk"
-  echo "-r: Release suffix (required)"
+  echo "-r: Release suffix (required: build sign deploy)"
   echo "-s: Site directory to use (required)"
   echo "    Availible: $(ls -m ${SITES_DIR})"
   echo "-t: Gluon target architectures to build (optional)"
-  echo "    Default: \"${TARGETS}\""
+  echo "    Applied: \"${TARGETS}\""
   echo "    Broken: \"${TARGETS_BROKEN}\""
 }
 
@@ -131,14 +132,12 @@ while getopts ab:c:dhm:p:i:t:r:s: flag; do
     s)
       if [[ -d "${SITES_DIR}/${OPTARG}" ]]; then
         SITE_DIR="${SITES_DIR}/${OPTARG}"
-      elif [[ -d "${OPTARG}" ]]; then
-        SITE_DIR="${OPTARG}"
+        SITE="${OPTARG}"
       else
         echo "Error: Invalid site directory set."
         usage
         exit ${E_ILLEGAL_ARGS}
       fi
-      SITE_DIR="$(readlink -f ${SITE_DIR})"
       ;;
     a)
       BROKEN=true
@@ -160,6 +159,10 @@ if [[ "${#}" > 0 ]]; then
   exit ${E_ILLEGAL_ARGS}
 fi
 
+# Set GLUON_OUTPUTDIR
+GLUON_OUTPUTDIR="${SCRIPTPATH}/output/${SITE}"
+MAKEOPTS="${MAKEOPTS} GLUON_OUTPUTDIR=${GLUON_OUTPUTDIR}"
+
 # Generate target list
 if [[ -z "${TARGETS_OPT}" && "${BROKEN}" == true ]]; then
   TARGETS="${TARGETS} ${TARGETS_BROKEN}"
@@ -178,33 +181,19 @@ if [[ -z "${COMMAND}" ]]; then
   exit ${E_ILLEGAL_ARGS}
 fi
 
-# Check if $RELEASE is set
-if [[ -z "${RELEASE}" ]]; then
+# Check if $RELEASE is set for commands that need it
+if [[ -z "${RELEASE}" && " build sign deploy " =~ " ${COMMAND} " ]]; then
   echo "Error: Release suffix missing."
   usage
   exit ${E_ILLEGAL_ARGS}
 fi
 
-# Check if $BRANCH is set
-if [[ -z "${BRANCH}" ]]; then
+# Check if $BRANCH is set for commands that need it
+if [[ -z "${BRANCH}" && " sign deploy " =~ " ${COMMAND} " ]]; then
   echo "Error: Branch missing."
   usage
   exit ${E_ILLEGAL_ARGS}
 fi
-
-if [[ "${BRANCH}" == "experimental" ]]; then
-  GLUON_TAG="${GLUON_EXP_TAG}"
-elif [[ "${BRANCH}" == "stable" || "${BRANCH}" == "testing" ]]; then
-  if ! GLUON_TAG=$(git --git-dir="${GLUON_DIR}/.git" describe --exact-match) ; then
-    echo 'Error: The gluon tree is not checked out at a tag.'
-    echo 'Please use `git checkout <tagname>` to use an official gluon release'
-    echo 'or build it as experimental.'
-    exit ${E_ILLEGAL_TAG}
-  fi
-  GLUON_TAG="${GLUON_TAG#v}"
-fi
-
-RELEASE="${GLUON_TAG}+${RELEASE}"
 
 update() {
   make ${MAKEOPTS} \
@@ -213,28 +202,29 @@ update() {
 }
 
 build() {
-  echo "--- Build Gluon ${GLUON_TAG} as ${RELEASE} ---"
+  echo "--- Cleaning output directory ---"
+  rm -rf "${GLUON_OUTPUTDIR}"
 
+  echo "--- Building Gluon as ${RELEASE} ---"
   for TARGET in ${TARGETS}; do
-    echo "--- Build Gluon Images for target: ${TARGET} ---"
+    echo "--- Building Gluon Images for target: ${TARGET} ---"
     make ${MAKEOPTS} \
          GLUON_SITEDIR="${SITE_DIR}" \
          GLUON_RELEASE="${RELEASE}" \
-         GLUON_BRANCH="${BRANCH}" \
-         GLUON_TARGET="${TARGET}" \
-         all
+         GLUON_BRANCH="${BUILDBRANCH}" \
+         GLUON_TARGET="${TARGET}"
   done
 }
 
 sign() {
-  echo "--- Build Gluon Manifest ---"
+  echo "--- Building Gluon Manifest ---"
   make ${MAKEOPTS} \
        GLUON_SITEDIR="${SITE_DIR}" \
        GLUON_RELEASE="${RELEASE}" \
        GLUON_BRANCH="${BRANCH}" \
        manifest
 
-  echo "--- Sign Gluon Firmware Build ---"
+  echo "--- Signing Gluon Firmware Build ---"
   # Add the signature to the local manifest
   if [[ -e "${SIGN_KEY}" ]] ; then
     contrib/sign.sh \
@@ -246,35 +236,31 @@ sign() {
 }
 
 deploy() {
-  # Site name
-  SITE=$(basename ${SITE_DIR})
-
   # Create the deployment directory
   TARGET="${DEPLOYMENT_DIR}/${RELEASE}/${SITE}"
   if [[ -n ${BUILD} ]]; then
     TARGET="${TARGET}~${BUILD}"
   fi
 
-  echo "--- Deploy Gluon Firmware ---"
+  echo "--- Deploying Gluon Firmware ---"
   mkdir --parents --verbose "${TARGET}"
 
   # Check if target directory is empty
   if [[ "$(ls -A ${TARGET})" ]]; then
-    echo "Error: Target directory not empty"
-    exit ${E_DIR_NOT_EMPTY}
+    echo "Error: Target directory not empty; skipping!"
+    return
   fi
 
   # Copy images and modules to DEPLOYMENT_DIR
   CP_CMD="cp --verbose --recursive --no-dereference"
-  $CP_CMD "output/images/factory"         "${TARGET}/factory"
-  $CP_CMD "output/images/sysupgrade"      "${TARGET}/sysupgrade"
-  $CP_CMD "output/modules/"*"${RELEASE}"  "${TARGET}/modules"
+  $CP_CMD "${GLUON_OUTPUTDIR}/images/factory"         "${TARGET}/factory"
+  $CP_CMD "${GLUON_OUTPUTDIR}/images/sysupgrade"      "${TARGET}/sysupgrade"
+  $CP_CMD "${GLUON_OUTPUTDIR}/modules/"*"${RELEASE}"  "${TARGET}/modules"
 
   # Set branch link to new release
   echo "--- Linking branch ${BRANCH} to $(basename ${TARGET}) ---"
   if [[ ! -d "${DEPLOYMENT_DIR}/../${SITE}" ]]; then
     echo "No directory to link to."
-    exit 0
   fi
 
   if [[ -L "${DEPLOYMENT_DIR}/../${SITE}/${BRANCH}" ]] ; then
@@ -287,24 +273,21 @@ deploy() {
 }
 
 clean(){
-  echo "--- Clean ---"
+  echo "--- Cleaning build directories ---"
 
   for TARGET in ${TARGETS}; do
     echo "--- Cleaning target: ${TARGET} ---"
     make ${MAKEOPTS} \
          GLUON_SITEDIR="${SITE_DIR}" \
-         GLUON_RELEASE="${RELEASE}" \
          GLUON_TARGET="${TARGET}" \
-         BROKEN="${BROKEN}" \
          clean
   done
 }
 
 dirclean(){
-  echo "--- Cleaning working directory ---"
+  echo "--- Cleaning entire working directory ---"
   make ${MAKEOPTS} \
        GLUON_SITEDIR="${SITE_DIR}" \
-       BROKEN="${BROKEN}" \
        dirclean
 }
 

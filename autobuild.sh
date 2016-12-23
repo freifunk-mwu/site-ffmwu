@@ -1,12 +1,28 @@
 #!/bin/bash -e
 
+# Get full path to script directory
+SCRIPTPATH="$(dirname "$(readlink -e "$0")" )"
+
+# Gluon directory
+GLUON_DIR="${SCRIPTPATH}/gluon"
+
 DATE=$(date +%Y%m%d)
 SITES="mainz wiesbaden rheingau taunus"
+
+# Overwrite Git Tag for experimental releases
+GLUON_EXP_TAG="2016.2"
 
 # Error codes
 E_ILLEGAL_ARGS=126
 E_ILLEGAL_TAG=127
 E_DIR_NOT_EMPTY=128
+
+LOGFILE="${SCRIPTPATH}/output/build.log"
+LOG_CMD="tee -a ${LOGFILE}"
+
+log() {
+   echo "${1}" | ${LOG_CMD}
+}
 
 # Help function used in error messages and -h option
 usage() {
@@ -63,52 +79,61 @@ if [[ -z "${SUFFIX}" ]]; then
   SUFFIX="1"
 fi
 
+echo "--- Start: $(date +"%Y-%m-%d %H:%M:%S%:z") ---" | tee ${LOGFILE}
+
 # Generate suffix and checkout latest gluon master
 if [[ "${BRANCH}" == "experimental" ]]; then
   SUFFIX="~exp${DATE}$(printf %02d ${SUFFIX})"
 
-  echo "--- Init & Checkout Latest Gluon Master ---"
-  git submodule init
-  git submodule update --remote --init --force
+  log "--- Init & Checkout Latest Gluon Master ---"
+  git submodule init 2>&1 | ${LOG_CMD}
+  git submodule update --remote --init --force 2>&1 | ${LOG_CMD}
+fi
+
+if [[ "${BRANCH}" == "experimental" ]]; then
+  GLUON_TAG="${GLUON_EXP_TAG}"
+else
+  if ! GLUON_TAG=$(git --git-dir="${GLUON_DIR}/.git" describe --exact-match) ; then
+    log 'Error: The gluon tree is not checked out at a tag.'
+    log 'Please use `git checkout <tagname>` to use an official gluon release'
+    log 'or build it as experimental.'
+    exit ${E_ILLEGAL_TAG}
+  fi
+  GLUON_TAG="${GLUON_TAG#v}"
 fi
 
 # Set release name
-RELEASE="mwu${SUFFIX}"
+RELEASE="${GLUON_TAG}+mwu${SUFFIX}"
 
-# Build testing as stable to get correct autoupdater branch
-if [[ "${BRANCH}" == "testing" ]]; then
-  BRANCH_EFFECTIVE="stable"
-else
-  BRANCH_EFFECTIVE="${BRANCH}"
-fi
-
-# Ensure the build tree is clean
-for SITE in ${SITES}; do
-  echo "--- Build Firmware / update ---"
-  ./build.sh -s ${SITE} -b ${BRANCH_EFFECTIVE} -r ${RELEASE} "${@}" -c update
-
-  if [[ ${CLEAN} ]] ; then
-    echo "--- Clean entire build tree ---"
-    ./build.sh -s ${SITE} -b ${BRANCH} -r ${RELEASE} "${@}" -c dirclean
-  else
-    echo "--- Clean build dir ---"
-    ./build.sh -s ${SITE} -b ${BRANCH} -r ${RELEASE} "${@}" -c clean 
-  fi
-
-  # exit loop after first run (running them once is enough)
-  break
-done
+FIRST_RUN=true
 
 # Build the firmware, sign and deploy
 for SITE in ${SITES}; do
-  echo "--- Build Firmware for ${SITE}/ ${RELEASE} ---"
+  log "--- Building Firmware for ${SITE} / ${RELEASE} (${BRANCH}) ---"
 
-  echo "--- Build Firmware for ${SITE}/ build ---"
-  ./build.sh -s ${SITE} -b ${BRANCH_EFFECTIVE} -r ${RELEASE} "${@}" -c build
+  # Running these commands for one site is sufficient
+  if [[ ${FIRST_RUN} == true ]] ; then
+    log "--- Building Firmware for ${SITE} / update ---"
+    ${SCRIPTPATH}/build.sh -s ${SITE} "${@}" -c update 2>&1 | ${LOG_CMD}
 
-  echo "--- Build Firmware for ${SITE}/ sign ---"
-  ./build.sh -s ${SITE} -b ${BRANCH} -r ${RELEASE} "${@}" -c sign
+    if [[ ${CLEAN} == true ]] ; then
+      log "--- Building Firmware for ${SITE} / dirclean ---"
+      ${SCRIPTPATH}/build.sh -s ${SITE} "${@}" -c dirclean 2>&1 | ${LOG_CMD}
+    else
+      log "--- Building Firmware for ${SITE} / clean ---"
+      ${SCRIPTPATH}/build.sh -s ${SITE} "${@}" -c clean 2>&1 | ${LOG_CMD}
+    fi
+    FIRST_RUN=false
+  fi
 
-  echo "--- Build Firmware for ${SITE}/ deploy ---"
-  ./build.sh -s ${SITE} -b ${BRANCH} -r ${RELEASE} "${@}" -c deploy
+  log "--- Building Firmware for ${SITE} / build ---"
+  ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} "${@}" -c build 2>&1 | ${LOG_CMD}
+
+  log "--- Building Firmware for ${SITE} / sign ---"
+  ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} -b ${BRANCH} "${@}" -c sign 2>&1 | ${LOG_CMD}
+
+  log "--- Building Firmware for ${SITE} / deploy ---"
+  ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} -b ${BRANCH} "${@}" -c deploy 2>&1 | ${LOG_CMD}
 done
+
+log "--- End: $(date +"%Y-%m-%d %H:%M:%S%:z") ---"
