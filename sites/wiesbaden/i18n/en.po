@@ -62,17 +62,13 @@ msgstr ""
 "value is known."
 
 msgid "gluon-luci-node-role:role:backbone"
-msgstr ""
-"Backbone node"
+msgstr "Backbone node"
 
 msgid "gluon-luci-node-role:role:node"
-msgstr ""
-"Normal node"
+msgstr "Normal node"
 
 msgid "gluon-luci-node-role:role:offloader"
-msgstr ""
-"Offloader"
+msgstr "Offloader"
 
 msgid "gluon-luci-node-role:role:test"
-msgstr ""
-"Test node"
+msgstr "Test node"

@@ -62,17 +62,13 @@ msgstr ""
 "exakter Wert bekannt ist."
 
 msgid "gluon-luci-node-role:role:backbone"
-msgstr ""
-"Backbone Knoten"
+msgstr "Backbone Knoten"
 
 msgid "gluon-luci-node-role:role:node"
-msgstr ""
-"Normaler Knoten"
+msgstr "Normaler Knoten"
 
 msgid "gluon-luci-node-role:role:offloader"
-msgstr ""
-"Offloader"
+msgstr "Offloader"
 
 msgid "gluon-luci-node-role:role:test"
-msgstr ""
-"Test Knoten"
+msgstr "Test Knoten"
