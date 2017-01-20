@@ -53,6 +53,14 @@ msgstr ""
 "You can obtain further information about the local Freifunk community from the website of <a href=\"http://www.freifunk-mainz.de/\">Freifunk Mainz</a><br />"
 "Have a lot of fun exploring Freifunk in Mainz!<br />"
 
+msgid "gluon-config-mode:altitude-label"
+msgstr "Altitude"
+
+msgid "gluon-config-mode:altitude-help"
+msgstr ""
+"Specifying the altitude is optional and should only be done if a proper "
+"value is known."
+
 msgid "gluon-luci-node-role:role:backbone"
 msgstr ""
 "Backbone node"

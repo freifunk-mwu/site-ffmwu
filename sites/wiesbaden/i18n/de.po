@@ -53,6 +53,14 @@ msgstr ""
 "Weitere Informationen zur Freifunk-Community findest du auf der Webseite von <a href=\"http://wiesbaden.freifunk.net/\">Freifunk Wiesbaden</a><br />"
 "Viel Spaß mit deinem Knoten und bei der Erkundung von Freifunk in Wiesbaden!<br />"
 
+msgid "gluon-config-mode:altitude-label"
+msgstr "Höhe"
+
+msgid "gluon-config-mode:altitude-help"
+msgstr ""
+"Die Höhenangabe ist optional und sollte nur gesetzt werden, wenn ein "
+"exakter Wert bekannt ist."
+
 msgid "gluon-luci-node-role:role:backbone"
 msgstr ""
 "Backbone Knoten"
