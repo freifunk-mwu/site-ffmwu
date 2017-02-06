@@ -16,7 +16,7 @@ MAKEOPTS="-j$((CORES+1)) V=s"
 
 # Default to build all Gluon targets if parameter -t is not set
 TARGETS="ar71xx-generic ar71xx-nand ar71xx-tiny mpc85xx-generic brcm2708-bcm2708 \
-brcm2708-bcm2709 x86-generic x86-64 x86-xen_domu"
+brcm2708-bcm2709 x86-generic x86-geode x86-64 x86-xen_domu"
 
 # Sites directory
 SITES_DIR="${SCRIPTPATH}/sites"
