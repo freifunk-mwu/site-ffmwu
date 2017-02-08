@@ -182,7 +182,7 @@ if [[ -z "${COMMAND}" ]]; then
 fi
 
 # Check if $RELEASE is set for commands that need it
-if [[ -z "${RELEASE}" && " build sign deploy " =~ " ${COMMAND} " ]]; then
+if [[ -z "${RELEASE}" && " update clean dirclean build sign deploy " =~ " ${COMMAND} " ]]; then
   echo "Error: Release suffix missing."
   usage
   exit ${E_ILLEGAL_ARGS}
@@ -198,6 +198,7 @@ fi
 update() {
   make ${MAKEOPTS} \
        GLUON_SITEDIR="${SITE_DIR}" \
+       GLUON_RELEASE="${RELEASE}" \
        update
 }
 
@@ -255,7 +256,7 @@ deploy() {
   CP_CMD="cp --verbose --recursive --no-dereference"
   $CP_CMD "${GLUON_OUTPUTDIR}/images/factory"         "${TARGET}/factory"
   $CP_CMD "${GLUON_OUTPUTDIR}/images/sysupgrade"      "${TARGET}/sysupgrade"
-  $CP_CMD "${GLUON_OUTPUTDIR}/modules/"*"${RELEASE}"  "${TARGET}/modules"
+  $CP_CMD "${GLUON_OUTPUTDIR}/packages/"*"${RELEASE}" "${TARGET}/modules"
 
   # Set branch link to new release
   echo "--- Linking branch ${BRANCH} to $(basename ${TARGET}) ---"
@@ -279,6 +280,7 @@ clean(){
     echo "--- Cleaning target: ${TARGET} ---"
     make ${MAKEOPTS} \
          GLUON_SITEDIR="${SITE_DIR}" \
+         GLUON_RELEASE="${RELEASE}" \
          GLUON_TARGET="${TARGET}" \
          clean
   done
@@ -288,6 +290,7 @@ dirclean(){
   echo "--- Cleaning entire working directory ---"
   make ${MAKEOPTS} \
        GLUON_SITEDIR="${SITE_DIR}" \
+       GLUON_RELEASE="${RELEASE}" \
        dirclean
 }
 

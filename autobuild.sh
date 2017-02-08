@@ -114,14 +114,14 @@ for SITE in ${SITES}; do
   # Running these commands for one site is sufficient
   if [[ ${FIRST_RUN} == true ]] ; then
     log "--- Building Firmware for ${SITE} / update ---"
-    ${SCRIPTPATH}/build.sh -s ${SITE} "${@}" -c update 2>&1 | ${LOG_CMD}
+    ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} "${@}" -c update 2>&1 | ${LOG_CMD}
 
     if [[ ${CLEAN} == true ]] ; then
       log "--- Building Firmware for ${SITE} / dirclean ---"
-      ${SCRIPTPATH}/build.sh -s ${SITE} "${@}" -c dirclean 2>&1 | ${LOG_CMD}
+      ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} "${@}" -c dirclean 2>&1 | ${LOG_CMD}
     else
       log "--- Building Firmware for ${SITE} / clean ---"
-      ${SCRIPTPATH}/build.sh -s ${SITE} "${@}" -c clean 2>&1 | ${LOG_CMD}
+      ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} "${@}" -c clean 2>&1 | ${LOG_CMD}
     fi
     FIRST_RUN=false
   fi
