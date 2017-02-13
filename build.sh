@@ -32,7 +32,7 @@ SIGN_KEY="${HOME}/.ecdsakey"
 
 # Build targets marked broken
 BROKEN=false
-TARGETS_BROKEN="ar71xx-mikrotik mvebu ramips-mt7621 ramips-rt305x sunxi"
+TARGETS_BROKEN="ar71xx-mikrotik mvebu ramips-mt7621 ramips-mt7628 ramips-rt305x sunxi"
 
 # Branch used for building (autoupdater!)
 BUILDBRANCH="stable"
