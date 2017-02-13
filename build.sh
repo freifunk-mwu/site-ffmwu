@@ -230,7 +230,7 @@ sign() {
   if [[ -e "${SIGN_KEY}" ]] ; then
     contrib/sign.sh \
         "${SIGN_KEY}" \
-        "output/images/sysupgrade/${BRANCH}.manifest"
+        "${GLUON_OUTPUTDIR}/images/sysupgrade/${BRANCH}.manifest"
   else
     "${SIGN_KEY} not found!"
   fi
