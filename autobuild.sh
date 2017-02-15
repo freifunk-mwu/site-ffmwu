@@ -45,6 +45,7 @@ while getopts b:cdhr:s: flag; do
   case ${flag} in
     d)
       set -x
+      DEBUG="-d"
       ;;
     h)
       usage
@@ -114,26 +115,26 @@ for SITE in ${SITES}; do
   # Running these commands for one site is sufficient
   if [[ ${FIRST_RUN} == true ]] ; then
     log "--- Building Firmware for ${SITE} / update ---"
-    ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} "${@}" -c update 2>&1 | ${LOG_CMD}
+    ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} ${DEBUG} "${@}" -c update 2>&1 | ${LOG_CMD}
 
     if [[ ${CLEAN} == true ]] ; then
       log "--- Building Firmware for ${SITE} / dirclean ---"
-      ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} "${@}" -c dirclean 2>&1 | ${LOG_CMD}
+      ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} ${DEBUG} "${@}" -c dirclean 2>&1 | ${LOG_CMD}
     else
       log "--- Building Firmware for ${SITE} / clean ---"
-      ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} "${@}" -c clean 2>&1 | ${LOG_CMD}
+      ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} ${DEBUG} "${@}" -c clean 2>&1 | ${LOG_CMD}
     fi
     FIRST_RUN=false
   fi
 
   log "--- Building Firmware for ${SITE} / build ---"
-  ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} "${@}" -c build 2>&1 | ${LOG_CMD}
+  ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} ${DEBUG} "${@}" -c build 2>&1 | ${LOG_CMD}
 
   log "--- Building Firmware for ${SITE} / sign ---"
-  ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} -b ${BRANCH} "${@}" -c sign 2>&1 | ${LOG_CMD}
+  ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} -b ${BRANCH} ${DEBUG} "${@}" -c sign 2>&1 | ${LOG_CMD}
 
   log "--- Building Firmware for ${SITE} / deploy ---"
-  ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} -b ${BRANCH} "${@}" -c deploy 2>&1 | ${LOG_CMD}
+  ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} -b ${BRANCH} ${DEBUG} "${@}" -c deploy 2>&1 | ${LOG_CMD}
 done
 
 log "--- End: $(date +"%Y-%m-%d %H:%M:%S%:z") ---"
