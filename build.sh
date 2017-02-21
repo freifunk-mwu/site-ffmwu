@@ -208,8 +208,16 @@ build() {
 
   echo "--- Building Gluon as ${RELEASE} ---"
   for TARGET in ${TARGETS}; do
+    EFFECTIVE_MAKEOPTS="${MAKEOPTS}"
+
     echo "--- Building Gluon Images for target: ${TARGET} ---"
-    make ${MAKEOPTS} \
+
+    # Enable aes128-ctr+umac for fastd in x86 images
+    if [[ " x86-generic x86-geode x86-64 " =~ " ${TARGET} " ]] ; then
+      EFFECTIVE_MAKEOPTS="${EFFECTIVE_MAKEOPTS} CONFIG_FASTD_ENABLE_CIPHER_AES128_CTR=y"
+    fi
+
+    make ${EFFECTIVE_MAKEOPTS} \
          GLUON_SITEDIR="${SITE_DIR}" \
          GLUON_RELEASE="${RELEASE}" \
          GLUON_BRANCH="${BUILDBRANCH}" \
