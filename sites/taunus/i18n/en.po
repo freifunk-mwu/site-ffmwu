@@ -61,14 +61,14 @@ msgstr ""
 "Specifying the altitude is optional and should only be done if a proper "
 "value is known."
 
-msgid "gluon-luci-node-role:role:backbone"
+msgid "gluon-web-node-role:role:backbone"
 msgstr "Backbone node"
 
-msgid "gluon-luci-node-role:role:node"
+msgid "gluon-web-node-role:role:node"
 msgstr "Normal node"
 
-msgid "gluon-luci-node-role:role:offloader"
+msgid "gluon-web-node-role:role:offloader"
 msgstr "Offloader"
 
-msgid "gluon-luci-node-role:role:test"
+msgid "gluon-web-node-role:role:test"
 msgstr "Test node"
