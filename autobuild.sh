@@ -16,7 +16,7 @@ DATE=$(date +%Y%m%d)
 SITES="mainz wiesbaden rheingau taunus"
 
 # Overwrite Git Tag for experimental releases
-GLUON_EXP_TAG="2016.2"
+GLUON_EXP_TAG="2017.1"
 
 # Error codes
 E_ILLEGAL_ARGS=126
