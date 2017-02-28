@@ -1,4 +1,10 @@
-#!/bin/bash -e
+#!/bin/bash
+# =====================================================================
+# Wrapper script for build.sh script
+# =====================================================================
+
+# Exit on failed commands
+set -e -o pipefail
 
 # Get full path to script directory
 SCRIPTPATH="$(dirname "$(readlink -e "$0")" )"

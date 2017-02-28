@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash
 # =====================================================================
 # Build script for Freifunk MWU firmware
 #
@@ -6,6 +6,9 @@
 # - Freifunk Fulda for their build script
 # - Freifunk Bremen for their version schema
 # =====================================================================
+
+# Exit on failed commands
+set -e -o pipefail
 
 # Get full path to script directory
 SCRIPTPATH="$(dirname "$(readlink -e "$0")" )"
