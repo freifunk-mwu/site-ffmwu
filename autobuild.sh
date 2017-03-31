@@ -26,6 +26,8 @@ E_DIR_NOT_EMPTY=128
 LOGFILE="${SCRIPTPATH}/output/build.log"
 LOG_CMD="tee -a ${LOGFILE}"
 
+mkdir -p "$(dirname ${LOGFILE})"
+
 log() {
    echo "${1}" | ${LOG_CMD}
 }
@@ -37,7 +39,8 @@ usage() {
   echo "Use the seperater -- to pass options directly to build.sh"
   echo ""
   echo "-b: Firmware branch name: stable | testing | experimental"
-  echo "-c: Run dirclean instead of clean"
+  echo "-c: Run clean for each target (optinal)"
+  echo "-p: Run dirclean (overwrites -c)"
   echo "-d: Enable bash debug output"
   echo "-h: Show this help"
   echo "-r: Release suffix number (default: 1)"
@@ -47,7 +50,7 @@ usage() {
 }
 
 # Evaluate arguments for build script.
-while getopts b:cdhr:s: flag; do
+while getopts b:cdhpr:s: flag; do
   case ${flag} in
     d)
       set -x
@@ -67,7 +70,10 @@ while getopts b:cdhr:s: flag; do
       fi
       ;;
     c)
-      CLEAN=true
+      CLEAN="clean"
+      ;;
+    p)
+      CLEAN="dirclean"
       ;;
     r)
       SUFFIX="${OPTARG}"
@@ -120,13 +126,15 @@ for SITE in ${SITES}; do
 
   # Running these commands for one site is sufficient
   if [[ ${FIRST_RUN} == true ]] ; then
+    if [[ ${CLEAN} == "dirclean" ]] ; then
+      log "--- Building Firmware for ${SITE} / dirclean ---"
+      ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} ${DEBUG} "${@}" -c dirclean 2>&1 | ${LOG_CMD}
+    fi
+
     log "--- Building Firmware for ${SITE} / update ---"
     ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} ${DEBUG} "${@}" -c update 2>&1 | ${LOG_CMD}
 
-    if [[ ${CLEAN} == true ]] ; then
-      log "--- Building Firmware for ${SITE} / dirclean ---"
-      ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} ${DEBUG} "${@}" -c dirclean 2>&1 | ${LOG_CMD}
-    else
+    if [[ ${CLEAN} == "clean" ]] ; then
       log "--- Building Firmware for ${SITE} / clean ---"
       ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} ${DEBUG} "${@}" -c clean 2>&1 | ${LOG_CMD}
     fi
