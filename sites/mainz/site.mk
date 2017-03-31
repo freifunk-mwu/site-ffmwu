@@ -1,6 +1,5 @@
 GLUON_SITE_PACKAGES := \
 	gluon-mesh-batman-adv-15 \
-	gluon-alfred \
 	gluon-autoupdater \
 	gluon-config-mode-autoupdater \
 	gluon-config-mode-contact-info \
@@ -26,8 +25,7 @@ GLUON_SITE_PACKAGES := \
 	iwinfo \
 	iptables \
 	haveged \
-	tecff-ath9k-broken-wifi-workaround \
-	ffmwu-beta-to-testing
+	tecff-ath9k-broken-wifi-workaround
 
 # basic support for USB stack
 USB_PACKAGES_BASIC := \
