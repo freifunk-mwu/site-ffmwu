@@ -19,9 +19,8 @@ MAKEOPTS="-j$((CORES+1)) BUILD_LOG=true V=s"
 
 # Default to build all Gluon targets if parameter -t is not set
 TARGETS="ar71xx-generic ar71xx-mikrotik ar71xx-nand ar71xx-tiny brcm2708-bcm2708 brcm2708-bcm2709 \
-         mpc85xx-generic mvebu ramips-mt7621 ramips-mt7628 ramips-rt305x sunxi x86-64 x86-generic \
-         x86-geode"
-
+         ipq806x mpc85xx-generic mvebu ramips-mt7621 ramips-mt7628 ramips-rt305x sunxi \
+         x86-64 x86-generic x86-geode"
 
 # Sites directory
 SITES_DIR="sites"
