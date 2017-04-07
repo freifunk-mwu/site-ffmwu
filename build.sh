@@ -15,17 +15,22 @@ SCRIPTPATH="$(dirname "$(readlink -e "$0")" )"
 
 # Default make options
 CORES=$(nproc)
-MAKEOPTS="-j$((CORES+1)) V=s"
+MAKEOPTS="-j$((CORES+1)) BUILD_LOG=true V=s"
 
 # Default to build all Gluon targets if parameter -t is not set
-TARGETS="ar71xx-generic ar71xx-nand ar71xx-tiny mpc85xx-generic brcm2708-bcm2708 \
-brcm2708-bcm2709 x86-generic x86-geode x86-64"
+TARGETS="ar71xx-generic ar71xx-mikrotik ar71xx-nand ar71xx-tiny brcm2708-bcm2708 brcm2708-bcm2709 \
+         mpc85xx-generic mvebu ramips-mt7621 ramips-mt7628 ramips-rt305x sunxi x86-64 x86-generic \
+         x86-geode"
+
 
 # Sites directory
-SITES_DIR="${SCRIPTPATH}/sites"
+SITES_DIR="sites"
 
 # Gluon directory
-GLUON_DIR="${SCRIPTPATH}/gluon"
+GLUON_DIR="gluon"
+
+# Gluon output base directory
+OUTPUT_DIR="output"
 
 # Deployment directory
 DEPLOYMENT_DIR="/var/www/html/firmware/_library"
@@ -127,7 +132,7 @@ while getopts ab:c:dhm:p:i:t:r:s: flag; do
       BUILD="${OPTARG}"
       ;;
     t)
-      TARGETS_OPT="${OPTARG}"
+      TARGETS="${OPTARG}"
       ;;
     r)
       RELEASE="${OPTARG}"
@@ -163,18 +168,12 @@ if [[ "${#}" > 0 ]]; then
 fi
 
 # Set GLUON_OUTPUTDIR
-GLUON_OUTPUTDIR="${SCRIPTPATH}/output/${SITE}"
-MAKEOPTS="${MAKEOPTS} GLUON_OUTPUTDIR=${GLUON_OUTPUTDIR}"
+GLUON_OUTPUTDIR="${SCRIPTPATH}/${OUTPUT_DIR}/${SITE}"
+mkdir -p "${GLUON_OUTPUTDIR}"
 
-# Generate target list
-if [[ -z "${TARGETS_OPT}" && "${BROKEN}" == true ]]; then
-  TARGETS="${TARGETS} ${TARGETS_BROKEN}"
+# Enable broken targets
+if [[ "${BROKEN}" == true ]]; then
   MAKEOPTS="${MAKEOPTS} BROKEN=true"
-elif [[ -n "${TARGETS_OPT}" && "${BROKEN}" == true ]] ; then
-  TARGETS="${TARGETS_OPT}"
-  MAKEOPTS="${MAKEOPTS} BROKEN=true"
-elif [[ -n "${TARGETS_OPT}" ]] ; then
-  TARGETS="${TARGETS_OPT}"
 fi
 
 # Check if $COMMAND is set
@@ -200,14 +199,13 @@ fi
 
 update() {
   make ${MAKEOPTS} \
-       GLUON_SITEDIR="${SITE_DIR}" \
        GLUON_RELEASE="${RELEASE}" \
        update
 }
 
 build() {
   echo "--- Cleaning output directory ---"
-  rm -rf "${GLUON_OUTPUTDIR}"
+  rm -rf "output/*" "output/.*"
 
   echo "--- Building Gluon as ${RELEASE} ---"
   for TARGET in ${TARGETS}; do
@@ -221,7 +219,6 @@ build() {
     fi
 
     make ${EFFECTIVE_MAKEOPTS} \
-         GLUON_SITEDIR="${SITE_DIR}" \
          GLUON_RELEASE="${RELEASE}" \
          GLUON_BRANCH="${BUILDBRANCH}" \
          GLUON_TARGET="${TARGET}"
@@ -231,7 +228,6 @@ build() {
 sign() {
   echo "--- Building Gluon Manifest ---"
   make ${MAKEOPTS} \
-       GLUON_SITEDIR="${SITE_DIR}" \
        GLUON_RELEASE="${RELEASE}" \
        GLUON_BRANCH="${BRANCH}" \
        manifest
@@ -241,7 +237,7 @@ sign() {
   if [[ -e "${SIGN_KEY}" ]] ; then
     contrib/sign.sh \
         "${SIGN_KEY}" \
-        "${GLUON_OUTPUTDIR}/images/sysupgrade/${BRANCH}.manifest"
+        "output/images/sysupgrade/${BRANCH}.manifest"
   else
     "${SIGN_KEY} not found!"
   fi
@@ -265,9 +261,9 @@ deploy() {
 
   # Copy images and modules to DEPLOYMENT_DIR
   CP_CMD="cp --verbose --recursive --no-dereference"
-  $CP_CMD "${GLUON_OUTPUTDIR}/images/factory"         "${TARGET}/factory"
-  $CP_CMD "${GLUON_OUTPUTDIR}/images/sysupgrade"      "${TARGET}/sysupgrade"
-  $CP_CMD "${GLUON_OUTPUTDIR}/packages/"*"${RELEASE}" "${TARGET}/modules"
+  $CP_CMD "output/images/factory"         "${TARGET}/factory"
+  $CP_CMD "output/images/sysupgrade"      "${TARGET}/sysupgrade"
+  $CP_CMD "output/packages/"*"${RELEASE}" "${TARGET}/packages"
 
   # Set branch link to new release
   echo "--- Linking branch ${BRANCH} to $(basename ${TARGET}) ---"
@@ -275,10 +271,7 @@ deploy() {
     echo "No directory to link to."
   fi
 
-  if [[ -L "${DEPLOYMENT_DIR}/../${SITE}/${BRANCH}" ]] ; then
-    unlink "${DEPLOYMENT_DIR}/../${SITE}/${BRANCH}"
-  fi
-
+  unlink "${DEPLOYMENT_DIR}/../${SITE}/${BRANCH}" &> /dev/null || true
   ln --relative --symbolic \
         "${TARGET}" \
         "${DEPLOYMENT_DIR}/../${SITE}/${BRANCH}"
@@ -290,7 +283,6 @@ clean(){
   for TARGET in ${TARGETS}; do
     echo "--- Cleaning target: ${TARGET} ---"
     make ${MAKEOPTS} \
-         GLUON_SITEDIR="${SITE_DIR}" \
          GLUON_RELEASE="${RELEASE}" \
          GLUON_TARGET="${TARGET}" \
          clean
@@ -300,7 +292,6 @@ clean(){
 dirclean(){
   echo "--- Cleaning entire working directory ---"
   make ${MAKEOPTS} \
-       GLUON_SITEDIR="${SITE_DIR}" \
        GLUON_RELEASE="${RELEASE}" \
        dirclean
 }
@@ -308,6 +299,11 @@ dirclean(){
 (
   # Change working directory to gluon tree
   cd "${GLUON_DIR}"
+
+  rm -rf output || true
+  rm -rf site || true
+  ln --relative --symbolic "${GLUON_OUTPUTDIR}" output
+  ln --relative --symbolic "${SCRIPTPATH}/${SITE_DIR}" site
 
   # Execute the selected command
   ${COMMAND}
