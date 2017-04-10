@@ -21,6 +21,7 @@ GLUON_SITE_PACKAGES := \
 	gluon-radv-filterd \
 	gluon-radvd \
 	gluon-respondd \
+	respondd-module-airtime \
 	gluon-setup-mode \
 	gluon-status-page \
 	iwinfo \
