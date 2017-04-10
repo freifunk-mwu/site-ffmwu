@@ -39,8 +39,7 @@ usage() {
   echo "Use the seperater -- to pass options directly to build.sh"
   echo ""
   echo "-b: Firmware branch name: stable | testing | experimental"
-  echo "-c: Run clean for each target (optinal)"
-  echo "-p: Run dirclean (overwrites -c)"
+  echo "-c: Run dirclean"
   echo "-d: Enable bash debug output"
   echo "-h: Show this help"
   echo "-r: Release suffix number (default: 1)"
@@ -50,7 +49,7 @@ usage() {
 }
 
 # Evaluate arguments for build script.
-while getopts b:cdhpr:s: flag; do
+while getopts b:cdhr:s: flag; do
   case ${flag} in
     d)
       set -x
@@ -70,10 +69,7 @@ while getopts b:cdhpr:s: flag; do
       fi
       ;;
     c)
-      CLEAN="clean"
-      ;;
-    p)
-      CLEAN="dirclean"
+      CLEAN="true"
       ;;
     r)
       SUFFIX="${OPTARG}"
@@ -124,22 +120,18 @@ FIRST_RUN=true
 for SITE in ${SITES}; do
   log "--- Building Firmware for ${SITE} / ${RELEASE} (${BRANCH}) ---"
 
-  # Running these commands for one site is sufficient
-  if [[ ${FIRST_RUN} == true ]] ; then
-    if [[ ${CLEAN} == "dirclean" ]] ; then
-      log "--- Building Firmware for ${SITE} / dirclean ---"
-      ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} ${DEBUG} "${@}" -c dirclean 2>&1 | ${LOG_CMD}
-    fi
-
-    log "--- Building Firmware for ${SITE} / update ---"
-    ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} ${DEBUG} "${@}" -c update 2>&1 | ${LOG_CMD}
-
-    if [[ ${CLEAN} == "clean" ]] ; then
-      log "--- Building Firmware for ${SITE} / clean ---"
-      ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} ${DEBUG} "${@}" -c clean 2>&1 | ${LOG_CMD}
-    fi
+  # Running this command for one site is sufficient
+  if [[ ${FIRST_RUN} == true && ${CLEAN} == "true" ]] ; then
+    log "--- Building Firmware for ${SITE} / dirclean ---"
+    ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} ${DEBUG} "${@}" -c dirclean 2>&1 | ${LOG_CMD}
     FIRST_RUN=false
   fi
+
+  log "--- Building Firmware for ${SITE} / update ---"
+  ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} ${DEBUG} "${@}" -c update 2>&1 | ${LOG_CMD}
+
+  log "--- Building Firmware for ${SITE} / clean ---"
+  ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} ${DEBUG} "${@}" -c clean 2>&1 | ${LOG_CMD}
 
   log "--- Building Firmware for ${SITE} / build ---"
   ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} ${DEBUG} "${@}" -c build 2>&1 | ${LOG_CMD}

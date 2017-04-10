@@ -204,7 +204,7 @@ update() {
 
 build() {
   echo "--- Cleaning output directory ---"
-  rm -rf "output/*" "output/.*"
+  rm -rf output/* 2>&1 || true
 
   echo "--- Building Gluon as ${RELEASE} ---"
   for TARGET in ${TARGETS}; do
