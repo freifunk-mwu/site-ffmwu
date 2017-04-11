@@ -1,3 +1,19 @@
+# Default priority for updates.
+GLUON_PRIORITY ?= 0
+
+# Region code required for some images; supported values: us eu
+GLUON_REGION ?= eu
+
+# languages to include in images
+GLUON_LANGS ?= en de
+
+# Prefer ath10k firmware with IBSS support
+GLUON_ATH10K_MESH ?= ibss
+
+#############################
+# Default packages
+#############################
+
 GLUON_SITE_PACKAGES := \
 	gluon-mesh-batman-adv-15 \
 	gluon-autoupdater \
@@ -28,41 +44,47 @@ GLUON_SITE_PACKAGES := \
 	haveged \
 	tecff-ath9k-broken-wifi-workaround
 
-# basic support for USB stack
-USB_PACKAGES_BASIC := \
-	kmod-usb-core \
-	kmod-usb2
+#############################
+# Additional package sets
+#############################
 
-# USB HID support
-USB_PACKAGES_HID += \
+# USB Human Interface
+USB_PACKAGES_HID := \
 	kmod-usb-hid \
-	kmod-hid-generic \
+	kmod-hid-generic
 
-# storage support for USB devices
+# USB Serial
+USB_PACKAGES_SERIAL := \
+	kmod-usb-serial \
+	kmod-usb-serial-ftdi \
+	kmod-usb-serial-pl2303
+
+# USB Storage
 USB_PACKAGES_STORAGE := \
 	block-mount \
 	blkid \
+	kmod-fs-exfat \
 	kmod-fs-ext4 \
+	kmod-fs-ntfs \
 	kmod-fs-vfat \
 	kmod-usb-storage \
 	kmod-usb-storage-extras \
+	kmod-nls-base \
 	kmod-nls-cp1250 \
 	kmod-nls-cp1251 \
 	kmod-nls-cp437 \
-	kmod-nls-cp775 \
 	kmod-nls-cp850 \
 	kmod-nls-cp852 \
-	kmod-nls-cp866 \
 	kmod-nls-iso8859-1 \
 	kmod-nls-iso8859-13 \
 	kmod-nls-iso8859-15 \
 	kmod-nls-iso8859-2 \
-	kmod-nls-koi8r \
 	kmod-nls-utf8 \
-	swap-utils
+swap-utils
 
-# network support for USB devices
+# USB Network
 USB_PACKAGES_NET := \
+	kmod-ath9k-htc \
 	kmod-mii \
 	kmod-nls-base \
 	kmod-usb-net \
@@ -71,7 +93,6 @@ USB_PACKAGES_NET := \
 	kmod-usb-net-cdc-eem \
 	kmod-usb-net-cdc-ether \
 	kmod-usb-net-cdc-mbim \
-	kmod-usb-net-cdc-ncm \
 	kmod-usb-net-cdc-subset \
 	kmod-usb-net-dm9601-ether \
 	kmod-usb-net-hso \
@@ -83,68 +104,86 @@ USB_PACKAGES_NET := \
 	kmod-usb-net-pegasus \
 	kmod-usb-net-qmi-wwan \
 	kmod-usb-net-rndis \
+	kmod-usb-net-rtl8152 \
 	kmod-usb-net-sierrawireless \
 	kmod-usb-net-smsc95xx
 
-# network support for PCI devices
-PCI_PACKAGES_NET := \
-	kmod-3c59x \
-	kmod-e100 \
-	kmod-e1000 \
-	kmod-e1000e \
-	kmod-forcedeth \
-	kmod-igb \
-	kmod-natsemi \
-	kmod-ne2k-pci \
-	kmod-pcnet32 \
-	kmod-r8169 \
-	kmod-sis900 \
-	kmod-sky2 \
-	kmod-tg3 \
-	kmod-tulip \
-	kmod-via-rhine
+# PCI-Express Network
+PCIE_PACKAGES_NET := \
+	kmod-bnx2
 
 # additional packages
 TOOLS_PACKAGES := \
 	iperf \
 	socat \
 	tcpdump \
-	usbutils \
 	vnstat
 
-# x86-generic
+# Group previous package sets
+USB_PACKAGES_WITHOUT_HID := \
+	usbutils \
+	$(USB_PACKAGES_SERIAL) \
+	$(USB_PACKAGES_STORAGE) \
+$(USB_PACKAGES_NET)
+
+USB_PACKAGES := \
+	$(USB_PACKAGES_HID) \
+	$(USB_PACKAGES_WITHOUT_HID)
+
+PCIE_PACKAGES := \
+	pciutils \
+	$(PCIE_PACKAGES_NET)
+
+##################################
+# Assign package sets to targets
+##################################
+
+# Embedded Routers
+ifeq ($(GLUON_TARGET),ar71xx-generic)
+GLUON_SITE_PACKAGES += $(USB_PACKAGES_WITHOUT_HID)
+endif
+
+ifeq ($(GLUON_TARGET),ar71xx-nand)
+GLUON_SITE_PACKAGES += $(USB_PACKAGES_WITHOUT_HID)
+endif
+
+ifeq ($(GLUON_TARGET),mpc85xx-generic)
+GLUON_SITE_PACKAGES += $(USB_PACKAGES_WITHOUT_HID)
+endif
+
+ifeq ($(GLUON_TARGET),mvebu)
+GLUON_SITE_PACKAGES += $(USB_PACKAGES_WITHOUT_HID)
+endif
+
+ifeq ($(GLUON_TARGET),ramips-mt7621)
+GLUON_SITE_PACKAGES += $(USB_PACKAGES_WITHOUT_HID)
+endif
+
+# x86 Generic Purpose Hardware
 ifeq ($(GLUON_TARGET),x86-generic)
-# support the usb stack on x86 devices
-# and add a few common USB and PCI NICs
-GLUON_SITE_PACKAGES += \
-	$(USB_PACKAGES_BASIC) \
-	$(USB_PACKAGES_HID) \
-	$(USB_PACKAGES_STORAGE) \
-	$(USB_PACKAGES_NET) \
-	$(PCI_PACKAGES_NET) \
-	$(TOOLS_PACKAGES)
+GLUON_SITE_PACKAGES += $(USB_PACKAGES) $(PCIE_PACKAGES) $(TOOLS_PACKAGES)
 endif
 
-# x86-64
 ifeq ($(GLUON_TARGET),x86-64)
-# support the usb stack on x86-64 devices
-# and add a few common USB and PCI NICs
-GLUON_SITE_PACKAGES += \
-	$(USB_PACKAGES_BASIC) \
-	$(USB_PACKAGES_HID) \
-	$(USB_PACKAGES_STORAGE) \
-	$(USB_PACKAGES_NET) \
-	$(PCI_PACKAGES_NET) \
-	$(TOOLS_PACKAGES)
+GLUON_SITE_PACKAGES += $(USB_PACKAGES) $(PCIE_PACKAGES) $(TOOLS_PACKAGES)
 endif
 
-# Default priority for updates.
-GLUON_PRIORITY ?= 0
+# PCEngines ALIX Boards
+ifeq ($(GLUON_TARGET),x86-geode)
+GLUON_SITE_PACKAGES += $(USB_PACKAGES) $(PCIE_PACKAGES) $(TOOLS_PACKAGES)
+endif
 
-# Region code required for some images; supported values: us eu
-GLUON_REGION ?= eu
+#  Raspberry Pi A/B/B+
+ifeq ($(GLUON_TARGET),brcm2708-bcm2708)
+GLUON_SITE_PACKAGES += $(USB_PACKAGES)
+endif
 
-# i18n langs
-GLUON_LANGS ?= en de
+# Raspberry Pi 2
+ifeq ($(GLUON_TARGET),brcm2708-bcm2709)
+GLUON_SITE_PACKAGES += $(USB_PACKAGES)
+endif
 
-GLUON_ATH10K_MESH ?= ibss
+# Banana Pi/Pro, Lamobo R1
+ifeq ($(GLUON_TARGET),sunxi)
+GLUON_SITE_PACKAGES += $(USB_PACKAGES)
+endif
