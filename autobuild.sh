@@ -44,12 +44,13 @@ usage() {
   echo "-h: Show this help"
   echo "-r: Release suffix number (default: 1)"
   echo "-s: Gluon sites to build (optional)"
+  echo "-u: Update Gluon to latest origin/master (optional)"
   echo "    Default: \"${SITES}\""
   echo ""
 }
 
 # Evaluate arguments for build script.
-while getopts b:cdhr:s: flag; do
+while getopts b:cdhr:s:u flag; do
   case ${flag} in
     d)
       set -x
@@ -77,6 +78,9 @@ while getopts b:cdhr:s: flag; do
     s)
       SITES="${OPTARG}"
       ;;
+    u)
+      UPDATE="true"
+      ;;
   esac
 done
 
@@ -91,7 +95,7 @@ fi
 echo "--- Start: $(date +"%Y-%m-%d %H:%M:%S%:z") ---" | tee ${LOGFILE}
 
 # Generate suffix and checkout latest gluon master
-if [[ "${BRANCH}" == "experimental" ]]; then
+if [[ "${BRANCH}" == "experimental" && "${UPDATE}" == "true" ]]; then
   SUFFIX="~exp${DATE}$(printf %02d ${SUFFIX})"
 
   log "--- Init & Checkout Latest Gluon Master ---"
