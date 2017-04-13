@@ -31,6 +31,9 @@ GLUON_DIR="gluon"
 # Gluon output base directory
 OUTPUT_DIR="output"
 
+# LEDE cache directory
+CACHE_DIR="${HOME}/.cache/lede"
+
 # Deployment directory
 DEPLOYMENT_DIR="/var/www/html/firmware/_library"
 
@@ -57,7 +60,8 @@ usage() {
   echo "-b: Firmware branch name (required: sign deploy)"
   echo "    Availible: stable testing experimental"
   echo "-c: Build command (required)"
-  echo "    Availible: update build sign deploy clean dirclean"
+  echo "    Availible: build clean deploy dirclean"
+  echo "               download link sign update"
   echo "-d: Enable bash debug output (optional)"
   echo "-h: Show this help"
   echo "-i: Build identifier (optional)"
@@ -101,6 +105,8 @@ while getopts ab:c:dhm:p:i:t:r:s: flag; do
       ;;
     c)
       case "${OPTARG}" in
+        link| \
+        download| \
         update| \
         build| \
         sign| \
@@ -166,10 +172,6 @@ if [[ "${#}" > 0 ]]; then
   exit ${E_ILLEGAL_ARGS}
 fi
 
-# Set GLUON_OUTPUTDIR
-GLUON_OUTPUTDIR="${SCRIPTPATH}/${OUTPUT_DIR}/${SITE}"
-mkdir -p "${GLUON_OUTPUTDIR}"
-
 # Enable broken targets
 if [[ "${BROKEN}" == true ]]; then
   MAKEOPTS="${MAKEOPTS} BROKEN=true"
@@ -197,16 +199,51 @@ if [[ -z "${BRANCH}" && " sign deploy " =~ " ${COMMAND} " ]]; then
 fi
 
 update() {
+  echo "--- Updating dependencies ---"
   make ${MAKEOPTS} \
        GLUON_RELEASE="${RELEASE}" \
        update
+}
+
+link() {
+  echo "--- Linking directories ---"
+
+  rm -rf "output" || true
+  mkdir -p "${SCRIPTPATH}/${OUTPUT_DIR}/${SITE}"
+  ln --relative --symbolic "${SCRIPTPATH}/${OUTPUT_DIR}/${SITE}" "output"
+
+  rm -rf "site" || true
+  ln --relative --symbolic "${SCRIPTPATH}/${SITE_DIR}" "site"
+
+  rm -rf "lede/dl" || true
+  mkdir -p "${CACHE_DIR}" "lede"
+  ln --relative --symbolic "${CACHE_DIR}" "lede/dl"
+}
+
+download() {
+  echo "--- Downloading dependencies ---"
+  for TARGET in ${TARGETS}; do
+    EFFECTIVE_MAKEOPTS="${MAKEOPTS}"
+
+    echo "--- Downloading dependencies for target: ${TARGET} ---"
+
+    # Enable aes128-ctr+umac for fastd in x86 images
+    if [[ " x86-generic x86-geode x86-64 " =~ " ${TARGET} " ]] ; then
+      EFFECTIVE_MAKEOPTS="${EFFECTIVE_MAKEOPTS} CONFIG_FASTD_ENABLE_CIPHER_AES128_CTR=y"
+    fi
+
+    make ${EFFECTIVE_MAKEOPTS} \
+         GLUON_RELEASE="${RELEASE}" \
+         GLUON_TARGET="${TARGET}"
+         download
+  done
 }
 
 build() {
   echo "--- Cleaning output directory ---"
   rm -rf output/* 2>&1 || true
 
-  echo "--- Building Gluon as ${RELEASE} ---"
+  echo "--- Building as ${RELEASE} ---"
   for TARGET in ${TARGETS}; do
     EFFECTIVE_MAKEOPTS="${MAKEOPTS}"
 
@@ -225,7 +262,7 @@ build() {
 }
 
 sign() {
-  echo "--- Building Gluon Manifest ---"
+  echo "--- Building Manifest ---"
   make ${MAKEOPTS} \
        GLUON_RELEASE="${RELEASE}" \
        GLUON_BRANCH="${BRANCH}" \
@@ -249,7 +286,7 @@ deploy() {
     TARGET="${TARGET}~${BUILD}"
   fi
 
-  echo "--- Deploying Gluon Firmware ---"
+  echo "--- Deploying Firmware ---"
   mkdir --parents --verbose "${TARGET}"
 
   # Check if target directory is empty
@@ -299,10 +336,8 @@ dirclean(){
   # Change working directory to gluon tree
   cd "${GLUON_DIR}"
 
-  rm -rf output || true
-  rm -rf site || true
-  ln --relative --symbolic "${GLUON_OUTPUTDIR}" output
-  ln --relative --symbolic "${SCRIPTPATH}/${SITE_DIR}" site
+  # Call link except link is called itself
+  [[ "${COMMAND}" != "link" ]] && link
 
   # Execute the selected command
   ${COMMAND}
