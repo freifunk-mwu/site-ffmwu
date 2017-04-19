@@ -19,14 +19,14 @@ SRV_PATH="/var/www/html/firmware"
 usage() {
   echo ""
   echo "Downloads, signs and uploads a gluon manifest file."
-  echo "Usage ./sign.sh KEYPATH SITE BRANCH"
+  echo "Usage ./sign.sh KEYPATH SITE BRANCH [VERSION]"
   echo "    KEYPATH     the path to the developers private key"
   echo "    SITE        the site to sign"
   echo "    BRANCH      the branch to sign"
 }
 
 # Evaluate arguments for build script.
-if [[ "${#}" != 3 ]]; then
+if [[ "${#}" < 3 ]]; then
   echo "Insufficient arguments given"
   usage
   exit 1
@@ -35,12 +35,19 @@ fi
 KEYPATH="${1}"
 SITE="${2}"
 BRANCH="${3}"
+VERSION="${4}"
 
 # Sanity checks for required arguments
 if [[ ! -e "${KEYPATH}" ]]; then
   echo "Error: Key file not found or not readable: ${KEY_PATH}"
   usage
   exit 1
+fi
+
+if [[ "${VERSION}" != "" ]]; then
+  MANIFEST_PATH="${SRV_PATH}/_library/${VERSION}/${SITE}/sysupgrade/${BRANCH}.manifest"
+else
+  MANIFEST_PATH="${SRV_PATH}/${SITE}/${BRANCH}/sysupgrade/${BRANCH}.manifest"
 fi
 
 # Check if ecdsa utils are installed
@@ -56,7 +63,7 @@ TMP="$(mktemp)"
 echo "--- download ${BRANCH}.manifest for ${SITE} ---"
 scp \
   -o stricthostkeychecking=no -P "${SRV_PORT}" \
-  "${SRV_USER}@${SRV_HOST}:${SRV_PATH}/${SITE}/${BRANCH}/sysupgrade/${BRANCH}.manifest" \
+  "${SRV_USER}@${SRV_HOST}:${MANIFEST_PATH}" \
   "${TMP}"
 
 echo "--- signing manifest ---"
@@ -76,5 +83,5 @@ if [ "$(echo ${UPLOAD} | tr [:upper:] [:lower:])" == "y" ] ; then
   scp \
     -o stricthostkeychecking=no -P "${SRV_PORT}" \
     "${TMP}" \
-    "${SRV_USER}@${SRV_HOST}:${SRV_PATH}/${SITE}/${BRANCH}/sysupgrade/${BRANCH}.manifest"
+    "${SRV_USER}@${SRV_HOST}:${MANIFEST_PATH}"
 fi
