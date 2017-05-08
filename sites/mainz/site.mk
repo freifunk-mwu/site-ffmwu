@@ -7,8 +7,8 @@ GLUON_REGION ?= eu
 # languages to include in images
 GLUON_LANGS ?= en de
 
-# Prefer ath10k firmware with ibss support
-GLUON_ATH10K_MESH ?= ibss
+# Prefer ath10k firmware with 802.11s support
+GLUON_ATH10K_MESH ?= 11s
 
 #############################
 # Default packages
