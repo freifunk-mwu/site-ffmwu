@@ -96,8 +96,6 @@ echo "--- Start: $(date +"%Y-%m-%d %H:%M:%S%:z") ---" | tee ${LOGFILE}
 
 # Generate suffix and checkout latest gluon master
 if [[ "${BRANCH}" == "experimental" && "${UPDATE}" == "true" ]]; then
-  SUFFIX="~exp${DATE}$(printf %02d ${SUFFIX})"
-
   log "--- Init & Checkout Latest Gluon Master ---"
   git submodule init 2>&1 | ${LOG_CMD}
   git submodule update --remote --init --force 2>&1 | ${LOG_CMD}
@@ -105,6 +103,7 @@ fi
 
 if [[ "${BRANCH}" == "experimental" ]]; then
   GLUON_TAG="${GLUON_EXP_TAG}"
+  SUFFIX="~exp${DATE}$(printf %02d ${SUFFIX})"
 else
   if ! GLUON_TAG=$(git --git-dir="${GLUON_DIR}/.git" describe --exact-match) ; then
     log 'Error: The gluon tree is not checked out at a tag.'
