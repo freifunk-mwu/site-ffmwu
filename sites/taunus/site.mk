@@ -85,6 +85,7 @@ swap-utils
 # USB Network
 USB_PACKAGES_NET := \
 	kmod-ath9k-htc \
+	kmod-rt2800-usb \
 	kmod-mii \
 	kmod-nls-base \
 	kmod-usb-net \
