@@ -23,6 +23,16 @@ The firmware can be build using the `build.sh` script contained in the repositor
 For example to do a full stable build for site _mainz_ use the following commands:
 
 ```
+# clone repository and checkout at given tag
+git clone --recursive --branch 2016.2.5+mwu1 https://github.com/freifunk-mwu/sites-ffmwu.git
+
+# change to newly created directory
+cd sites-ffmwu
+
+# initialize submodule
+git submodule update --init
+
+# start the build
 ./build.sh -s mainz -b stable -r mwu1 -c update
 ./build.sh -s mainz -b stable -r mwu1 -c build
 ```
