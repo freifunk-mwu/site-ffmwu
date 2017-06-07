@@ -123,9 +123,10 @@ TOOLS_PACKAGES := \
 # Group previous package sets
 USB_PACKAGES_WITHOUT_HID := \
 	usbutils \
+	usb-modeswitch \
 	$(USB_PACKAGES_SERIAL) \
 	$(USB_PACKAGES_STORAGE) \
-$(USB_PACKAGES_NET)
+	$(USB_PACKAGES_NET)
 
 USB_PACKAGES := \
 	$(USB_PACKAGES_HID) \
