@@ -27,7 +27,7 @@ GLUON_SITE_PACKAGES := \
 	iwinfo \
 	iptables \
 	haveged \
-	tecff-ath9k-broken-wifi-workaround \
+	ffho-ath9k-blackout-workaround \
 	ffmwu-beta-to-testing
 
 # basic support for USB stack
