@@ -234,7 +234,7 @@ download() {
 
     make ${EFFECTIVE_MAKEOPTS} \
          GLUON_RELEASE="${RELEASE}" \
-         GLUON_TARGET="${TARGET}"
+         GLUON_TARGET="${TARGET}" \
          download
   done
 }
