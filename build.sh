@@ -18,9 +18,6 @@ CORES=$(nproc)
 MAKEOPTS="-j$((CORES+1)) BUILD_LOG=true V=s"
 
 # Default to build all Gluon targets if parameter -t is not set
-TARGETS="ar71xx-generic ar71xx-mikrotik ar71xx-nand ar71xx-tiny brcm2708-bcm2708 brcm2708-bcm2709 \
-         ipq806x mpc85xx-generic mvebu ramips-mt7621 ramips-mt7628 ramips-rt305x sunxi \
-         x86-64 x86-generic x86-geode"
 
 # Sites directory
 SITES_DIR="sites"
@@ -42,7 +39,6 @@ SIGN_KEY="${HOME}/.ecdsakey"
 
 # Build targets marked broken
 BROKEN=false
-TARGETS_BROKEN="ar71xx-mikrotik mvebu ramips-mt7621 ramips-mt7628 ramips-rt305x sunxi"
 
 # Branch used for building (autoupdater!)
 BUILDBRANCH="stable"
@@ -74,8 +70,7 @@ usage() {
   echo "-s: Site directory to use (required)"
   echo "    Availible: $(ls -m ${SITES_DIR})"
   echo "-t: Gluon target architectures to build (optional)"
-  echo "    Applied: \"${TARGETS}\""
-  echo "    Broken: \"${TARGETS_BROKEN}\""
+  echo "    Default: all"
 }
 
 # Evaluate arguments for build script.
@@ -335,6 +330,11 @@ dirclean(){
 (
   # Change working directory to gluon tree
   cd "${GLUON_DIR}"
+
+  # Get TARGETS if unset
+  if [[ ${TARGETS} == "" ]]; then
+    TARGETS=$(make ${MAKEOPTS} GLUON_RELEASE="${RELEASE}" list-targets)
+  fi
 
   # Call link except link is called itself
   [[ "${COMMAND}" != "link" ]] && link
