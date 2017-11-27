@@ -41,8 +41,7 @@ GLUON_SITE_PACKAGES := \
 	gluon-status-page \
 	iwinfo \
 	iptables \
-	haveged \
-	ffho-ath9k-blackout-workaround
+	haveged
 
 #############################
 # Additional package sets
