@@ -331,13 +331,13 @@ dirclean(){
   # Change working directory to gluon tree
   cd "${GLUON_DIR}"
 
+  # Call link except link is called itself
+  [[ "${COMMAND}" != "link" ]] && link
+
   # Get TARGETS if unset
   if [[ ${TARGETS} == "" ]]; then
     TARGETS=$(make ${MAKEOPTS} GLUON_RELEASE="${RELEASE}" list-targets)
   fi
-
-  # Call link except link is called itself
-  [[ "${COMMAND}" != "link" ]] && link
 
   # Execute the selected command
   ${COMMAND}
