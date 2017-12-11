@@ -1,9 +1,5 @@
-GLUON_SITE_FEEDS='ffmwu ffho'
+GLUON_SITE_FEEDS='ffmwu'
 
 PACKAGES_FFMWU_REPO=git://github.com/freifunk-mwu/packages-ffmwu.git
 PACKAGES_FFMWU_BRANCH=master
-PACKAGES_FFMWU_COMMIT=41c32d0d8ef74e030b74024efc75da06a0acfe4c
-
-PACKAGES_FFHO_REPO=git://github.com/FreifunkHochstift/ffho-packages.git
-PACKAGES_FFHO_BRANCH=v2017.1.x
-PACKAGES_FFHO_COMMIT=7e1fb0ba5b1dd894049b25ffa9b13705c8c4ba00
+PACKAGES_FFMWU_COMMIT=2f77578417cf7df3b7f3e31b7ecad73acb5fb2b1
