@@ -14,34 +14,30 @@ GLUON_ATH10K_MESH ?= 11s
 # Default packages
 #############################
 
+# Featureset, these are either virtual or packages prefixed with "gluon-"
+GLUON_FEATURES := \
+	autoupdater \
+	ebtables-filter-multicast \
+	ebtables-filter-ra-dhcp \
+	ebtables-segment-mld \
+	ebtables-source-filter \
+	mesh-batman-adv-15 \
+	mesh-vpn-fastd \
+	radvd \
+	respondd \
+	status-page \
+	web-advanced \
+	web-logging \
+	web-private-wifi \
+	web-wizard
+
+# Additional packages to install on every image
 GLUON_SITE_PACKAGES := \
-	gluon-mesh-batman-adv-15 \
-	gluon-autoupdater \
-	gluon-config-mode-autoupdater \
-	gluon-config-mode-contact-info \
-	gluon-config-mode-core \
-	gluon-config-mode-geo-location \
-	gluon-config-mode-hostname \
-	gluon-config-mode-mesh-vpn \
-	gluon-ebtables-filter-multicast \
-	gluon-ebtables-filter-ra-dhcp \
-	gluon-ebtables-segment-mld \
-	gluon-web-admin \
-	gluon-web-autoupdater \
-	gluon-web-node-role \
-	gluon-web-network \
-	gluon-web-private-wifi \
-	gluon-web-wifi-config \
-	gluon-mesh-vpn-fastd \
-	gluon-radv-filterd \
-	gluon-radvd \
-	gluon-respondd \
-	respondd-module-airtime \
-	gluon-setup-mode \
-	gluon-status-page \
-	iwinfo \
 	iptables \
-	haveged
+	iwinfo \
+	haveged \
+	gluon-radv-filterd \
+	respondd-module-airtime
 
 #############################
 # Additional package sets
