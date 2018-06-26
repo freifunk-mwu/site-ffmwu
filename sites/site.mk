@@ -19,10 +19,9 @@ GLUON_FEATURES := \
 	autoupdater \
 	ebtables-filter-multicast \
 	ebtables-filter-ra-dhcp \
-	ebtables-segment-mld \
-	ebtables-source-filter \
 	mesh-batman-adv-15 \
 	mesh-vpn-fastd \
+	radv-filterd \
 	radvd \
 	respondd \
 	status-page \
@@ -36,7 +35,6 @@ GLUON_SITE_PACKAGES := \
 	iptables \
 	iwinfo \
 	haveged \
-	gluon-radv-filterd \
 	respondd-module-airtime
 
 #############################
