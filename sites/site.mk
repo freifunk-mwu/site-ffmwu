@@ -156,6 +156,11 @@ ifeq ($(GLUON_TARGET),brcm2708-bcm2709)
 	GLUON_SITE_PACKAGES += $(USB_PACKAGES)
 endif
 
+# Raspberry Pi 3
+ifeq ($(GLUON_TARGET),brcm2708-bcm2710)
+        GLUON_SITE_PACKAGES += $(USB_PACKAGES)
+endif
+
 # Banana Pi/Pro, Lamobo R1
 ifeq ($(GLUON_TARGET),sunxi)
 	GLUON_SITE_PACKAGES += $(USB_PACKAGES)
