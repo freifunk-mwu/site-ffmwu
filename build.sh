@@ -40,9 +40,6 @@ SIGN_KEY="${HOME}/.ecdsakey"
 # Build targets marked broken
 BROKEN=false
 
-# Branch used for building (autoupdater!)
-BUILDBRANCH="stable"
-
 # Error codes
 E_ILLEGAL_ARGS=126
 
@@ -191,6 +188,13 @@ if [[ -z "${BRANCH}" && " sign deploy " =~ " ${COMMAND} " ]]; then
   echo "Error: Branch missing."
   usage
   exit ${E_ILLEGAL_ARGS}
+fi
+
+# Set branch used for building (autoupdater!)
+if [[ "${BRANCH}" == "experimental" ]]; then
+  BUILDBRANCH="experimental"
+else
+  BUILDBRANCH="stable"
 fi
 
 update() {
