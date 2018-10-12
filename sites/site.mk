@@ -10,6 +10,9 @@ GLUON_LANGS ?= en de
 # Prefer ath10k firmware with 802.11s support
 GLUON_ATH10K_MESH ?= 11s
 
+# Build gluon with multidomain support.
+GLUON_MULTIDOMAIN=1
+
 #############################
 # Default packages
 #############################
