@@ -20,6 +20,7 @@ GLUON_MULTIDOMAIN=1
 # Featureset, these are either virtual or packages prefixed with "gluon-"
 GLUON_FEATURES := \
 	autoupdater \
+	config-mode-domain-select \
 	ebtables-filter-multicast \
 	ebtables-filter-ra-dhcp \
 	mesh-batman-adv-15 \
