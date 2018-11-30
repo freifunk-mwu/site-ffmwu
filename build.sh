@@ -19,9 +19,6 @@ MAKEOPTS="-j$((CORES+1)) BUILD_LOG=true V=s"
 
 # Default to build all Gluon targets if parameter -t is not set
 
-# Sites directory
-SITES_DIR="sites"
-
 # Gluon directory
 GLUON_DIR="gluon"
 
@@ -29,7 +26,7 @@ GLUON_DIR="gluon"
 OUTPUT_DIR="output"
 
 # LEDE cache directory
-CACHE_DIR="${HOME}/.cache/lede"
+CACHE_DIR="${HOME}/.cache/openwrt"
 
 # Deployment directory
 DEPLOYMENT_DIR="/var/www/html/firmware/_library"
@@ -64,8 +61,6 @@ usage() {
   echo "-p: Priority used for autoupdater (optional)"
   echo "    Default: see site.mk"
   echo "-r: Release suffix (required: build sign deploy)"
-  echo "-s: Site directory to use (required)"
-  echo "    Availible: $(ls -m ${SITES_DIR})"
   echo "-t: Gluon target architectures to build (optional)"
   echo "    Default: all"
 }
@@ -104,7 +99,8 @@ while getopts ab:c:dhm:p:i:t:r:s: flag; do
         sign| \
         deploy| \
         clean| \
-        dirclean)
+        dirclean| \
+        targets)
           COMMAND="${OPTARG}"
           ;;
         *)
@@ -133,16 +129,6 @@ while getopts ab:c:dhm:p:i:t:r:s: flag; do
       ;;
     r)
       RELEASE="${OPTARG}"
-      ;;
-    s)
-      if [[ -d "${SITES_DIR}/${OPTARG}" ]]; then
-        SITE_DIR="${SITES_DIR}/${OPTARG}"
-        SITE="${OPTARG}"
-      else
-        echo "Error: Invalid site directory set."
-        usage
-        exit ${E_ILLEGAL_ARGS}
-      fi
       ;;
     a)
       BROKEN=true
@@ -209,14 +195,14 @@ link() {
 
   rm -rf "output" || true
   mkdir -p "${SCRIPTPATH}/${OUTPUT_DIR}/${SITE}"
-  ln --relative --symbolic "${SCRIPTPATH}/${OUTPUT_DIR}/${SITE}" "output"
+  ln --relative --symbolic "${SCRIPTPATH}/${OUTPUT_DIR}" "output"
 
   rm -rf "site" || true
-  ln --relative --symbolic "${SCRIPTPATH}/${SITE_DIR}" "site"
+  ln --relative --symbolic "${SCRIPTPATH}" "site"
 
-  rm -rf "lede/dl" || true
-  mkdir -p "${CACHE_DIR}" "lede"
-  ln --relative --symbolic "${CACHE_DIR}" "lede/dl"
+  rm -rf "openwrt/dl" || true
+  mkdir -p "${CACHE_DIR}" "openwrt"
+  ln --relative --symbolic "${CACHE_DIR}" "openwrt/dl"
 }
 
 download() {
@@ -280,7 +266,7 @@ sign() {
 
 deploy() {
   # Create the deployment directory
-  TARGET="${DEPLOYMENT_DIR}/${RELEASE}/${SITE}"
+  TARGET="${DEPLOYMENT_DIR}/${RELEASE}"
   if [[ -n ${BUILD} ]]; then
     TARGET="${TARGET}~${BUILD}"
   fi
@@ -302,14 +288,10 @@ deploy() {
 
   # Set branch link to new release
   echo "--- Linking branch ${BRANCH} to $(basename ${TARGET}) ---"
-  if [[ ! -d "${DEPLOYMENT_DIR}/../${SITE}" ]]; then
-    echo "No directory to link to."
-  fi
-
-  unlink "${DEPLOYMENT_DIR}/../${SITE}/${BRANCH}" &> /dev/null || true
+  unlink "${DEPLOYMENT_DIR}/../${BRANCH}" &> /dev/null || true
   ln --relative --symbolic \
         "${TARGET}" \
-        "${DEPLOYMENT_DIR}/../${SITE}/${BRANCH}"
+        "${DEPLOYMENT_DIR}/../${BRANCH}"
 }
 
 clean(){
@@ -331,16 +313,33 @@ dirclean(){
        dirclean
 }
 
+targets(){
+  echo "--- List availible Targets ---"
+  TARGETS=$(make ${MAKEOPTS} GLUON_RELEASE="${RELEASE}" list-targets)
+
+  # print TARGETS
+  for TARGET in ${TARGETS}; do
+    echo "* ${TARGET}"
+  done
+
+  # if called directly exit after print
+  if [[ "${COMMAND}" == "targets" ]]; then
+    exit 0
+  fi
+}
+
 (
   # Change working directory to gluon tree
   cd "${GLUON_DIR}"
 
-  # Call link except link is called itself
-  [[ "${COMMAND}" != "link" ]] && link
+  # Always link directories except link() is called explicitly
+  if [[ "${COMMAND}" != "link" ]]; then
+    link
+  fi
 
   # Get TARGETS if unset
   if [[ ${TARGETS} == "" ]]; then
-    TARGETS=$(make ${MAKEOPTS} GLUON_RELEASE="${RELEASE}" list-targets)
+    targets
   fi
 
   # Execute the selected command

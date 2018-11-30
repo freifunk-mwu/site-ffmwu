@@ -12,30 +12,29 @@
 # Basic configuration
 SRV_USER="admin"
 SRV_HOST="milchreis.freifunk-mwu.de"
-SRV_PORT="3323"
+SRV_PORT="23"
 SRV_PATH="/var/www/html/firmware"
 
 # Help function used in error messages and -h option
 usage() {
   echo ""
   echo "Downloads, signs and uploads a gluon manifest file."
-  echo "Usage ./sign.sh KEYPATH SITE BRANCH [VERSION]"
+  echo "Usage ./sign.sh KEYPATH BRANCH [VERSION]"
   echo "    KEYPATH     the path to the developers private key"
-  echo "    SITE        the site to sign"
   echo "    BRANCH      the branch to sign"
+  echo "    VERSION     the version to sign (optional)"
 }
 
 # Evaluate arguments for build script.
-if [[ "${#}" < 3 ]]; then
+if [[ "${#}" < 2 ]]; then
   echo "Insufficient arguments given"
   usage
   exit 1
 fi
 
 KEYPATH="${1}"
-SITE="${2}"
-BRANCH="${3}"
-VERSION="${4}"
+BRANCH="${2}"
+VERSION="${3}"
 
 # Sanity checks for required arguments
 if [[ ! -e "${KEYPATH}" ]]; then
@@ -45,9 +44,9 @@ if [[ ! -e "${KEYPATH}" ]]; then
 fi
 
 if [[ "${VERSION}" != "" ]]; then
-  MANIFEST_PATH="${SRV_PATH}/_library/${VERSION}/${SITE}/sysupgrade/${BRANCH}.manifest"
+  MANIFEST_PATH="${SRV_PATH}/_library/${VERSION}/sysupgrade/${BRANCH}.manifest"
 else
-  MANIFEST_PATH="${SRV_PATH}/${SITE}/${BRANCH}/sysupgrade/${BRANCH}.manifest"
+  MANIFEST_PATH="${SRV_PATH}/${BRANCH}/sysupgrade/${BRANCH}.manifest"
 fi
 
 # Check if ecdsa utils are installed
@@ -60,7 +59,7 @@ fi
 TMP="$(mktemp)"
 
 # Download manifest
-echo "--- download ${BRANCH}.manifest for ${SITE} ---"
+echo "--- download ${BRANCH}.manifest ---"
 scp \
   -o stricthostkeychecking=no -P "${SRV_PORT}" \
   "${SRV_USER}@${SRV_HOST}:${MANIFEST_PATH}" \
