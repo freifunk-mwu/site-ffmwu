@@ -3,6 +3,7 @@ This repository holds the site configurations for the following Freifunk MWU (Ma
 
 * [Freifunk Mainz](http://www.freifunk-mainz.de)
 * [Freifunk Wiesbaden](http://wiesbaden.freifunk.net)
+* [Freifunk Bingen](https://www.freifunk-bingen.de)
 * [Freifunk Rheingau-Taunus](https://www.freifunk-rtk.de)
 
 ## Repository structure
