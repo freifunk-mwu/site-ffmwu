@@ -13,17 +13,16 @@ SCRIPTPATH="$(dirname "$(readlink -e "$0")" )"
 GLUON_DIR="${SCRIPTPATH}/gluon"
 
 DATE=$(date +%Y%m%d)
-SITES="mainz wiesbaden rheingau taunus"
 
 # Overwrite Git Tag for experimental releases
-GLUON_EXP_TAG="2018.1"
+GLUON_EXP_TAG="2018.2"
 
 # Error codes
 E_ILLEGAL_ARGS=126
 E_ILLEGAL_TAG=127
 E_DIR_NOT_EMPTY=128
 
-LOGFILE="${SCRIPTPATH}/output/build.log"
+LOGFILE="${SCRIPTPATH}/build.log"
 LOG_CMD="tee -a ${LOGFILE}"
 
 mkdir -p "$(dirname ${LOGFILE})"
@@ -75,9 +74,6 @@ while getopts b:cdhr:s:u flag; do
     r)
       SUFFIX="${OPTARG}"
       ;;
-    s)
-      SITES="${OPTARG}"
-      ;;
     u)
       UPDATE="true"
       ;;
@@ -105,7 +101,7 @@ if [[ "${BRANCH}" == "experimental" ]]; then
   GLUON_TAG="${GLUON_EXP_TAG}"
   SUFFIX="~exp${DATE}$(printf %02d ${SUFFIX})"
 else
-  if ! GLUON_TAG=$(git --git-dir="${GLUON_DIR}/.git" describe --exact-match) ; then
+  if ! GLUON_TAG=$(git --git-dir="${GLUON_DIR}/.git" describe --tags --exact-match) ; then
     log 'Error: The gluon tree is not checked out at a tag.'
     log 'Please use `git checkout <tagname>` to use an official gluon release'
     log 'or build it as experimental.'
@@ -117,33 +113,17 @@ fi
 # Set release name
 RELEASE="${GLUON_TAG}+mwu${SUFFIX}"
 
-FIRST_RUN=true
-
 # Build the firmware, sign and deploy
-for SITE in ${SITES}; do
-  log "--- Building Firmware for ${SITE} / ${RELEASE} (${BRANCH}) ---"
+log "--- Building Firmware / ${RELEASE} (${BRANCH}) ---"
 
-  # Running this command for one site is sufficient
-  if [[ ${FIRST_RUN} == true && ${CLEAN} == "true" ]] ; then
-    log "--- Building Firmware for ${SITE} / dirclean ---"
-    ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} ${DEBUG} "${@}" -c dirclean 2>&1 | ${LOG_CMD}
-    FIRST_RUN=false
-  fi
+if [[ ${CLEAN} == "true" ]] ; then
+  log "--- Building Firmware / dirclean ---"
+  ${SCRIPTPATH}/build.sh -r ${RELEASE} ${DEBUG} "${@}" -c dirclean 2>&1 | ${LOG_CMD}
+fi
 
-  log "--- Building Firmware for ${SITE} / update ---"
-  ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} ${DEBUG} "${@}" -c update 2>&1 | ${LOG_CMD}
-
-  log "--- Building Firmware for ${SITE} / clean ---"
-  ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} ${DEBUG} "${@}" -c clean 2>&1 | ${LOG_CMD}
-
-  log "--- Building Firmware for ${SITE} / build ---"
-  ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} ${DEBUG} "${@}" -c build 2>&1 | ${LOG_CMD}
-
-  log "--- Building Firmware for ${SITE} / sign ---"
-  ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} -b ${BRANCH} ${DEBUG} "${@}" -c sign 2>&1 | ${LOG_CMD}
-
-  log "--- Building Firmware for ${SITE} / deploy ---"
-  ${SCRIPTPATH}/build.sh -s ${SITE} -r ${RELEASE} -b ${BRANCH} ${DEBUG} "${@}" -c deploy 2>&1 | ${LOG_CMD}
+for COMMAND in update download build sign deploy ; do
+  log "--- Building Firmware / ${COMMAND} ---"
+  ${SCRIPTPATH}/build.sh -r ${RELEASE} -b ${BRANCH} ${DEBUG} "${@}" -c ${COMMAND} 2>&1 | ${LOG_CMD}
 done
 
 log "--- End: $(date +"%Y-%m-%d %H:%M:%S%:z") ---"
