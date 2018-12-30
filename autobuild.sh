@@ -15,7 +15,7 @@ GLUON_DIR="${SCRIPTPATH}/gluon"
 DATE=$(date +%Y%m%d)
 
 # Overwrite Git Tag for experimental releases
-GLUON_EXP_TAG="2018.2"
+GLUON_EXP_TAG="2019.1"
 
 # Error codes
 E_ILLEGAL_ARGS=126
