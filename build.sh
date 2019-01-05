@@ -284,6 +284,7 @@ deploy() {
   CP_CMD="cp --verbose --recursive --no-dereference"
   $CP_CMD "output/images/factory"         "${TARGET}/factory"
   $CP_CMD "output/images/sysupgrade"      "${TARGET}/sysupgrade"
+  $CP_CMD "output/images/other"           "${TARGET}/other"
   $CP_CMD "output/packages/"*"${RELEASE}" "${TARGET}/packages"
 
   # Set branch link to new release
