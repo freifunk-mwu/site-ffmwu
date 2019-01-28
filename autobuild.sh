@@ -25,6 +25,8 @@ E_DIR_NOT_EMPTY=128
 LOGFILE="${SCRIPTPATH}/build.log"
 LOG_CMD="tee -a ${LOGFILE}"
 
+CLEAN=0
+
 mkdir -p "$(dirname ${LOGFILE})"
 
 log() {
@@ -38,7 +40,7 @@ usage() {
   echo "Use the seperater -- to pass options directly to build.sh"
   echo ""
   echo "-b: Firmware branch name: stable | testing | experimental"
-  echo "-c: Run dirclean"
+  echo "-c: Run clean (-cc for dirclean)"
   echo "-d: Enable bash debug output"
   echo "-h: Show this help"
   echo "-r: Release suffix number (default: 1)"
@@ -69,7 +71,7 @@ while getopts b:cdhr:s:u flag; do
       fi
       ;;
     c)
-      CLEAN="true"
+      CLEAN=$((CLEAN+1))
       ;;
     r)
       SUFFIX="${OPTARG}"
@@ -116,9 +118,12 @@ RELEASE="${GLUON_TAG}+mwu${SUFFIX}"
 # Build the firmware, sign and deploy
 log "--- Building Firmware / ${RELEASE} (${BRANCH}) ---"
 
-if [[ ${CLEAN} == "true" ]] ; then
+if [[ ${CLEAN} -eq 1 ]] ; then
+  log "--- Building Firmware / clean ---"
+  ${SCRIPTPATH}/build.sh -r ${RELEASE} -b ${BRANCH} ${DEBUG} "${@}" -c clean 2>&1 | ${LOG_CMD}
+elif [[ ${CLEAN} -gt 1 ]] ; then
   log "--- Building Firmware / dirclean ---"
-  ${SCRIPTPATH}/build.sh -r ${RELEASE} ${DEBUG} "${@}" -c dirclean 2>&1 | ${LOG_CMD}
+  ${SCRIPTPATH}/build.sh -r ${RELEASE} -b ${BRANCH} ${DEBUG} "${@}" -c dirclean 2>&1 | ${LOG_CMD}
 fi
 
 for COMMAND in update download build sign deploy ; do
