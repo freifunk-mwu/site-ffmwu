@@ -1,4 +1,4 @@
-# sites-ffmwu.git
+# site-ffmwu.git
 This repository holds the site configuration for the following Freifunk MWU (Mainz, Wiesbaden & Umgebung) communities:
 
 * [Freifunk Mainz](http://www.freifunk-mainz.de)
