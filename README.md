@@ -1,9 +1,10 @@
 # sites-ffmwu.git
-This repository holds the site configurations for the following Freifunk MWU (Mainz, Wiesbaden & Umgebung) communities:
+This repository holds the site configuration for the following Freifunk MWU (Mainz, Wiesbaden & Umgebung) communities:
 
 * [Freifunk Mainz](http://www.freifunk-mainz.de)
 * [Freifunk Wiesbaden](http://wiesbaden.freifunk.net)
 * [Freifunk Rheingau-Taunus](https://www.freifunk-rtk.de)
+* [Freifunk Bingen](https://www.freifunk-bingen.de)
 
 ## Repository structure
 In addition to the _master_ branch we maintain one branch for each major release.
