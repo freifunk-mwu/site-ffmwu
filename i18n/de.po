@@ -92,15 +92,3 @@ msgstr ""
 
 msgid "gluon-config-mode:altitude-help"
 msgstr ""
-
-msgid "gluon-web-node-role:role:backbone"
-msgstr "Backbone Knoten"
-
-msgid "gluon-web-node-role:role:node"
-msgstr "Normaler Knoten"
-
-msgid "gluon-web-node-role:role:offloader"
-msgstr "Offloader"
-
-msgid "gluon-web-node-role:role:test"
-msgstr "Test Knoten"
