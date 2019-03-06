@@ -37,6 +37,8 @@ GLUON_FEATURES := \
 
 # Additional packages to install on every image
 GLUON_SITE_PACKAGES := \
+	gluon-web-ffda-domain-director \
+	ffda-domain-director \
 	iptables \
 	iwinfo \
 	haveged \
