@@ -118,6 +118,9 @@ RELEASE="${GLUON_TAG}+mwu${SUFFIX}"
 # Build the firmware, sign and deploy
 log "--- Building Firmware / ${RELEASE} (${BRANCH}) ---"
 
+log "--- Building Firmware / update ---"
+${SCRIPTPATH}/build.sh -r ${RELEASE} -b ${BRANCH} ${DEBUG} "${@}" -c update 2>&1 | ${LOG_CMD}
+
 if [[ ${CLEAN} -eq 1 ]] ; then
   log "--- Building Firmware / clean ---"
   ${SCRIPTPATH}/build.sh -r ${RELEASE} -b ${BRANCH} ${DEBUG} "${@}" -c clean 2>&1 | ${LOG_CMD}
@@ -126,7 +129,7 @@ elif [[ ${CLEAN} -gt 1 ]] ; then
   ${SCRIPTPATH}/build.sh -r ${RELEASE} -b ${BRANCH} ${DEBUG} "${@}" -c dirclean 2>&1 | ${LOG_CMD}
 fi
 
-for COMMAND in update download build sign deploy ; do
+for COMMAND in download build sign deploy ; do
   log "--- Building Firmware / ${COMMAND} ---"
   ${SCRIPTPATH}/build.sh -r ${RELEASE} -b ${BRANCH} ${DEBUG} "${@}" -c ${COMMAND} 2>&1 | ${LOG_CMD}
 done
