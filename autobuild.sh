@@ -42,6 +42,7 @@ usage() {
   echo "-b: Firmware branch name: stable | testing | experimental"
   echo "-c: Run clean (-cc for dirclean)"
   echo "-d: Enable bash debug output"
+  echo "-g: Get remote sources before build"
   echo "-h: Show this help"
   echo "-r: Release suffix number (default: 1)"
   echo "-s: Gluon sites to build (optional)"
@@ -51,7 +52,7 @@ usage() {
 }
 
 # Evaluate arguments for build script.
-while getopts b:cdhr:s:u flag; do
+while getopts b:cdghr:s:u flag; do
   case ${flag} in
     d)
       set -x
@@ -72,6 +73,9 @@ while getopts b:cdhr:s:u flag; do
       ;;
     c)
       CLEAN=$((CLEAN+1))
+      ;;
+    g)
+      DOWNLOAD="true"
       ;;
     r)
       SUFFIX="${OPTARG}"
@@ -129,7 +133,12 @@ elif [[ ${CLEAN} -gt 1 ]] ; then
   ${SCRIPTPATH}/build.sh -r ${RELEASE} -b ${BRANCH} ${DEBUG} "${@}" -c dirclean 2>&1 | ${LOG_CMD}
 fi
 
-for COMMAND in download build sign deploy ; do
+if [[ "${DOWNLOAD}" == "true" ]]; then
+  log "--- Building Firmware / download ---"
+  ${SCRIPTPATH}/build.sh -r ${RELEASE} -b ${BRANCH} ${DEBUG} "${@}" -c download 2>&1 | ${LOG_CMD}
+fi
+
+for COMMAND in build sign deploy ; do
   log "--- Building Firmware / ${COMMAND} ---"
   ${SCRIPTPATH}/build.sh -r ${RELEASE} -b ${BRANCH} ${DEBUG} "${@}" -c ${COMMAND} 2>&1 | ${LOG_CMD}
 done
