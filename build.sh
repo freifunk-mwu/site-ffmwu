@@ -15,7 +15,7 @@ SCRIPTPATH="$(dirname "$(readlink -e "$0")" )"
 
 # Default make options
 CORES=$(nproc)
-MAKEOPTS="-j$((CORES+1)) BUILD_LOG=true V=s"
+MAKEOPTS="-j$((CORES+1)) BUILD_LOG=1 V=s"
 
 # Default to build all Gluon targets if parameter -t is not set
 
@@ -35,7 +35,7 @@ DEPLOYMENT_DIR="/var/www/html/firmware/_library"
 SIGN_KEY="${HOME}/.ecdsakey"
 
 # Build targets marked broken
-BROKEN=false
+BROKEN=0
 
 # Error codes
 E_ILLEGAL_ARGS=126
@@ -131,7 +131,7 @@ while getopts ab:c:dhm:p:i:t:r:s: flag; do
       RELEASE="${OPTARG}"
       ;;
     a)
-      BROKEN=true
+      BROKEN=1
       ;;
     *)
       usage
@@ -151,8 +151,8 @@ if [[ "${#}" > 0 ]]; then
 fi
 
 # Enable broken targets
-if [[ "${BROKEN}" == true ]]; then
-  MAKEOPTS="${MAKEOPTS} BROKEN=true"
+if [[ "${BROKEN}" == 1 ]]; then
+  MAKEOPTS="${MAKEOPTS} BROKEN=1"
 fi
 
 # Check if $COMMAND is set
