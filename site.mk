@@ -14,7 +14,7 @@ GLUON_DEPRECATED ?= full
 GLUON_WLAN_MESH ?= 11s
 
 # Build gluon with multidomain support.
-GLUON_MULTIDOMAIN=1
+GLUON_MULTIDOMAIN := 1
 
 #############################
 # Default packages
@@ -34,13 +34,13 @@ GLUON_FEATURES := \
 	respondd \
 	status-page \
 	web-advanced \
+	web-ffda-domain-director \
 	web-logging \
 	web-private-wifi \
 	web-wizard
 
 # Additional packages to install on every image
 GLUON_SITE_PACKAGES := \
-	gluon-web-ffda-domain-director \
 	ffda-domain-director \
 	iptables \
 	iwinfo \
@@ -171,6 +171,6 @@ ifeq ($(GLUON_TARGET),brcm2708-bcm2710)
 endif
 
 # Banana Pi/Pro, Lamobo R1
-ifeq ($(GLUON_TARGET),sunxi)
+ifeq ($(GLUON_TARGET),sunxi-cortexa7)
 	GLUON_SITE_PACKAGES += $(USB_PACKAGES)
 endif
