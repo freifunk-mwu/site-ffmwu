@@ -1,10 +1,11 @@
 # site-ffmwu.git
-This repository holds the site configuration for the following Freifunk MWU (Mainz, Wiesbaden & Umgebung) communities:
+This repository holds the site configuration for the following Freifunk MWU (Mainz, Wiesbaden & Umgebung) Communities:
 
 * [Freifunk Mainz](http://www.freifunk-mainz.de)
 * [Freifunk Wiesbaden](http://wiesbaden.freifunk.net)
 * [Freifunk Rheingau-Taunus](https://www.freifunk-rtk.de)
 * [Freifunk Bingen](https://www.freifunk-bingen.de)
+* [Freifunk Limburg](https://www.freifunk-limburg.de/)
 
 ## Repository structure
 In addition to the _master_ branch we maintain one branch for each major release.
@@ -17,9 +18,9 @@ To ensure that the submodule is initialized correctly, call `git submodule updat
 To update gluon to the latest `origin/master` use `git submodule update --remote`.
 
 ## Version schema
-For the versioning of our _stable_ and _testing_ releases we use the Gluon version and append the string `mwu` followed by a counter. The counter starts at 1 and will be increased if we do maintenance releases with the same gluon version as the current release. For example the first release based on gluon v2018.1.2 would be `2018.1.2+mwu1`.
+For the versioning of our _stable_ and _testing_ releases we use the Gluon version and append the string `mwu` followed by a counter. The counter starts at 1 and will be increased if we do maintenance releases with the same gluon version as the current release. For example the first release based on gluon v2019.1 would be `2019.1+mwu1`.
 
-For _experimental_ builds this is slightly different. They also start with the Gluon version (as we don't have a Git tag we use a predefined prefix) followed by `mwu`. But the suffix doesn't include the regular counter instead we add a second suffix that reflects the build date followed by an incremental counter in case we build several times a day. For example the first experimental build of 30.11.2018 would be called `2018.2+mwu~exp2018113001`.
+For _experimental_ builds this is slightly different. They also start with the Gluon version (as we don't have a Git tag we use a predefined prefix) followed by `mwu`. But the suffix doesn't include the regular counter instead we add a second suffix that reflects the build date followed by an incremental counter in case we build several times a day. For example the first experimental build of 04.10.2019 would be called `2019.2+mwu~exp2019100401`.
 
 ## Build the firmware
 The firmware can be build using the `build.sh` script contained in the repository.
@@ -39,9 +40,9 @@ git submodule update --init --remote
 # start the build
 DATE=$(date +%Y%m%d)
 
-./build.sh -r 2018.2+mwu~exp${DATE}01 -c update
-./build.sh -r 2018.2+mwu~exp${DATE}01 -c clean
-./build.sh -r 2018.2+mwu~exp${DATE}01 -c build
+./build.sh -r 2019.2+mwu~exp${DATE}01 -c update
+./build.sh -r 2019.2+mwu~exp${DATE}01 -c clean
+./build.sh -r 2019.2+mwu~exp${DATE}01 -c build
 ```
 
 ## Sign and deploy the firmware
@@ -50,13 +51,13 @@ DATE=$(date +%Y%m%d)
 To create and sign the _testing_ manifest for the new images use the following command:
 
 ```
-./build.sh -c sign -r 2018.2+mwu~exp${DATE}01 -b experimental
+./build.sh -c sign -r 2019.2+mwu~exp${DATE}01 -b experimental
 ```
 
 To copy the images and packages to the firmware directory, you can use the following command:
 
 ```
-./build.sh -c deploy -r 2018.2+mwu~exp${DATE}01 -b experimental
+./build.sh -c deploy -r 2019.2+mwu~exp${DATE}01 -b experimental
 ```
 
 ## Automated builds
