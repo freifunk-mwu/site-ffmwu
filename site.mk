@@ -8,7 +8,7 @@ GLUON_REGION ?= eu
 GLUON_LANGS ?= en de
 
 # Build images for deprecated devices
-GLUON_DEPRECATED ?= full
+GLUON_DEPRECATED ?= upgrade
 
 # Prefer ath10k firmware with 802.11s support
 GLUON_WLAN_MESH ?= 11s
