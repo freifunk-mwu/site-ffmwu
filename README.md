@@ -18,9 +18,9 @@ To ensure that the submodule is initialized correctly, call `git submodule updat
 To update gluon to the latest `origin/master` use `git submodule update --remote`.
 
 ## Version schema
-For the versioning of our _stable_ and _testing_ releases we use the Gluon version and append the string `mwu` followed by a counter. The counter starts at 1 and will be increased if we do maintenance releases with the same gluon version as the current release. For example the first release based on gluon v2019.1 would be `2019.1+mwu1`.
+For the versioning of our _stable_ and _testing_ releases we use the Gluon version and append the string `mwu` followed by a counter. The counter starts at 1 and will be increased if we do maintenance releases with the same gluon version as the current release. For example the first release based on gluon v2020.1 would be `2020.1+mwu1`.
 
-For _experimental_ builds this is slightly different. They also start with the Gluon version (as we don't have a Git tag we use a predefined prefix) followed by `mwu`. But the suffix doesn't include the regular counter instead we add a second suffix that reflects the build date followed by an incremental counter in case we build several times a day. For example the first experimental build of 04.10.2019 would be called `2019.2+mwu~exp2019100401`.
+For _experimental_ builds this is slightly different. They also start with the Gluon version (as we don't have a Git tag we use a predefined prefix) followed by `mwu`. But the suffix doesn't include the regular counter instead we add a second suffix that reflects the build date followed by an incremental counter in case we build several times a day. For example the first experimental build of 25.02.2020 would be called `2020.2+mwu~exp2020022501`.
 
 ## Build the firmware
 The firmware can be build using the `build.sh` script contained in the repository.
@@ -34,15 +34,12 @@ git clone --recursive https://github.com/freifunk-mwu/sites-ffmwu.git
 # change to newly created directory
 cd sites-ffmwu
 
-# initialize submodule and update to latest upstream
-git submodule update --init --remote
+# initialize submodule
+git submodule update --init 
 
-# start the build
-DATE=$(date +%Y%m%d)
-
-./build.sh -r 2019.2+mwu~exp${DATE}01 -c update
-./build.sh -r 2019.2+mwu~exp${DATE}01 -c clean
-./build.sh -r 2019.2+mwu~exp${DATE}01 -c build
+./build.sh -r 2020.1 -c update
+./build.sh -r 2020.1 -c clean
+./build.sh -r 2020.1 -c build
 ```
 
 ## Sign and deploy the firmware
@@ -51,13 +48,13 @@ DATE=$(date +%Y%m%d)
 To create and sign the _testing_ manifest for the new images use the following command:
 
 ```
-./build.sh -c sign -r 2019.2+mwu~exp${DATE}01 -b experimental
+./build.sh -r 2020.1 -b testing -c sign
 ```
 
 To copy the images and packages to the firmware directory, you can use the following command:
 
 ```
-./build.sh -c deploy -r 2019.2+mwu~exp${DATE}01 -b experimental
+./build.sh -r 2020.1 -b testing -c deploy
 ```
 
 ## Automated builds
@@ -66,5 +63,5 @@ To copy the images and packages to the firmware directory, you can use the follo
 For example to do a full build _(update, build, sign, deploy)_ use the following commands:
 
 ```
-./autobuild.sh -b experimental -u -- -a
+./autobuild.sh -b testing
 ```
