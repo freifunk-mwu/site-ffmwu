@@ -48,7 +48,8 @@ GLUON_SITE_PACKAGES := \
 	iptables \
 	iwinfo \
 	haveged \
-	respondd-module-airtime
+	respondd-module-airtime \
+	-urngd
 
 #############################
 # Additional package sets
