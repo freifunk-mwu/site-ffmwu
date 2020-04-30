@@ -47,9 +47,7 @@ GLUON_SITE_PACKAGES := \
 	ffda-domain-director \
 	iptables \
 	iwinfo \
-	haveged \
-	respondd-module-airtime \
-	-urngd
+	respondd-module-airtime
 
 #############################
 # Additional package sets
