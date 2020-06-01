@@ -119,7 +119,7 @@ while getopts ab:c:dhm:p:i:t:r:s: flag; do
       fi
       ;;
     p)
-      MAKEOPTS="${MAKEOPTS} GLUON_PRIORITY=${OPTARG}"
+      PRIORITY="${OPTARG}"
       ;;
     i)
       BUILD="${OPTARG}"
@@ -148,6 +148,11 @@ if [[ "${#}" > 0 ]]; then
   echo "Error: To many arguments: ${*}"
   usage
   exit ${E_ILLEGAL_ARGS}
+fi
+
+# Set priority
+if [[ -n "${PRIORITY}" ]]; then
+  MAKEOPTS="${MAKEOPTS} GLUON_PRIORITY=${PRIORITY}"
 fi
 
 # Enable broken targets
