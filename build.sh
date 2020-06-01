@@ -60,7 +60,7 @@ usage() {
   echo "    Applied: \"${MAKEOPTS}\""
   echo "-p: Priority used for autoupdater (optional)"
   echo "    Default: see site.mk"
-  echo "-r: Release suffix (required: build sign deploy)"
+  echo "-r: Release version (required: build sign deploy)"
   echo "-t: Gluon target architectures to build (optional)"
   echo "    Default: all"
 }
