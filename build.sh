@@ -287,6 +287,7 @@ deploy() {
 
   # Copy images and modules to DEPLOYMENT_DIR
   CP_CMD="cp --verbose --recursive --no-dereference"
+  $CP_CMD "output/debug"                 "${TARGET}/debug"
   $CP_CMD "output/images/factory"         "${TARGET}/factory"
   $CP_CMD "output/images/sysupgrade"      "${TARGET}/sysupgrade"
   $CP_CMD "output/images/other"           "${TARGET}/other"
