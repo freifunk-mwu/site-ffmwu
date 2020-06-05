@@ -45,7 +45,6 @@ GLUON_FEATURES_standard := \
 # Additional packages to install on every image
 GLUON_SITE_PACKAGES := \
 	ffda-domain-director \
-	iptables \
 	iwinfo \
 	respondd-module-airtime
 
