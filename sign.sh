@@ -11,7 +11,7 @@
 
 # Basic configuration
 SRV_USER="admin"
-SRV_HOST="milchreis.freifunk-mwu.de"
+SRV_HOST="griesbrei.freifunk-mwu.de"
 SRV_PORT="23"
 SRV_PATH="/var/www/html/firmware"
 
