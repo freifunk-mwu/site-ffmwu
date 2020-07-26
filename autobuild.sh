@@ -45,7 +45,6 @@ usage() {
   echo "-g: Get remote sources before build"
   echo "-h: Show this help"
   echo "-r: Release suffix number (default: 1)"
-  echo "-s: Gluon sites to build (optional)"
   echo "-u: Update Gluon to latest origin/master (optional)"
   echo "    Default: \"${SITES}\""
   echo ""
