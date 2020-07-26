@@ -29,7 +29,7 @@ OUTPUT_DIR="output"
 CACHE_DIR="${HOME}/.cache/openwrt"
 
 # Deployment directory
-DEPLOYMENT_DIR="/var/www/html/firmware/_library"
+DEPLOYMENT_DIR="${HOME}/firmware/_library"
 
 # Autosign key
 SIGN_KEY="${HOME}/.ecdsakey"
