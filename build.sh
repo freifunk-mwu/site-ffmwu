@@ -246,7 +246,8 @@ build() {
 
     make ${EFFECTIVE_MAKEOPTS} \
          GLUON_RELEASE="${RELEASE}" \
-         GLUON_BRANCH="${BUILDBRANCH}" \
+         GLUON_AUTOUPDATER_ENABLED=1 \
+         GLUON_AUTOUPDATER_BRANCH="${BUILDBRANCH}" \
          GLUON_TARGET="${TARGET}"
   done
 }
@@ -255,7 +256,7 @@ sign() {
   echo "--- Building Manifest ---"
   make ${MAKEOPTS} \
        GLUON_RELEASE="${RELEASE}" \
-       GLUON_BRANCH="${BRANCH}" \
+       GLUON_AUTOUPDATER_BRANCH="${BRANCH}" \
        manifest
 
   echo "--- Signing Gluon Firmware Build ---"
