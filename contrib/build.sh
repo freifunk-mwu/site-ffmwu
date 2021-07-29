@@ -33,7 +33,6 @@ SIGN_KEY="${HOME}/.ecdsakey"
 BROKEN=0
 
 LOGFILE="build.log"
-LOG_CMD="tee ${LOGFILE}"
 
 # Help function used in error messages and -h option
 usage() {
@@ -356,4 +355,6 @@ autocc(){
 
   # Execute the selected command
   ${COMMAND}
-) 2>&1 | ${LOG_CMD}
+
+  echo "--- End: $(date +"%Y-%m-%d %H:%M:%S%:z") ---"
+) 2>&1 | tee ${LOGFILE}
