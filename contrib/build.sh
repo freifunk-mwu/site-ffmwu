@@ -41,12 +41,13 @@ usage() {
   echo ""
   echo "-a: Build targets marked as broken (optional)"
   echo "    Applied: ${BROKEN}"
-  echo "-b: Firmware branch name (required sign deploy)"
+  echo "-b: Firmware branch name"
+  echo "    (required: manifest sign deploy)"
   echo "    Availible: stable testing experimental"
   echo "-c: Build command (required)"
   echo "    Available: build clean deploy dirclean"
-  echo "               download link sign update"
-  echo "               auto autoc autocc"
+  echo "               download link manifest sign"
+  echo "               update auto autoc autocc"
   echo "-d: Enable bash debug output (optional)"
   echo "-h: Show this help"
   echo "    Will be applied to the deployment directory"
@@ -93,6 +94,7 @@ while getopts ab:c:dhm:p:r:s:t: flag; do
         download| \
         update| \
         build| \
+        manifest| \
         sign| \
         deploy| \
         clean| \
@@ -172,7 +174,7 @@ if [[ -z "${COMMAND}" ]]; then
 fi
 
 # Check if $BRANCH is set for commands that need it
-if [[ -z "${BRANCH}" && " sign deploy auto autoc autocc " =~ " ${COMMAND} " ]]; then
+if [[ -z "${BRANCH}" && " manifest sign deploy auto autoc autocc " =~ " ${COMMAND} " ]]; then
   echo "Error: Branch missing."
   usage
   exit 1
@@ -243,13 +245,15 @@ build() {
   done
 }
 
-sign() {
+manifest() {
   echo "--- Building Manifest ---"
   make ${MAKEOPTS} \
        GLUON_RELEASE="${RELEASE}" \
        GLUON_AUTOUPDATER_BRANCH="${BRANCH}" \
        manifest
+}
 
+sign() {
   echo "--- Signing Gluon Firmware Build ---"
   # Add the signature to the local manifest
   if [[ -e "${SIGN_KEY}" ]] ; then
@@ -257,7 +261,7 @@ sign() {
         "${SIGN_KEY}" \
         "output/images/sysupgrade/${BRANCH}.manifest"
   else
-    "${SIGN_KEY} not found!"
+    echo "${SIGN_KEY} not found!"
   fi
 }
 
@@ -328,15 +332,22 @@ targets(){
 }
 
 auto(){
-  update ; download ; build ; sign ; deploy
+  update
+  download
+  build
+  manifest
+  [[ "${BUILDBRANCH}" == "stable" ]] && sign
+  deploy
 }
 
 autoc(){
-  clean ; auto
+  clean
+  auto
 }
 
 autocc(){
-  dirclean ; auto
+  dirclean
+  auto
 }
 
 (
