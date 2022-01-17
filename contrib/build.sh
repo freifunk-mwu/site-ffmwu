@@ -336,7 +336,7 @@ auto(){
   download
   build
   manifest
-  [[ "${BUILDBRANCH}" == "stable" ]] && sign
+  sign
   deploy
 }
 
