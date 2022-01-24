@@ -15,7 +15,7 @@ CORES=$(nproc)
 MAKEOPTS="-j$((CORES+1)) BUILD_LOG=1 V=s"
 
 # Overwrite Git Tag for experimental releases
-EXP_TAG="2021.2"
+EXP_TAG="2022.1"
 
 # Release suffix for experimental releases
 SUFFIX=1
