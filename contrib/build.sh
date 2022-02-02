@@ -12,7 +12,7 @@ set -e -o pipefail
 
 # Default make options
 CORES=$(nproc)
-MAKEOPTS="-j$((CORES+1)) BUILD_LOG=1 V=s"
+MAKEOPTS="-j$((CORES+1)) NO_COLOR=1 BUILD_LOG=1 V=s"
 
 # Overwrite Git Tag for experimental releases
 EXP_TAG="2022.1"
@@ -368,4 +368,4 @@ autocc(){
   ${COMMAND}
 
   echo "--- End: $(date +"%Y-%m-%d %H:%M:%S%:z") ---"
-) 2>&1 | tee ${LOGFILE}
+) 2>&1 | tr '\r' '\n' | tee ${LOGFILE}
