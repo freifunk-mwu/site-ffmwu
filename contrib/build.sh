@@ -368,4 +368,4 @@ autocc(){
   ${COMMAND}
 
   echo "--- End: $(date +"%Y-%m-%d %H:%M:%S%:z") ---"
-) 2>&1 | tr '\r' '\n' | tee ${LOGFILE}
+) 2>&1 | sed --unbuffered 's/\r/\n/g' | tee ${LOGFILE}
