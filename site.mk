@@ -87,6 +87,7 @@ USB_PACKAGES_STORAGE := \
 USB_PACKAGES_NET := \
 	kmod-ath9k-htc \
 	kmod-mii \
+	kmod-usb-net \
 	kmod-usb-net-asix \
 	kmod-usb-net-asix-ax88179 \
 	kmod-usb-net-cdc-eem \
@@ -127,6 +128,7 @@ USB_PACKAGES_WITHOUT_HID := \
 	$(USB_PACKAGES_NET)
 
 USB_PACKAGES := \
+	usbutils \
 	$(USB_PACKAGES_HID) \
 	$(USB_PACKAGES_WITHOUT_HID)
 
@@ -154,20 +156,20 @@ endif
 
 #  Raspberry Pi A/B/B+
 ifeq ($(GLUON_TARGET),brcm2708-bcm2708)
-	GLUON_SITE_PACKAGES += $(USB_PACKAGES)
+	GLUON_SITE_PACKAGES += $(USB_PACKAGES) $(TOOLS_PACKAGES)
 endif
 
 # Raspberry Pi 2
 ifeq ($(GLUON_TARGET),brcm2708-bcm2709)
-	GLUON_SITE_PACKAGES += $(USB_PACKAGES)
+	GLUON_SITE_PACKAGES += $(USB_PACKAGES) $(TOOLS_PACKAGES)
 endif
 
 # Raspberry Pi 3
 ifeq ($(GLUON_TARGET),brcm2708-bcm2710)
-        GLUON_SITE_PACKAGES += $(USB_PACKAGES)
+        GLUON_SITE_PACKAGES += $(USB_PACKAGES) $(TOOLS_PACKAGES)
 endif
 
 # Banana Pi/Pro, Lamobo R1
 ifeq ($(GLUON_TARGET),sunxi-cortexa7)
-	GLUON_SITE_PACKAGES += $(USB_PACKAGES)
+	GLUON_SITE_PACKAGES += $(USB_PACKAGES) $(TOOLS_PACKAGES)
 endif
