@@ -10,9 +10,6 @@ GLUON_LANGS ?= en de
 # Build images for deprecated devices
 GLUON_DEPRECATED ?= upgrade
 
-# Prefer ath10k firmware with 802.11s support
-GLUON_WLAN_MESH ?= 11s
-
 # Build gluon with multidomain support.
 GLUON_MULTIDOMAIN := 1
 
