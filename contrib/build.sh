@@ -341,13 +341,23 @@ auto(){
 }
 
 autoc(){
+  update
   clean
-  auto
+  download
+  build
+  manifest
+  sign
+  deploy
 }
 
 autocc(){
+  update
   dirclean
-  auto
+  download
+  build
+  manifest
+  sign
+  deploy
 }
 
 (
