@@ -170,3 +170,8 @@ endif
 ifeq ($(GLUON_TARGET),sunxi-cortexa7)
 	GLUON_SITE_PACKAGES += $(USB_PACKAGES) $(TOOLS_PACKAGES)
 endif
+
+# Linksys WRT1200AC
+ifeq ($(GLUON_TARGET),mvebu-cortexa9)
+	GLUON_SITE_PACKAGES += -respondd-module-airtime
+endif
