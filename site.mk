@@ -36,6 +36,7 @@ GLUON_FEATURES := \
 	web-wizard
 
 GLUON_FEATURES_standard := \
+	mesh-vpn-sqm \
 	web-cellular \
 	wireless-encryption-wpa3
 
