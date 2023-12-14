@@ -1,4 +1,4 @@
-GLUON_SITE_FEEDS='ffmwu ffda'
+GLUON_SITE_FEEDS='ffmwu ffda community'
 
 PACKAGES_FFMWU_REPO=https://github.com/freifunk-mwu/packages-ffmwu.git
 PACKAGES_FFMWU_BRANCH=master
@@ -7,3 +7,7 @@ PACKAGES_FFMWU_COMMIT=55c2cdbc1001a380735e2e3344a7bd8ef9aa84a3
 PACKAGES_FFDA_REPO=https://github.com/freifunk-darmstadt/ffda-packages.git
 PACKAGES_FFDA_BRANCH=master
 PACKAGES_FFDA_COMMIT=26e9be0a567d643e078c24b54a9f1cac313f7693
+
+PACKAGES_COMMUNITY_REPO=https://github.com/freifunk-gluon/community-packages.git
+PACKAGES_COMMUNITY_BRANCH=master
+PACKAGES_COMMUNITY_COMMIT=01adecc14478dedbb247dbe3846d7414756ddb6a
