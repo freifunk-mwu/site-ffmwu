@@ -46,6 +46,9 @@ GLUON_SITE_PACKAGES := \
 	iwinfo \
 	respondd-module-airtime
 
+GLUON_SITE_PACKAGES_standard := \
+	ffda-gluon-usteer
+
 #############################
 # Additional package sets
 #############################
