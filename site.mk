@@ -178,5 +178,7 @@ endif
 
 # Linksys WRT1200AC
 ifeq ($(GLUON_TARGET),mvebu-cortexa9)
-	GLUON_SITE_PACKAGES += -respondd-module-airtime
+	GLUON_SITE_PACKAGES += \
+		-gluon-wireless-encryption-wpa3 \
+		-respondd-module-airtime
 endif
