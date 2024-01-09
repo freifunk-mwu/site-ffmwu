@@ -133,7 +133,7 @@ while getopts ab:c:dhm:p:r:s:t: flag; do
       RELEASE="${OPTARG}"
       ;;
 
-    r)
+    s)
       SUFFIX="${OPTARG}"
       ;;
     a)
